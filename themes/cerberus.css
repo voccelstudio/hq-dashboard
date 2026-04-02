@@ -1,0 +1,36 @@
+/* ── MASS EFFECT: CERBERUS ───────────────────────────────────
+   The Illusive Man. Amber flame on obsidian. TIM's office.
+   Burnt orange #ff6200, amber #ffaa00, char black. Power.
+──────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto+Condensed:wght@300;400;700&display=swap');
+:root{
+  --bg:#080400;--bg2:#100800;--bg3:#181000;--bg4:#201800;--bg5:#282000;
+  --border:#ff620016;--border2:#ff620030;--border3:#ff620052;
+  --text:#ffe8c0;--muted:#c07030;--hint:#582808;
+  --voccel:#ff6200;--voccelg:#ff620014;--voccelb:#ff620028;
+  --prussia:#ffaa00;--prussiag:#ffaa0014;--prussiab:#ffaa0028;
+  --mh:#ff3000;--mhg:#ff300014;--mhb:#ff300028;
+  --success:#a8cc00;--successg:#a8cc0014;
+  --warn:#ffaa00;--warng:#ffaa0014;
+  --danger:#ff2000;--dangerg:#ff200014;
+  --r:2px;--r2:4px;--r3:6px;
+}
+body,*{font-family:'Roboto Condensed',sans-serif!important}
+.brand-name{font-family:'Rajdhani',sans-serif!important;font-size:15px!important;font-weight:700!important;color:var(--voccel)!important;letter-spacing:.22em!important;text-shadow:0 0 16px #ff620090!important;text-transform:uppercase!important}
+.brand-sub{font-family:'Rajdhani',sans-serif!important;font-size:7px!important;letter-spacing:.32em!important;color:var(--muted)!important;text-transform:uppercase!important}
+.page-title{font-family:'Rajdhani',sans-serif!important;font-size:22px!important;font-weight:700!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:var(--voccel)!important;text-shadow:0 0 14px #ff620070!important}
+.nav-section{font-family:'Rajdhani',sans-serif!important;font-size:8px!important;letter-spacing:.3em!important;color:var(--hint)!important;text-transform:uppercase!important}
+.nav-item{font-family:'Rajdhani',sans-serif!important;font-weight:600!important;font-size:14px!important;letter-spacing:.09em!important;text-transform:uppercase!important}
+.nav-item.active{background:var(--voccelg)!important;border-left-color:var(--voccel)!important;text-shadow:0 0 8px var(--voccel)!important;box-shadow:inset 0 0 20px #ff620010!important}
+.card{border-radius:var(--r)!important;border:1px solid var(--border2)!important;box-shadow:0 2px 20px #ff620008!important}
+.card-title{font-family:'Rajdhani',sans-serif!important;font-weight:700!important;font-size:10px!important;letter-spacing:.2em!important;text-transform:uppercase!important;color:var(--voccel)!important}
+.metric-val{font-family:'Rajdhani',sans-serif!important;font-size:28px!important;font-weight:700!important}
+.metric-lbl{font-family:'Rajdhani',sans-serif!important;font-size:9px!important;letter-spacing:.2em!important;text-transform:uppercase!important}
+.xp-fill{background:linear-gradient(90deg,var(--mh),var(--voccel),var(--prussia))!important;box-shadow:0 0 10px #ff620060!important}
+.sidebar{border-right:1px solid var(--border2)!important}
+.topbar{border-bottom:1px solid var(--border2)!important;background:var(--bg)!important}
+.btn-main{font-family:'Rajdhani',sans-serif!important;font-weight:700!important;letter-spacing:.16em!important;text-transform:uppercase!important;border-radius:var(--r)!important;background:transparent!important;border:1px solid var(--voccel)!important;color:var(--voccel)!important;box-shadow:0 0 14px #ff620040!important}
+.btn-main:hover{background:var(--voccelg)!important;box-shadow:0 0 22px #ff620060!important}
+.section-line{background:linear-gradient(90deg,var(--voccel)50,transparent)!important}
+.sm-day.done{background:var(--voccel)!important;box-shadow:0 0 8px var(--voccel)!important;color:#000!important}
+.content::before{content:'⬟';position:fixed;bottom:20px;right:20px;font-size:280px;color:#ff620004;pointer-events:none;z-index:0;line-height:1}

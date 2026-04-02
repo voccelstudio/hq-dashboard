@@ -6,7 +6,17 @@
 <title>HQ — Command Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
+<link id="theme-css" rel="stylesheet" href="">
+<style>@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=Lato:wght@300;400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500&display=swap');
+
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#08080f;--bg2:#0f0f1a;--bg3:#161625;--bg4:#1e1e30;--bg5:#26263c;
@@ -26,17 +36,17 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);disp
 /* ── SIDEBAR ── */
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:50;padding:20px 0}
 .brand{padding:0 20px 20px;border-bottom:1px solid var(--border)}
-.brand-name{font-size:16px;font-weight:700;letter-spacing:-.01em}
+.brand-name{font-size:18px;font-weight:700;letter-spacing:-.01em}
 .brand-sub{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.1em}
 .xp-section{padding:16px 20px;border-bottom:1px solid var(--border)}
 .xp-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.xp-level{font-family:'DM Mono',monospace;font-size:11px;color:var(--voccel);font-weight:500}
-.xp-val{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)}
+.xp-level{font-family:'DM Mono',monospace;font-size:12px;color:var(--voccel);font-weight:500}
+.xp-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)}
 .xp-track{height:4px;background:var(--bg5);border-radius:2px;overflow:hidden}
 .xp-fill{height:100%;background:linear-gradient(90deg,var(--voccel),var(--mh));border-radius:2px;transition:width .5s cubic-bezier(.34,1.56,.64,1)}
 .nav{flex:1;padding:12px 0;overflow-y:auto}
-.nav-section{font-size:9px;color:var(--hint);text-transform:uppercase;letter-spacing:.1em;padding:12px 20px 6px;font-weight:600}
-.nav-item{display:flex;align-items:center;gap:10px;padding:9px 20px;cursor:pointer;transition:all .15s;border-left:2px solid transparent;color:var(--muted);font-size:13px;font-weight:500}
+.nav-section{font-size:11px;color:var(--hint);text-transform:uppercase;letter-spacing:.08em;padding:14px 20px 6px;font-weight:600}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:all .15s;border-left:2px solid transparent;color:var(--muted);font-size:15px;font-weight:500}
 .nav-item:hover{background:var(--bg3);color:var(--text)}
 .nav-item.active{background:var(--bg3);color:var(--text);border-left-color:var(--voccel)}
 .nav-item.active.av{border-left-color:var(--voccel);color:var(--voccel)}
@@ -54,27 +64,27 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);disp
 /* ── MAIN ── */
 .main{margin-left:220px;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
 .topbar{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;z-index:40;backdrop-filter:blur(10px)}
-.page-title{font-size:18px;font-weight:700;letter-spacing:-.02em}
+.page-title{font-size:22px;font-weight:700;letter-spacing:-.02em}
 .topbar-right{display:flex;align-items:center;gap:10px}
-.today-badge{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);background:var(--bg3);padding:4px 10px;border-radius:20px;border:1px solid var(--border2)}
+.today-badge{font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);background:var(--bg3);padding:5px 12px;border-radius:20px;border:1px solid var(--border2)}
 .content{padding:24px 28px;flex:1}
 
 /* ── METRICS ── */
 .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:22px}
 .metric{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px}
-.metric-val{font-family:'DM Mono',monospace;font-size:22px;font-weight:500;margin-bottom:3px}
-.metric-lbl{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em}
+.metric-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;margin-bottom:3px}
+.metric-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
 
 /* ── GRID LAYOUTS ── */
 .grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .span2{grid-column:1/-1}
 .card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px}
-.card-title{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
 .card-title span{font-size:10px;font-weight:400;color:var(--hint)}
 
 /* ── BADGES ── */
-.co-badge{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700;display:inline-block;flex-shrink:0}
+.co-badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:700;display:inline-block;flex-shrink:0}
 .bv{background:var(--voccelg);color:var(--voccel)}
 .bp{background:var(--prussiag);color:var(--prussia)}
 .bm{background:var(--mhg);color:var(--mh)}
@@ -89,7 +99,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);disp
 .mchk{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--border3);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:8px;transition:all .18s}
 .mi-done .mchk{background:var(--success);border-color:var(--success);color:#000}
 .mi-locked .mchk{background:var(--bg5);border-color:var(--hint)}
-.mi-text{flex:1;font-size:12px;line-height:1.4}
+.mi-text{flex:1;font-size:14px;line-height:1.4}
 .mi-done .mi-text{text-decoration:line-through}
 .mi-xp{font-family:'DM Mono',monospace;font-size:9px;color:var(--success);flex-shrink:0}
 .mi-locked .mi-xp{color:var(--hint)}
@@ -114,7 +124,7 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);disp
 
 /* ── PIPELINE ── */
 .lead-row{display:flex;align-items:center;gap:8px;padding:7px 9px;background:var(--bg3);border-radius:var(--r);margin-bottom:3px;flex-wrap:wrap}
-.lr-name{font-size:12px;flex:1;min-width:80px}
+.lr-name{font-size:14px;flex:1;min-width:80px}
 .lr-stage{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700}
 .sl{background:#1a1a30;color:#9090c8}.sp{background:var(--warng);color:var(--warn)}.sn{background:var(--voccelg);color:var(--voccel)}.sg{background:var(--successg);color:var(--success)}
 .lr-val{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0}
@@ -140,12 +150,12 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);disp
 .kb-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
 .kb-col{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:12px;min-height:160px}
 .kb-col-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.kb-col-title{font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase}
+.kb-col-title{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
 .kb-col-count{font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);background:var(--bg5);padding:1px 6px;border-radius:20px}
 .kb-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 11px;cursor:grab;transition:all .15s;border-left:3px solid transparent;margin-bottom:5px}
 .kb-card:hover{border-color:var(--border2);background:var(--bg4)}
 .kb-card.dragging{opacity:.3}
-.kb-card-title{font-size:12px;font-weight:500;line-height:1.4;margin-bottom:6px}
+.kb-card-title{font-size:14px;font-weight:500;line-height:1.4;margin-bottom:6px}
 .kb-card-done .kb-card-title{text-decoration:line-through;opacity:.5}
 .kb-card-bottom{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
 .prio-a{background:var(--dangerg);color:var(--danger)}
@@ -202,10 +212,10 @@ body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);disp
 /* ── SIMULATOR ── */
 .sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 .sim-sec{background:var(--bg3);border-radius:var(--r);padding:13px;margin-bottom:8px}
-.sim-sec-t{font-size:10px;font-weight:700;letter-spacing:.07em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:5px}
+.sim-sec-t{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:5px}
 .srow{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.slbl{font-size:11px;color:var(--muted);min-width:120px;flex-shrink:0}
-.sval{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;width:48px;text-align:right;flex-shrink:0}
+.slbl{font-size:13px;color:var(--muted);min-width:130px;flex-shrink:0}
+.sval{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;width:56px;text-align:right;flex-shrink:0}
 input[type=range]{flex:1;accent-color:var(--voccel);cursor:pointer}
 .res-total{font-family:'DM Mono',monospace;font-size:34px;font-weight:500;color:var(--success);margin:8px 0 4px;text-align:center}
 .rb{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;background:var(--bg4);border-radius:var(--r);margin-bottom:3px}
@@ -307,11 +317,11 @@ input[type=range]{flex:1;accent-color:var(--voccel);cursor:pointer}
 .modal-section{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;margin-top:4px;font-weight:700}
 
 /* ── MISC ── */
-.section-title{font-size:10px;font-weight:700;letter-spacing:.1em;color:var(--muted);text-transform:uppercase;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
+.section-title{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
 .section-line{flex:1;height:1px;background:var(--border)}
 .add-btn{width:100%;padding:7px;border-radius:var(--r);border:1px dashed var(--border2);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s;margin-top:5px}
 .add-btn:hover{border-color:var(--border3);color:var(--text)}
-.empty-hint{font-size:11px;color:var(--hint);padding:8px 0;text-align:center}
+.empty-hint{font-size:13px;color:var(--hint);padding:8px 0;text-align:center}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 16px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:300;max-width:280px}
 .toast.show{opacity:1}
 .xp-pop-el{position:fixed;top:40%;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:26px;font-weight:700;color:var(--success);opacity:0;pointer-events:none;transition:opacity .2s,top .5s;z-index:300;text-shadow:0 0 20px #5ef57a50}
@@ -323,6 +333,254 @@ select:focus{border-color:var(--border3)}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
+
+/* ═══════════════════════════════════════════════════════════
+   THEMES — all using html[data-theme] to override :root
+   Research sources: official game art, fan wikis, color palettes
+═══════════════════════════════════════════════════════════ */
+
+/* ── DARK ACADEMIA
+   Oxford stone, candlelight amber, aged parchment, ink brown.
+   Inspired by: leather-bound books, brass candelabras, gothic arches */
+html[data-theme="dark-academia"] {
+  --bg:#0c0904;--bg2:#14100a;--bg3:#1e1610;--bg4:#281e15;--bg5:#32261a;
+  --border:#c8a96e18;--border2:#c8a96e32;--border3:#c8a96e55;
+  --text:#ede0c4;--muted:#9e7a4a;--hint:#4a3218;
+  --voccel:#c8a96e;--voccelg:#c8a96e14;--voccelb:#c8a96e28;
+  --prussia:#a05030;--prussiag:#a0503014;--prussiab:#a0503028;
+  --mh:#6b8c5a;--mhg:#6b8c5a14;--mhb:#6b8c5a28;
+  --success:#6b8c5a;--successg:#6b8c5a14;--warn:#c8a96e;--warng:#c8a96e14;--danger:#8b2020;--dangerg:#8b202014;
+  --r:4px;--r2:8px;--r3:12px;
+}
+html[data-theme="dark-academia"] body,html[data-theme="dark-academia"] .sidebar,html[data-theme="dark-academia"] .main,html[data-theme="dark-academia"] .topbar,html[data-theme="dark-academia"] .card,html[data-theme="dark-academia"] .nav-item,html[data-theme="dark-academia"] .metric,html[data-theme="dark-academia"] button,html[data-theme="dark-academia"] input,html[data-theme="dark-academia"] select,html[data-theme="dark-academia"] textarea{font-family:'Cormorant Garamond',Georgia,serif!important}
+html[data-theme="dark-academia"] .brand-name{font-family:'IM Fell English',serif!important;font-size:19px!important;color:#c8a96e!important;text-shadow:0 0 20px #c8a96e50!important;letter-spacing:.04em!important}
+html[data-theme="dark-academia"] .brand-sub{font-family:monospace!important;font-size:8px!important;letter-spacing:.22em!important}
+html[data-theme="dark-academia"] .page-title{font-family:'IM Fell English',serif!important;font-style:italic!important;font-size:24px!important}
+html[data-theme="dark-academia"] .card-title{font-family:'IM Fell English',serif!important;font-style:italic!important;font-size:11px!important}
+html[data-theme="dark-academia"] .metric-val{font-family:'IM Fell English',serif!important;font-size:28px!important}
+html[data-theme="dark-academia"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:#4a3218!important}
+html[data-theme="dark-academia"] .nav-item.active{box-shadow:inset 0 0 16px #c8a96e14!important}
+html[data-theme="dark-academia"] .xp-fill{background:linear-gradient(90deg,#a05030,#c8a96e)!important}
+
+/* ── GOTH
+   Pure black velvet, cold violet, silver moonlight, bone white.
+   Inspired by: Sisters of Mercy, The Cure, Victorian mourning dress */
+html[data-theme="goth"] {
+  --bg:#010103;--bg2:#05050d;--bg3:#090916;--bg4:#0e0e20;--bg5:#13132a;
+  --border:#8865d018;--border2:#8865d032;--border3:#8865d055;
+  --text:#ddd5f5;--muted:#6855a8;--hint:#281848;
+  --voccel:#9975e0;--voccelg:#9975e014;--voccelb:#9975e028;
+  --prussia:#c8c8e0;--prussiag:#c8c8e014;--prussiab:#c8c8e028;
+  --mh:#4060a0;--mhg:#4060a014;--mhb:#4060a028;
+  --success:#507050;--successg:#50705014;--warn:#806840;--warng:#80684014;--danger:#801828;--dangerg:#80182814;
+  --r:3px;--r2:6px;--r3:10px;
+}
+html[data-theme="goth"] body{font-family:'EB Garamond',Georgia,serif!important}
+html[data-theme="goth"] .sidebar,html[data-theme="goth"] .main,html[data-theme="goth"] .topbar,html[data-theme="goth"] .content,html[data-theme="goth"] .card,html[data-theme="goth"] .nav-item,html[data-theme="goth"] .metric,html[data-theme="goth"] .modal,html[data-theme="goth"] button,html[data-theme="goth"] input,html[data-theme="goth"] select,html[data-theme="goth"] textarea{font-family:'EB Garamond',Georgia,serif!important}
+html[data-theme="goth"] .brand-name{font-family:'UnifrakturMaguntia',cursive!important;font-size:22px!important;color:#9975e0!important;text-shadow:0 0 24px #9975e060!important}
+html[data-theme="goth"] .page-title{font-family:'UnifrakturMaguntia',cursive!important;font-size:26px!important;color:#9975e0!important;text-shadow:0 0 16px #9975e050!important}
+html[data-theme="goth"] .metric-val{font-family:'UnifrakturMaguntia',cursive!important;font-size:28px!important}
+html[data-theme="goth"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.22em!important;color:#281848!important}
+html[data-theme="goth"] .nav-item.active{text-shadow:0 0 8px #9975e040!important}
+html[data-theme="goth"] .xp-fill{background:linear-gradient(90deg,#3a0880,#9975e0)!important;box-shadow:0 0 10px #9975e050!important}
+html[data-theme="goth"] .sm-day.done{box-shadow:0 0 8px #9975e0!important}
+
+/* ── VAMPIRE: THE MASQUERADE
+   True blood crimson #8B0000 + #CC0000 on absolute black velvet.
+   Deep burgundy #4A0010, ivory bone, Elysium night purple.
+   Source: VtM 5th Ed corebook, LARP official art */
+html[data-theme="vampire"] {
+  --bg:#04000a;--bg2:#0a0010;--bg3:#120018;--bg4:#1a0022;--bg5:#22002e;
+  --border:#cc000018;--border2:#cc000035;--border3:#cc000058;
+  --text:#f0e0e8;--muted:#903060;--hint:#400018;
+  --voccel:#cc0000;--voccelg:#cc000014;--voccelb:#cc000028;
+  --prussia:#800050;--prussiag:#80005014;--prussiab:#80005028;
+  --mh:#e8c0d8;--mhg:#e8c0d814;--mhb:#e8c0d828;
+  --success:#405040;--successg:#40504014;--warn:#b8860b;--warng:#b8860b14;--danger:#cc0000;--dangerg:#cc000014;
+  --r:3px;--r2:6px;--r3:10px;
+}
+html[data-theme="vampire"] body,html[data-theme="vampire"] .sidebar,html[data-theme="vampire"] .main,html[data-theme="vampire"] .topbar,html[data-theme="vampire"] .card,html[data-theme="vampire"] .nav-item,html[data-theme="vampire"] .metric,html[data-theme="vampire"] button,html[data-theme="vampire"] input,html[data-theme="vampire"] select,html[data-theme="vampire"] textarea{font-family:'Crimson Pro',Georgia,serif!important}
+html[data-theme="vampire"] .brand-name{font-family:'Cinzel Decorative',serif!important;font-size:12px!important;color:#cc0000!important;text-shadow:0 0 22px #cc000090!important;text-transform:uppercase!important;letter-spacing:.04em!important}
+html[data-theme="vampire"] .page-title{font-family:'Cinzel Decorative',serif!important;font-size:16px!important;color:#cc0000!important;text-shadow:0 0 16px #cc000060!important}
+html[data-theme="vampire"] .card-title{font-family:'Cinzel Decorative',serif!important;font-size:8px!important;letter-spacing:.1em!important}
+html[data-theme="vampire"] .metric-val{font-family:'Cinzel Decorative',serif!important;font-size:22px!important}
+html[data-theme="vampire"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:#400018!important}
+html[data-theme="vampire"] .nav-item.active{text-shadow:0 0 8px #cc000050!important}
+html[data-theme="vampire"] .xp-fill{background:linear-gradient(90deg,#660011,#cc0000,#800050)!important;box-shadow:0 0 10px #cc000050!important}
+html[data-theme="vampire"] .sm-day.done{background:#cc0000!important;box-shadow:0 0 8px #cc000060!important}
+html[data-theme="vampire"] .card{box-shadow:inset 0 0 30px #cc00000a!important}
+
+/* ── MATRIX
+   Exact Matrix green #00ff41 (confirmed from film color grading).
+   Pure black #000400, medium green #008f20, dark #004010.
+   VT323 monospace, CRT scanlines, phosphor glow. */
+html[data-theme="matrix"] {
+  --bg:#000400;--bg2:#010901;--bg3:#021202;--bg4:#031a03;--bg5:#042204;
+  --border:#00ff4112;--border2:#00ff4126;--border3:#00ff4145;
+  --text:#00ff41;--muted:#00a020;--hint:#004510;
+  --voccel:#00ff41;--voccelg:#00ff4110;--voccelb:#00ff4120;
+  --prussia:#00dd33;--prussiag:#00dd3310;--prussiab:#00dd3320;
+  --mh:#50ff20;--mhg:#50ff2010;--mhb:#50ff2020;
+  --success:#00ff41;--successg:#00ff4112;--warn:#ccff00;--warng:#ccff0012;--danger:#ff0033;--dangerg:#ff003312;
+  --r:0px;--r2:1px;--r3:2px;
+}
+html[data-theme="matrix"] body,html[data-theme="matrix"] .sidebar,html[data-theme="matrix"] .main,html[data-theme="matrix"] .topbar,html[data-theme="matrix"] .card,html[data-theme="matrix"] .nav-item,html[data-theme="matrix"] .metric,html[data-theme="matrix"] button,html[data-theme="matrix"] input,html[data-theme="matrix"] select,html[data-theme="matrix"] textarea{font-family:'Share Tech Mono',monospace!important;color:#00ff41}
+html[data-theme="matrix"] .brand-name{font-family:'VT323',monospace!important;font-size:24px!important;color:#00ff41!important;text-shadow:0 0 10px #00ff41,0 0 22px #00ff4160!important;letter-spacing:.1em!important}
+html[data-theme="matrix"] .page-title{font-family:'VT323',monospace!important;font-size:30px!important;color:#00ff41!important;text-shadow:0 0 10px #00ff41!important}
+html[data-theme="matrix"] .metric-val{font-family:'VT323',monospace!important;font-size:32px!important;text-shadow:0 0 8px currentColor!important}
+html[data-theme="matrix"] .nav-item.active::before{content:'> ';color:#00ff41;font-size:12px}
+html[data-theme="matrix"] .xp-fill{background:#00ff41!important;box-shadow:0 0 8px #00ff41!important}
+html[data-theme="matrix"] .btn-main{background:transparent!important;border:1px solid #00ff41!important;color:#00ff41!important;text-shadow:0 0 6px #00ff41!important;box-shadow:0 0 10px #00ff4130!important}
+html[data-theme="matrix"] .card{border-radius:0!important;box-shadow:0 0 8px #00ff4108,inset 0 0 20px #00ff4103!important}
+html[data-theme="matrix"] body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,#00000018 2px,#00000018 4px);pointer-events:none;z-index:9999}
+
+/* ── SOLARPUNK
+   Leaf green #6abf5e, solar amber #f5c842, sky teal #42c8c0.
+   Deep forest bg, organic rounded corners, hopeful warmth.
+   Source: Becky Chambers aesthetic, solar/botanical references */
+html[data-theme="solarpunk"] {
+  --bg:#080f08;--bg2:#0e180c;--bg3:#142212;--bg4:#1a2c18;--bg5:#213818;
+  --border:#7acc5e18;--border2:#7acc5e2c;--border3:#7acc5e48;
+  --text:#e8f5dc;--muted:#7ab85a;--hint:#2d5228;
+  --voccel:#7acc5e;--voccelg:#7acc5e14;--voccelb:#7acc5e28;
+  --prussia:#f5c842;--prussiag:#f5c84214;--prussiab:#f5c84228;
+  --mh:#42c8c0;--mhg:#42c8c014;--mhb:#42c8c028;
+  --success:#7acc5e;--successg:#7acc5e14;--warn:#f5c842;--warng:#f5c84214;--danger:#f56040;--dangerg:#f5604014;
+  --r:12px;--r2:20px;--r3:28px;
+}
+html[data-theme="solarpunk"] body,html[data-theme="solarpunk"] .sidebar,html[data-theme="solarpunk"] .main,html[data-theme="solarpunk"] .topbar,html[data-theme="solarpunk"] .card,html[data-theme="solarpunk"] .nav-item,html[data-theme="solarpunk"] .metric,html[data-theme="solarpunk"] button,html[data-theme="solarpunk"] input,html[data-theme="solarpunk"] select,html[data-theme="solarpunk"] textarea{font-family:'Nunito',sans-serif!important}
+html[data-theme="solarpunk"] .brand-name{font-family:'Playfair Display',serif!important;font-style:italic!important;font-size:18px!important;color:#7acc5e!important}
+html[data-theme="solarpunk"] .page-title{font-family:'Playfair Display',serif!important;font-style:italic!important;font-size:26px!important}
+html[data-theme="solarpunk"] .metric-val{font-family:'Playfair Display',serif!important;font-size:28px!important}
+html[data-theme="solarpunk"] .nav-item.active{border-radius:0 20px 20px 0!important}
+html[data-theme="solarpunk"] .xp-fill{background:linear-gradient(90deg,#7acc5e,#f5c842,#42c8c0)!important}
+html[data-theme="solarpunk"] .sm-day.done{color:#000!important}
+
+/* ── MARATHON (Bungie 1994)
+   Security terminal teal #00e8c0 on absolute black #000c0a.
+   Pfhor purple #6040a0, warning amber, Orbitron display font.
+   Source: original Marathon trilogy HUD colors, terminal interface */
+html[data-theme="marathon"] {
+  --bg:#000c0a;--bg2:#001510;--bg3:#001e18;--bg4:#002822;--bg5:#003230;
+  --border:#00e8c016;--border2:#00e8c028;--border3:#00e8c045;
+  --text:#c0fff8;--muted:#409888;--hint:#103830;
+  --voccel:#00e8c0;--voccelg:#00e8c012;--voccelb:#00e8c028;
+  --prussia:#6040a0;--prussiag:#6040a012;--prussiab:#6040a028;
+  --mh:#40ffe0;--mhg:#40ffe012;--mhb:#40ffe028;
+  --success:#40ffe0;--successg:#40ffe012;--warn:#f0e040;--warng:#f0e04012;--danger:#ff4040;--dangerg:#ff404012;
+  --r:0px;--r2:0px;--r3:2px;
+}
+html[data-theme="marathon"] body,html[data-theme="marathon"] .sidebar,html[data-theme="marathon"] .main,html[data-theme="marathon"] .topbar,html[data-theme="marathon"] .card,html[data-theme="marathon"] .nav-item,html[data-theme="marathon"] .metric,html[data-theme="marathon"] button,html[data-theme="marathon"] input,html[data-theme="marathon"] select,html[data-theme="marathon"] textarea{font-family:'Share Tech Mono',monospace!important}
+html[data-theme="marathon"] .brand-name{font-family:'Orbitron',sans-serif!important;font-size:13px!important;font-weight:900!important;color:#00e8c0!important;text-shadow:0 0 18px #00e8c090,0 0 36px #00e8c040!important;letter-spacing:.16em!important;text-transform:uppercase!important}
+html[data-theme="marathon"] .page-title{font-family:'Orbitron',sans-serif!important;font-size:18px!important;font-weight:700!important;text-transform:uppercase!important;color:#00e8c0!important;text-shadow:0 0 14px #00e8c070!important}
+html[data-theme="marathon"] .card-title{font-family:'Orbitron',sans-serif!important;font-size:9px!important;letter-spacing:.22em!important;text-transform:uppercase!important}
+html[data-theme="marathon"] .metric-val{font-family:'Orbitron',sans-serif!important;font-size:24px!important;font-weight:700!important;text-shadow:0 0 8px currentColor!important}
+html[data-theme="marathon"] .nav-item.active::before{content:'>> ';color:#00e8c0}
+html[data-theme="marathon"] .nav-item{text-transform:uppercase!important;font-size:11px!important}
+html[data-theme="marathon"] .xp-fill{background:#00e8c0!important;box-shadow:0 0 10px #00e8c0!important}
+html[data-theme="marathon"] .btn-main{background:transparent!important;border:1px solid #00e8c0!important;color:#00e8c0!important;box-shadow:0 0 12px #00e8c040!important;border-radius:0!important}
+html[data-theme="marathon"] .card{border-radius:0!important;border-top:2px solid rgba(0,232,192,.3)!important}
+html[data-theme="marathon"] body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,#00e8c802 3px,#00e8c802 4px);pointer-events:none;z-index:9999}
+
+/* ── MASS EFFECT (Alliance / Normandy)
+   N7 blue #1e90ff, biotic violet #8040d0, Normandy cyan #00c8ff.
+   Deep navy #030c14. Holographic grid. Rajdhani military font.
+   Source: ME2/ME3 UI, N7 color codes, Normandy interior art */
+html[data-theme="mass-effect"] {
+  --bg:#030c14;--bg2:#071422;--bg3:#0b1d30;--bg4:#0f273e;--bg5:#13304c;
+  --border:#1e90ff16;--border2:#1e90ff28;--border3:#1e90ff48;
+  --text:#c0e4ff;--muted:#4e8ab8;--hint:#162a40;
+  --voccel:#1e90ff;--voccelg:#1e90ff12;--voccelb:#1e90ff28;
+  --prussia:#00c8ff;--prussiag:#00c8ff12;--prussiab:#00c8ff28;
+  --mh:#40e8d0;--mhg:#40e8d012;--mhb:#40e8d028;
+  --success:#40e8d0;--successg:#40e8d012;--warn:#f5c842;--warng:#f5c84212;--danger:#ff4840;--dangerg:#ff484012;
+  --r:3px;--r2:5px;--r3:8px;
+}
+html[data-theme="mass-effect"] body,html[data-theme="mass-effect"] .sidebar,html[data-theme="mass-effect"] .main,html[data-theme="mass-effect"] .topbar,html[data-theme="mass-effect"] .card,html[data-theme="mass-effect"] .nav-item,html[data-theme="mass-effect"] .metric,html[data-theme="mass-effect"] button,html[data-theme="mass-effect"] input,html[data-theme="mass-effect"] select,html[data-theme="mass-effect"] textarea{font-family:'Exo 2',sans-serif!important}
+html[data-theme="mass-effect"] .brand-name{font-family:'Rajdhani',sans-serif!important;font-size:17px!important;font-weight:700!important;color:#1e90ff!important;letter-spacing:.14em!important;text-shadow:0 0 14px #1e90ff80!important;text-transform:uppercase!important}
+html[data-theme="mass-effect"] .page-title{font-family:'Rajdhani',sans-serif!important;font-size:22px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.12em!important;color:#1e90ff!important;text-shadow:0 0 12px #1e90ff60!important}
+html[data-theme="mass-effect"] .card-title{font-family:'Rajdhani',sans-serif!important;font-weight:700!important;font-size:11px!important;letter-spacing:.16em!important;text-transform:uppercase!important}
+html[data-theme="mass-effect"] .metric-val{font-family:'Rajdhani',sans-serif!important;font-size:28px!important;font-weight:700!important;text-shadow:0 0 8px currentColor!important}
+html[data-theme="mass-effect"] .metric-lbl{font-family:'Rajdhani',sans-serif!important;font-size:10px!important;letter-spacing:.16em!important;text-transform:uppercase!important}
+html[data-theme="mass-effect"] .nav-item{font-family:'Rajdhani',sans-serif!important;font-weight:500!important;font-size:14px!important;text-transform:uppercase!important}
+html[data-theme="mass-effect"] .nav-section{font-family:'Rajdhani',sans-serif!important;font-size:9px!important;letter-spacing:.3em!important;text-transform:uppercase!important;color:#162a40!important}
+html[data-theme="mass-effect"] .xp-fill{background:linear-gradient(90deg,#1e90ff,#40e8d0)!important;box-shadow:0 0 8px #1e90ff60!important}
+html[data-theme="mass-effect"] .btn-main{font-family:'Rajdhani',sans-serif!important;font-weight:700!important;text-transform:uppercase!important;box-shadow:0 0 14px #1e90ff40!important}
+html[data-theme="mass-effect"] .card{box-shadow:0 0 15px #1e90ff06,inset 0 0 30px #1e90ff03!important}
+html[data-theme="mass-effect"] .sm-day.done{box-shadow:0 0 6px #1e90ff!important}
+
+/* ── MASS EFFECT: CERBERUS
+   The Illusive Man's palette: burnt orange #ff6200, amber #ffaa00, char black.
+   TIM's office: warm tungsten glow, obsidian, orange holographics.
+   Source: ME2 Cerberus HQ, TIM's chair scene color grade */
+html[data-theme="cerberus"] {
+  --bg:#080400;--bg2:#100800;--bg3:#181000;--bg4:#201800;--bg5:#282000;
+  --border:#ff620016;--border2:#ff620030;--border3:#ff620052;
+  --text:#ffe8c0;--muted:#c07030;--hint:#582808;
+  --voccel:#ff6200;--voccelg:#ff620014;--voccelb:#ff620028;
+  --prussia:#ffaa00;--prussiag:#ffaa0014;--prussiab:#ffaa0028;
+  --mh:#ff3000;--mhg:#ff300014;--mhb:#ff300028;
+  --success:#a8cc00;--successg:#a8cc0014;--warn:#ffaa00;--warng:#ffaa0014;--danger:#ff2000;--dangerg:#ff200014;
+  --r:2px;--r2:4px;--r3:6px;
+}
+html[data-theme="cerberus"] body,html[data-theme="cerberus"] .sidebar,html[data-theme="cerberus"] .main,html[data-theme="cerberus"] .topbar,html[data-theme="cerberus"] .card,html[data-theme="cerberus"] .nav-item,html[data-theme="cerberus"] .metric,html[data-theme="cerberus"] button,html[data-theme="cerberus"] input,html[data-theme="cerberus"] select,html[data-theme="cerberus"] textarea{font-family:'Rajdhani',sans-serif!important}
+html[data-theme="cerberus"] .brand-name{font-size:15px!important;font-weight:700!important;color:#ff6200!important;letter-spacing:.22em!important;text-shadow:0 0 16px #ff620090!important;text-transform:uppercase!important}
+html[data-theme="cerberus"] .page-title{font-size:22px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.16em!important;color:#ff6200!important;text-shadow:0 0 14px #ff620070!important}
+html[data-theme="cerberus"] .card-title{font-weight:700!important;font-size:10px!important;letter-spacing:.2em!important;text-transform:uppercase!important;color:#ff6200!important}
+html[data-theme="cerberus"] .metric-val{font-size:28px!important;font-weight:700!important}
+html[data-theme="cerberus"] .nav-item{font-weight:600!important;font-size:14px!important;text-transform:uppercase!important}
+html[data-theme="cerberus"] .nav-section{font-size:8px!important;letter-spacing:.3em!important;text-transform:uppercase!important;color:#582808!important}
+html[data-theme="cerberus"] .xp-fill{background:linear-gradient(90deg,#ff3000,#ff6200,#ffaa00)!important;box-shadow:0 0 10px #ff620060!important}
+html[data-theme="cerberus"] .btn-main{background:transparent!important;border:1px solid #ff6200!important;color:#ff6200!important;box-shadow:0 0 14px #ff620040!important}
+html[data-theme="cerberus"] .btn-main:hover{background:#ff620014!important;box-shadow:0 0 22px #ff620060!important}
+html[data-theme="cerberus"] .sm-day.done{background:#ff6200!important;color:#000!important;box-shadow:0 0 8px #ff6200!important}
+
+/* ── MAGE: THE ASCENSION
+   Tradition violet #7c3aed, Technocracy blue-grey, Paradox crimson.
+   Void purple #4a1090, will-fire gold #e0c040, sphere arcane teal.
+   Source: M:tA 20th Anniversary art, sphere color assignments */
+html[data-theme="mage"] {
+  --bg:#06040f;--bg2:#0d0818;--bg3:#140d24;--bg4:#1c1232;--bg5:#241840;
+  --border:#7c3aed18;--border2:#7c3aed2c;--border3:#7c3aed4a;
+  --text:#e0d6f8;--muted:#8060c0;--hint:#2e1860;
+  --voccel:#9b59f5;--voccelg:#9b59f514;--voccelb:#9b59f528;
+  --prussia:#e040c0;--prussiag:#e040c014;--prussiab:#e040c028;
+  --mh:#40b8e0;--mhg:#40b8e014;--mhb:#40b8e028;
+  --success:#50e080;--successg:#50e08014;--warn:#e0c040;--warng:#e0c04014;--danger:#e04060;--dangerg:#e0406014;
+  --r:7px;--r2:13px;--r3:20px;
+}
+html[data-theme="mage"] body,html[data-theme="mage"] .sidebar,html[data-theme="mage"] .main,html[data-theme="mage"] .topbar,html[data-theme="mage"] .card,html[data-theme="mage"] .nav-item,html[data-theme="mage"] .metric,html[data-theme="mage"] button,html[data-theme="mage"] input,html[data-theme="mage"] select,html[data-theme="mage"] textarea{font-family:'Lato',sans-serif!important}
+html[data-theme="mage"] .brand-name{font-family:'Metamorphous',serif!important;font-size:15px!important;color:#9b59f5!important;text-shadow:0 0 22px #9b59f580,0 0 44px #9b59f530!important}
+html[data-theme="mage"] .page-title{font-family:'Metamorphous',serif!important;font-size:21px!important;color:#9b59f5!important;text-shadow:0 0 16px #9b59f560!important}
+html[data-theme="mage"] .card-title{font-family:'Metamorphous',serif!important;font-size:10px!important}
+html[data-theme="mage"] .metric-val{font-family:'Metamorphous',serif!important;font-size:24px!important;text-shadow:0 0 8px currentColor!important}
+html[data-theme="mage"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:#2e1860!important}
+html[data-theme="mage"] .xp-fill{background:linear-gradient(90deg,#5020c0,#9b59f5,#e040c0)!important;box-shadow:0 0 12px #9b59f550!important}
+html[data-theme="mage"] .sm-day.done{box-shadow:0 0 8px #9b59f5!important}
+
+/* ── GEN X SOFT CLUB
+   Silver #c0c0c8, powder blue #a8c8e8, dusty mauve #b890b0.
+   Near-black velvet, cigarette haze, late-90s lounge.
+   Inspired by: Trip-hop era, Portishead, Air, Massive Attack visuals */
+html[data-theme="genx"] {
+  --bg:#0a0810;--bg2:#121018;--bg3:#1a1822;--bg4:#22202c;--bg5:#2a2836;
+  --border:#b8b8d018;--border2:#b8b8d028;--border3:#b8b8d045;
+  --text:#e8e4f0;--muted:#9090b0;--hint:#404060;
+  --voccel:#c0c0d8;--voccelg:#c0c0d814;--voccelb:#c0c0d828;
+  --prussia:#a8c8e8;--prussiag:#a8c8e814;--prussiab:#a8c8e828;
+  --mh:#b890b0;--mhg:#b890b014;--mhb:#b890b028;
+  --success:#90b090;--successg:#90b09014;--warn:#d8c090;--warng:#d8c09014;--danger:#c87880;--dangerg:#c8788014;
+  --r:10px;--r2:17px;--r3:24px;
+}
+html[data-theme="genx"] body,html[data-theme="genx"] .sidebar,html[data-theme="genx"] .main,html[data-theme="genx"] .topbar,html[data-theme="genx"] .card,html[data-theme="genx"] .nav-item,html[data-theme="genx"] .metric,html[data-theme="genx"] button,html[data-theme="genx"] input,html[data-theme="genx"] select,html[data-theme="genx"] textarea{font-family:'Space Grotesk',sans-serif!important;font-weight:300!important}
+html[data-theme="genx"] .brand-name{font-family:'DM Serif Display',serif!important;font-style:italic!important;font-size:19px!important;color:#c0c0d8!important;font-weight:400!important}
+html[data-theme="genx"] .page-title{font-family:'DM Serif Display',serif!important;font-style:italic!important;font-size:27px!important;font-weight:400!important}
+html[data-theme="genx"] .metric-val{font-family:'DM Serif Display',serif!important;font-size:28px!important;font-weight:400!important}
+html[data-theme="genx"] .nav-section{font-size:9px!important;letter-spacing:.2em!important;color:#404060!important}
+html[data-theme="genx"] .xp-fill{background:linear-gradient(90deg,#9090b0,#c0c0d8,#a8c8e8)!important}
+html[data-theme="genx"] .sm-day.done{background:#c0c0d8!important;color:#0a0810!important}
+html[data-theme="genx"] .nav-item.active{border-radius:0 17px 17px 0!important}
+
 </style>
 </head>
 <body>
@@ -356,9 +614,22 @@ select:focus{border-color:var(--border3)}
     <div class="nav-item" onclick="go('pipeline')" id="n-pipeline"><span class="nav-icon">→</span>Pipeline</div>
     <div class="nav-item" onclick="go('cobros')" id="n-cobros"><span class="nav-icon">$</span>Cobros</div>
     <div class="nav-item" onclick="go('simulator')" id="n-simulator"><span class="nav-icon">~</span>Simulador</div>
+    <div class="nav-section">Contactos</div>
+    <div class="nav-item" onclick="go('crm')" id="n-crm"><span class="nav-icon">👤</span>CRM</div>
+    <div class="nav-item" onclick="go('recordatorios')" id="n-recordatorios"><span class="nav-icon">🔔</span>Recordatorios</div>
+    <div class="nav-section">Contenido</div>
+    <div class="nav-item" onclick="go('publicaciones')" id="n-publicaciones"><span class="nav-icon">✍</span>Publicaciones</div>
+    <div class="nav-item" onclick="go('plantillas')" id="n-plantillas"><span class="nav-icon">📄</span>Plantillas</div>
+    <div class="nav-item" onclick="go('ideas')" id="n-ideas"><span class="nav-icon">💡</span>Ideas</div>
+    <div class="nav-section">Finanzas+</div>
+    <div class="nav-item" onclick="go('gastos')" id="n-gastos"><span class="nav-icon">↓</span>Gastos</div>
     <div class="nav-section">Progreso</div>
     <div class="nav-item" onclick="go('logros')" id="n-logros"><span class="nav-icon">★</span>Logros</div>
     <div class="nav-item" onclick="go('historial')" id="n-historial"><span class="nav-icon">≡</span>Historial XP</div>
+    <div class="nav-section">Sistema</div>
+    <div class="nav-item" onclick="exportBackup()"><span class="nav-icon">↑</span>Exportar backup</div>
+    <div class="nav-item" onclick="document.getElementById('import-file').click()"><span class="nav-icon">↓</span>Importar backup</div>
+    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importBackup(this)">
   </nav>
   <div class="sidebar-bottom">
     <div class="streak-label">Racha semanal</div>
@@ -372,6 +643,24 @@ select:focus{border-color:var(--border3)}
     <div class="page-title" id="page-title">Dashboard</div>
     <div class="topbar-right">
       <div class="today-badge" id="today-badge"></div>
+    <select id="theme-sel" style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:4px 9px;color:var(--text);font-family:'Outfit',sans-serif;font-size:11px;outline:none;cursor:pointer" onchange="setTheme(this.value)">
+      <option value="">Default</option>
+      <option value="dark-academia">Dark Academia</option>
+      <option value="goth">Goth</option>
+      <option value="vampire">Vampire: The Masquerade</option>
+      <option value="matrix">Matrix</option>
+      <option value="solarpunk">Solarpunk</option>
+      <option value="marathon">Marathon</option>
+      <option value="mass-effect">Mass Effect</option>
+      <option value="cerberus">Mass Effect: Cerberus</option>
+      <option value="mage">Mage: The Ascension</option>
+      <option value="genx">Gen X Soft Club</option>
+    </select>
+    <select id="currency-sel" style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:4px 9px;color:var(--text);font-family:'Outfit',sans-serif;font-size:11px;outline:none;cursor:pointer" onchange="S.currency=this.value;saveState();updateSim&&updateSim()">
+      <option value="USD">$ USD</option>
+      <option value="EUR">€ EUR</option>
+      <option value="PYG">₲ PYG</option>
+    </select>
     </div>
   </div>
   <div class="content" id="content"></div>
@@ -433,8 +722,11 @@ select:focus{border-color:var(--border3)}
 <div class="modal-bg" id="modal-milestone">
   <div class="modal">
     <h3 id="ms-modal-title">Hito</h3>
-    <div style="display:flex;gap:8px;margin-bottom:9px">
-      <input id="ms-emoji" placeholder="🎯" style="width:64px;text-align:center;font-size:20px;padding:8px">
+    <div style="display:flex;gap:8px;margin-bottom:9px;align-items:center">
+      <div style="position:relative">
+        <input id="ms-emoji" placeholder="🎯" style="width:56px;text-align:center;font-size:20px;padding:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);color:var(--text);outline:none;cursor:pointer" readonly onclick="openEmojiPicker('ms-emoji')">
+        <div style="font-size:8px;color:var(--hint);text-align:center;margin-top:2px">click</div>
+      </div>
       <input id="ms-name" placeholder="Nombre del hito" style="flex:1">
     </div>
     <input id="ms-value" placeholder="Valor en USD (ej: 2000)" type="number">
@@ -444,6 +736,83 @@ select:focus{border-color:var(--border3)}
       <button class="mc2" onclick="closeM('modal-milestone')">Cancelar</button>
       <button class="ms2" onclick="saveMilestone()">Guardar</button>
     </div>
+  </div>
+</div>
+<!-- MODAL EMOJI -->
+<div class="modal-bg" id="modal-emoji">
+  <div class="modal" style="width:340px">
+    <h3>Elegir emoji</h3>
+    <input id="emoji-search" placeholder="Buscar emoji..." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:8px 11px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none;margin-bottom:10px" oninput="renderEmojiGrid(this.value)">
+    <div id="emoji-grid" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px;max-height:240px;overflow-y:auto"></div>
+    <div style="margin-top:12px"><button class="mc2" onclick="closeM('modal-emoji')" style="width:100%">Cancelar</button></div>
+  </div>
+</div>
+<!-- MODAL CONTACT -->
+<div class="modal-bg" id="modal-contact">
+  <div class="modal">
+    <h3>Contacto</h3>
+    <input id="ct-nombre" placeholder="Nombre completo">
+    <input id="ct-empresa" placeholder="Empresa">
+    <select id="ct-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
+    <input id="ct-whatsapp" placeholder="WhatsApp (ej: +595981234567)" type="tel">
+    <input id="ct-email" placeholder="Email" type="email">
+    <textarea id="ct-notas" placeholder="Notas..." style="min-height:55px"></textarea>
+    <div class="mrow2"><button class="md2" id="ct-del" style="display:none" onclick="delContact()">Eliminar</button><button class="mc2" onclick="closeM('modal-contact')">Cancelar</button><button class="ms2" onclick="saveContact()">Guardar</button></div>
+  </div>
+</div>
+<!-- MODAL RECORDATORIO -->
+<div class="modal-bg" id="modal-recordatorio">
+  <div class="modal">
+    <h3>Recordatorio</h3>
+    <textarea id="rec-texto" placeholder="¿Qué tenés que hacer?" style="min-height:65px"></textarea>
+    <select id="rec-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option><option value="general">General</option></select>
+    <input id="rec-fecha" type="date">
+    <div class="mrow2"><button class="mc2" onclick="closeM('modal-recordatorio')">Cancelar</button><button class="ms2" onclick="saveRecordatorio()">Guardar</button></div>
+  </div>
+</div>
+<!-- MODAL GASTO -->
+<div class="modal-bg" id="modal-gasto">
+  <div class="modal">
+    <h3>Registrar gasto</h3>
+    <input id="gasto-desc" placeholder="Descripción (ej: dominio voccel.com)">
+    <select id="gasto-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option><option value="general">General</option></select>
+    <select id="gasto-cat"><option value="infraestructura">Infraestructura / hosting</option><option value="materiales">Materiales</option><option value="marketing">Marketing</option><option value="herramientas">Herramientas / software</option><option value="otros">Otros</option></select>
+    <input id="gasto-monto" placeholder="Monto en USD" type="number">
+    <input id="gasto-fecha" type="date">
+    <div class="mrow2"><button class="mc2" onclick="closeM('modal-gasto')">Cancelar</button><button class="ms2" onclick="saveGasto()">Guardar</button></div>
+  </div>
+</div>
+<!-- MODAL PLANTILLA -->
+<div class="modal-bg" id="modal-plantilla">
+  <div class="modal">
+    <h3>Plantilla de mensaje</h3>
+    <input id="pl-nombre" placeholder="Nombre de la plantilla">
+    <select id="pl-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
+    <select id="pl-tipo"><option value="outreach">Outreach</option><option value="propuesta">Propuesta</option><option value="consulta">Consulta</option><option value="seguimiento">Seguimiento</option><option value="otro">Otro</option></select>
+    <textarea id="pl-texto" placeholder="Texto de la plantilla. Usá [nombre], [empresa], [fecha] como variables." style="min-height:120px"></textarea>
+    <div class="mrow2"><button class="md2" id="pl-del" style="display:none" onclick="delPlantilla(S.editing.plantilla);closeM('modal-plantilla')">Eliminar</button><button class="mc2" onclick="closeM('modal-plantilla')">Cancelar</button><button class="ms2" onclick="savePlantilla()">Guardar</button></div>
+  </div>
+</div>
+<!-- MODAL IDEA -->
+<div class="modal-bg" id="modal-idea">
+  <div class="modal">
+    <h3>Idea detallada</h3>
+    <input id="idea-texto" placeholder="La idea en una línea">
+    <select id="idea-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option><option value="general">General</option></select>
+    <input id="idea-tag" placeholder="Tag (ej: producto, contenido, mejora)">
+    <textarea id="idea-detalle" placeholder="Detalle opcional..." style="min-height:80px"></textarea>
+    <div class="mrow2"><button class="mc2" onclick="closeM('modal-idea')">Cancelar</button><button class="ms2" onclick="saveIdea()">Guardar</button></div>
+  </div>
+</div>
+<!-- MODAL PUBLICACION -->
+<div class="modal-bg" id="modal-pub">
+  <div class="modal">
+    <h3>Publicación</h3>
+    <input id="pub-titulo" placeholder="Título de la publicación">
+    <select id="pub-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
+    <select id="pub-red"><option value="instagram">Instagram</option><option value="tiktok">TikTok</option><option value="linkedin">LinkedIn</option><option value="general">General</option></select>
+    <textarea id="pub-texto" placeholder="Texto completo de la publicación con hashtags..." style="min-height:160px"></textarea>
+    <div class="mrow2"><button class="md2" id="pub-del" style="display:none" onclick="delPub(S.editing.pub);closeM('modal-pub')">Eliminar</button><button class="mc2" onclick="closeM('modal-pub')">Cancelar</button><button class="ms2" onclick="savePub()">Guardar</button></div>
   </div>
 </div>
 <div class="toast" id="toast"></div>
@@ -558,6 +927,60 @@ const BADGES=[
 // ═══════════════════════════════════════
 // STATE
 // ═══════════════════════════════════════
+const DEFAULT_PUBS=[
+    {id:'pub1',co:'prussia',red:'instagram',titulo:'Lámpara en ambiente',texto:'Transformá cualquier espacio con la luz correcta. 🔆\n\nNuestra colección de lámparas artesanales combina diseño y funcionalidad para crear ambientes únicos en tu hogar.\n\n✅ Envío a todo el país\n✅ Garantía incluida\n✅ Consultá por tu modelo\n\n👉 Link en bio\n\n#diseño #iluminacion #hogar #decoracion #lamparas',copiado:false},
+    {id:'pub2',co:'voccel',red:'tiktok',titulo:'Demo SaaS precios construcción',texto:'¿Cuánto tiempo perdés calculando presupuestos de obra a mano? 🏗️\n\nCon nuestra app lo hacés en minutos:\n✅ Cargás materiales y m²\n✅ La app calcula todo automáticamente\n✅ Exportás el presupuesto listo para el cliente\n\nProbala gratis → link en bio\n\n#construccion #arquitectura #presupuesto #app #tech',copiado:false},
+    {id:'pub3',co:'mh',red:'instagram',titulo:'Proceso de diseño',texto:'De la idea al espacio terminado. 📐\n\nCada proyecto empieza con una conversación. Entender cómo vivís, qué necesitás, qué soñás.\n\nDespués viene el trabajo: sketches, planos, renders, y finalmente... la obra.\n\n¿Tenés un proyecto en mente? Hablemos.\n\n#arquitectura #diseño #arquitecto #interiorismo #proyecto',copiado:false},
+    {id:'pub4',co:'voccel',red:'linkedin',titulo:'ERP para PyMEs',texto:'El 70% de las PyMEs todavía gestionan sus operaciones en hojas de cálculo.\n\nEl resultado: errores, tiempo perdido y decisiones sin datos reales.\n\nDesarrollamos un ERP pensado para empresas medianas que quieren escalar sin complejidad innecesaria.\n\n→ Onboarding en 48hs\n→ Sin costo de implementación\n→ Soporte incluido\n\n¿Tu empresa está lista para el siguiente paso? Escribime.',copiado:false},
+
+    {id:'pub5',co:'prussia',red:'instagram',titulo:'La luz cambia todo',texto:'La gente cambia los muebles. Pinta las paredes. Renueva el piso.\n\nY después enciende la misma lámpara de siempre. 💡\n\nCambiar la iluminación es lo más barato y lo que más impacto tiene en un espacio.\n\nConsultá por DM y te asesoramos.\n\n#iluminacion #decoracion #hogar #diseñodeinteriores #lamparas #prussia'},
+    {id:'pub6',co:'prussia',red:'instagram',titulo:'Antes y después',texto:'La misma habitación. La misma hora del día. Distinta lámpara. 🔆\n\nEso es todo lo que cambió.\n\n¿Querés ver el tuyo? Mandanos una foto del espacio y te asesoramos sin compromiso.\n\n#transformacion #decoracion #iluminacion #hogar #interiorismo #prussia'},
+    {id:'pub7',co:'prussia',red:'instagram',titulo:'Hecha a mano',texto:'Cada pieza es única. 🤲\n\nNo hay dos iguales. El proceso es artesanal, el resultado es diseño.\n\nMateriales premium, acabados a mano, entrega en todo el país.\n\n👉 Ver catálogo — link en bio\n\n#artesanal #handmade #lamparas #diseño #decoracion #prussia'},
+    {id:'pub8',co:'prussia',red:'tiktok',titulo:'TikTok: cuánto tarda hacer una lámpara',texto:'POV: fabricás lámparas artesanales y alguien te pregunta cuánto tardás ⏱️\n\nRespuesta: entre el diseño, el corte, el armado y el acabado... entre 3 y 5 días por pieza.\n\nPor eso no somos los más baratos. Pero somos los mejores.\n\n#artesanal #lamparas #proceso #prussia #handmade'},
+    {id:'pub9',co:'prussia',red:'tiktok',titulo:'TikTok: el mejor regalo',texto:'Si no sabés qué regalar, regalá luz 💡\n\nNuestros modelos van desde $[precio] con envíos a todo el país.\n\nEscribinos por DM y te ayudamos a elegir.\n\n#regalo #hogar #decoracion #prussia #lamparas'},
+    {id:'pub10',co:'prussia',red:'instagram',titulo:'Testimonio de cliente',texto:'"Cuando llegó la lámpara no podía creer la calidad. Cambió todo el ambiente de la casa." ⭐⭐⭐⭐⭐\n\n— [nombre], [ciudad]\n\n¿Querés ser el próximo? Link en bio 👆\n\n#testimonio #review #prussia #lamparas #clientes'},
+    {id:'pub11',co:'prussia',red:'instagram',titulo:'Colección nueva',texto:'Colección nueva. 🆕\n\nNuevos modelos, nuevos materiales, misma calidad artesanal.\n\n¿Cuál es tu favorita? Comentá abajo 👇\n\n#nuevacoleccion #lamparas #prussia #diseño #decoracion #hogar'},
+    {id:'pub12',co:'prussia',red:'instagram',titulo:'Decorá con intención',texto:'Una lámpara no es solo iluminación. Es el punto focal de un cuarto. La pieza que define el estilo. Lo primero que ven tus visitas. ✨\n\nElegí con intención.\n\nVer colección → link en bio\n\n#decoracion #interiorismo #lamparas #prussia #hogar #diseño'},
+
+    {id:'pub13',co:'voccel',red:'tiktok',titulo:'TikTok: el error más caro en obras',texto:'El error más caro en construcción no es técnico. Es de números. 🏗️\n\nLa mayoría presupuesta al inicio y no actualiza durante la obra.\n\nResultado: el cliente se enoja, el proyecto se frena.\n\nNuestra app actualiza costos en tiempo real.\n\nLink en bio 👆\n\n#construccion #arquitectura #presupuesto #app #voccel'},
+    {id:'pub14',co:'voccel',red:'tiktok',titulo:'TikTok: 6 horas ahorradas por semana',texto:'¿Cuánto tiempo perdés en Excel para presupuestos? 📊\n\nNuestros usuarios ahorran en promedio 6 horas por semana.\n\n6h × 4 semanas = 24 horas al mes. Recuperadas.\n\nProbala gratis → link en bio\n\n#productividad #construccion #arquitectura #app #voccel'},
+    {id:'pub15',co:'voccel',red:'instagram',titulo:'Para constructoras medianas',texto:'Diseñamos nuestra app para constructoras de 5 a 50 empleados. 🏢\n\nNo para grandes corporaciones. No para freelancers solos.\n\nPara las que están creciendo y necesitan procesos reales.\n\n¿Es tu caso? Hablemos.\n\n#constructoras #gestion #erp #voccel #construccion'},
+    {id:'pub16',co:'voccel',red:'linkedin',titulo:'Por qué las obras se pasan del presupuesto',texto:'Después de hablar con 50+ profesionales de la construcción encontramos el patrón:\n\n1. Presupuesto inicial con precios desactualizados\n2. Sin seguimiento de variaciones durante la obra\n3. El cliente se entera del desvío cuando ya es tarde\n\nNo es un problema de gestión. Es un problema de herramientas.\n\nPor eso construimos algo diferente.\n\n→ Demo gratuita. Escribime.\n\n#construccion #gestion #presupuesto #arquitectura #voccel'},
+    {id:'pub17',co:'voccel',red:'linkedin',titulo:'Buscamos primeros clientes SaaS',texto:'Lanzamos la primera versión de nuestra app de gestión de precios para construcción.\n\n¿Qué hace?\n✅ Calcula costo por m² automáticamente\n✅ Actualiza precios de materiales\n✅ Genera presupuestos en PDF\n✅ Registra variaciones durante la obra\n\nBuscamos 10 clientes piloto con precio especial.\n\n¿Conocés un arquitecto, ingeniero o constructora? Etiquetalo 👇\n\n#startup #saas #construccion #arquitectura #voccel'},
+    {id:'pub18',co:'voccel',red:'tiktok',titulo:'TikTok: antes vs después',texto:'Antes de nuestra app 👎\n❌ Excel con fórmulas rotas\n❌ Precios desactualizados\n❌ Clientes enojados\n\nDespués 👍\n✅ Todo centralizado\n✅ Precios siempre actualizados\n✅ Presupuestos en 5 minutos\n\n#voccel #construccion #app #productividad'},
+    {id:'pub19',co:'voccel',red:'instagram',titulo:'Diseño web que convierte',texto:'Tu sitio web es tu vendedor 24/7. 💻\n\nSi no convierte visitas en consultas, algo falla.\n\nEn Voccel diseñamos sitios que:\n→ Cargan rápido\n→ Se ven bien en celular\n→ Generan contactos reales\n\nCotización sin costo. Escribinos.\n\n#diseñoweb #webdesign #voccel #programacion'},
+
+    {id:'pub20',co:'mh',red:'instagram',titulo:'El espacio que soñás existe',texto:'No importa el tamaño del terreno. No importa el presupuesto inicial.\n\nHay una versión de ese espacio que soñás que es posible. 📐\n\nEmpezamos con una conversación. Sin compromiso.\n\nEscribinos.\n\n#arquitectura #diseño #obra #hogar #arquitecto #mh'},
+    {id:'pub21',co:'mh',red:'instagram',titulo:'Por qué contratar un arquitecto',texto:'La gente piensa que contratar un arquitecto es un gasto. 💭\n\nEn realidad evita:\n❌ Errores de construcción costosos\n❌ Espacios mal aprovechados\n❌ Obras que se extienden meses\n\nLo que pagás en honorarios lo recuperás en eficiencia.\n\n¿Tenés un proyecto? Hablemos.\n\n#arquitectura #construccion #diseño #inversion #mh'},
+    {id:'pub22',co:'mh',red:'instagram',titulo:'Detalles que hacen la diferencia',texto:'El diseño está en los detalles. 🔍\n\nLa altura exacta de una ventana. La dirección de la luz natural. El ancho de un pasillo.\n\nSon cosas que no se notan cuando están bien hechas.\n\nPero se sienten.\n\n#arquitectura #diseño #detalles #espacio #mh'},
+    {id:'pub23',co:'mh',red:'instagram',titulo:'Luz natural en arquitectura',texto:'El mejor recurso de diseño es gratuito. ☀️\n\nLa luz natural bien aprovechada:\n→ Reduce costos de electricidad\n→ Mejora el bienestar\n→ Hace los espacios más grandes\n→ Crea experiencias distintas según la hora\n\nEn cada proyecto estudiamos orientación, aberturas y recorrido del sol.\n\n#arquitectura #luz #diseño #sustentabilidad #mh'},
+    {id:'pub24',co:'mh',red:'instagram',titulo:'Collab Prussia x MH',texto:'Cuando el diseño del espacio y la iluminación se piensan juntos, el resultado es otro. 🤝\n\nEn este proyecto trabajamos con @prussiailuminacion para diseñar arquitectura y propuesta lumínica desde cero.\n\n¿Querés algo así? Escribinos.\n\n#arquitectura #iluminacion #collab #diseño #mh #prussia'},
+    {id:'pub25',co:'mh',red:'instagram',titulo:'Render del proyecto',texto:'Así va tomando forma. ✏️\n\nCada línea tiene un por qué. Cada espacio, una función. Cada decisión, una intención.\n\nEsto es lo que está en proceso en el estudio.\n\n¿Querés saber más? Contamos todo en Stories.\n\n#arquitectura #render #diseño #proceso #obra #mh'},
+
+    // ── PRUSSIA extra ──
+    {id:'pub26',co:'prussia',red:'instagram',titulo:'El regalo que no defrauda',texto:'Para quien ya tiene todo. 🎁\n\nUna lámpara artesanal no es un objeto. Es un ambiente. Una decisión de diseño que dura años.\n\nConsultá disponibilidad por DM.\n\n#regalo #diseño #lamparas #prussia #iluminacion #hogar'},
+    {id:'pub27',co:'prussia',red:'instagram',titulo:'Cómo elegir la lámpara correcta',texto:'3 preguntas antes de elegir una lámpara 💡\n\n1. ¿Querés luz cálida o fría?\n2. ¿Es luz principal o decorativa?\n3. ¿El espacio es moderno, clásico o industrial?\n\nEn Prussia te asesoramos sin costo. Escribinos y te ayudamos a elegir.\n\n#iluminacion #decoracion #tips #prussia #lamparas #hogar'},
+    {id:'pub28',co:'prussia',red:'tiktok',titulo:'TikTok: 3 errores al comprar lámparas',texto:'3 errores que la gente comete al comprar lámparas 🚫\n\n❌ Comprar por precio sin ver la calidad\n❌ No medir el espacio antes\n❌ Ignorar el tipo de luz (cálida vs fría)\n\nEn Prussia hacemos lo opuesto:\n✅ Calidad artesanal\n✅ Te asesoramos con el espacio\n✅ Luz pensada para cada ambiente\n\n#lamparas #tips #decoracion #prussia #iluminacion'},
+    {id:'pub29',co:'prussia',red:'instagram',titulo:'Luz y arquitectura',texto:'La mejor arquitectura se diseña pensando en la luz. ☀️\n\nY la mejor iluminación se elige pensando en el espacio.\n\nPor eso trabajamos con arquitectos y diseñadores de interiores que buscan algo diferente para sus proyectos.\n\n¿Sos profesional del diseño? Tenemos precios especiales. DM.\n\n#arquitectura #diseño #iluminacion #prussia #interiorismo #b2b'},
+    {id:'pub30',co:'prussia',red:'tiktok',titulo:'TikTok: de qué están hechas',texto:'¿De qué están hechas nuestras lámparas? 🔍\n\nMateriales que usamos:\n→ [Material 1]\n→ [Material 2]\n→ [Material 3]\n\nCada pieza pasa por control de calidad antes de salir del taller.\n\nEso es lo que hace la diferencia.\n\n#artesanal #materiales #lamparas #prussia #handmade #proceso'},
+    {id:'pub31',co:'prussia',red:'instagram',titulo:'Enviamos a todo el país',texto:'¿Estás en [ciudad]? Enviamos igual. 📦\n\nTodo el país. Embalaje especial para que llegue perfecta. Seguro incluido.\n\nConsultá tiempo de entrega y costos por DM.\n\n#envios #paraguay #lamparas #prussia #entrega #hogar'},
+
+    // ── VOCCEL extra ──
+    {id:'pub32',co:'voccel',red:'instagram',titulo:'Cuánto cuesta hacer una web profesional',texto:'La pregunta que todo el mundo tiene miedo de hacer. 💻\n\nDepende de muchas cosas. Pero lo que sí podemos decirte:\n\n→ Una página básica no es lo mismo que un sistema completo\n→ El precio incluye diseño, desarrollo y soporte\n→ El ROI de un buen sitio se mide en consultas generadas\n\nCotización gratuita → link en bio\n\n#diseñoweb #desarrollo #voccel #web #programacion'},
+    {id:'pub33',co:'voccel',red:'tiktok',titulo:'TikTok: qué hace un ERP',texto:'¿Qué es un ERP y por qué tu empresa lo necesita? 🏢\n\nERP = Enterprise Resource Planning\n\nEn simple: un sistema que conecta todas las áreas de tu empresa en un solo lugar.\n\n→ Ventas\n→ Inventario\n→ Finanzas\n→ RRHH\n\nSin Excel. Sin datos duplicados. Sin caos.\n\nNuestra versión es para PyMEs. Sin complejidad innecesaria.\n\n#erp #gestion #empresas #voccel #software #pymes'},
+    {id:'pub34',co:'voccel',red:'linkedin',titulo:'Testimonio cliente SaaS',texto:'"Antes usábamos 4 planillas de Excel distintas para presupuestar una obra. Ahora lo hacemos en una sola pantalla en 10 minutos."\n\n— [Nombre], [Empresa constructora]\n\nEso es lo que construimos en Voccel.\n\nSi trabajás en construcción y querés una demo, escribime.\n\n#testimonio #saas #construccion #voccel #productividad'},
+    {id:'pub35',co:'voccel',red:'tiktok',titulo:'TikTok: el stack de una PyME moderna',texto:'El stack tecnológico de una PyME moderna en 2024 📱\n\n→ CRM para clientes\n→ ERP para operaciones\n→ Web que convierte\n→ Pagos digitales\n→ Analytics para decidir\n\nNo necesitás ser una corporación para tener esto.\n\nEn Voccel lo armamos para vos.\n\n#tecnologia #pymes #digital #voccel #software #gestion'},
+    {id:'pub36',co:'voccel',red:'instagram',titulo:'Por qué un sitio lento te hace perder ventas',texto:'Un sitio que tarda 3 segundos en cargar pierde el 40% de sus visitas. 📉\n\nEso es plata que se va antes de que el cliente vea lo que ofrecés.\n\nEn Voccel optimizamos cada sitio para que cargue rápido, se vea bien en celular y convierta.\n\nCotización gratuita → link en bio\n\n#web #velocidad #ux #voccel #diseñoweb #conversiones'},
+    {id:'pub37',co:'voccel',red:'linkedin',titulo:'El problema real de la construcción en Paraguay',texto:'El sector de la construcción en Paraguay mueve millones. Y todavía gestiona sus proyectos con hojas de cálculo del 2005.\n\nNo es falta de dinero. Es falta de herramientas diseñadas para este contexto.\n\nDesarrollamos una app específicamente para el mercado paraguayo y latinoamericano.\n\nSi sos del sector y querés hablar, mi DM está abierto.\n\n#paraguay #construccion #latam #voccel #saas #arquitectura'},
+
+    // ── MH extra ──
+    {id:'pub38',co:'mh',red:'instagram',titulo:'Cuánto cuesta contratar un arquitecto',texto:'La pregunta que todos tienen pero pocos hacen. 💭\n\nLos honorarios de un arquitecto en Paraguay varían según:\n→ Alcance del proyecto\n→ Superficie\n→ Complejidad\n\nLo que sí es constante: lo que ahorrás en errores evitados supera siempre los honorarios.\n\nConsultá sin compromiso → DM\n\n#arquitectura #honorarios #construccion #paraguay #mh'},
+    {id:'pub39',co:'mh',red:'instagram',titulo:'Un espacio bien diseñado se siente',texto:'No siempre sabés por qué un espacio se siente bien. 🏠\n\nPero hay razones concretas:\n\n→ Proporciones correctas\n→ Luz natural bien aprovechada\n→ Circulación fluida\n→ Materiales que combinan\n\nEso es lo que hace el diseño arquitectónico.\n\n#arquitectura #diseño #espacio #bienestar #mh #interiorismo'},
+    {id:'pub40',co:'mh',red:'instagram',titulo:'Antes de construir, diseñá',texto:'El error más caro en construcción no es el material. Es construir sin un buen diseño previo. 📐\n\nCambiar un muro ya construido cuesta 10 veces más que ajustar un plano.\n\nEl diseño no es un gasto. Es la inversión más barata de toda la obra.\n\n¿Tenés un proyecto? Hablemos antes de empezar.\n\n#arquitectura #construccion #diseño #inversion #mh #paraguay'},
+    {id:'pub41',co:'mh',red:'instagram',titulo:'Pequeños espacios, grandes soluciones',texto:'Los espacios chicos son los más difíciles y los más fascinantes. ✨\n\nCada m² cuenta. Cada decisión tiene un impacto mayor.\n\nEspecialidad: proyectos de hasta 120m² donde el diseño hace toda la diferencia.\n\nDM para consultar disponibilidad.\n\n#arquitectura #pequeñosespacios #diseño #mh #interiores #paraguay'},
+    {id:'pub42',co:'mh',red:'instagram',titulo:'El proceso completo',texto:'Así es trabajar con nosotros 📋\n\n1. Reunión inicial (sin costo) — entendemos tu visión\n2. Propuesta de honorarios — sin sorpresas\n3. Anteproyecto — primeras ideas\n4. Proyecto ejecutivo — planos definitivos\n5. Dirección de obra — acompañamiento completo\n\n¿En qué etapa estás vos?\n\n#arquitectura #proceso #construccion #mh #diseño #obra'},
+  ];
+
 let S={
   page:'home',xp:0,xpLog:[],earnedBadges:[],
   missions:{voccel:[],prussia:[],mh:[]},
@@ -579,10 +1002,22 @@ let S={
     {id:'ms5',i:'💎',t:'Full freedom',v:10000},
   ],
   editingMilestone:null,
+  currency:'USD',
+  contacts:[],
+  recordatorios:[],
+  gastos:[],
+  plantillas:[
+    {id:'pl1',co:'voccel',tipo:'outreach',nombre:'Outreach SaaS frío',texto:'Hola [nombre], vi que trabajás en [empresa]. Desarrollé una herramienta que ayuda a gestionar presupuestos de construcción de forma automática. ¿Te interesaría ver una demo de 15 minutos? Sin compromiso.'},
+    {id:'pl2',co:'prussia',tipo:'consulta',nombre:'Respuesta consulta lámpara',texto:'Hola! Gracias por tu consulta. La lámpara [modelo] está disponible en [colores]. El precio es $[precio] con envío incluido a todo el país. ¿Te mando más fotos o querés coordinar para verla en persona?'},
+    {id:'pl3',co:'mh',tipo:'propuesta',nombre:'Intro propuesta arquitectura',texto:'Hola [nombre], un placer. Estuve revisando el brief que me mandaste y me parece un proyecto muy interesante. Te preparo una propuesta formal con alcance, cronograma y honorarios para enviarte antes del [fecha]. Cualquier consulta, estoy disponible.'},
+  ],
+  ideas:[],
+  publicaciones:null,
   focus:{running:false,dur:25,remaining:1500,session:1,mode:'focus',co:'voccel',log:[],todayKey:''},
-  editing:{lead:null,cobro:null,card:null,post:null,postCell:null,cardCol:'todo'},
+  editing:{lead:null,cobro:null,card:null,post:null,postCell:null,cardCol:'todo',contact:null,pub:null,plantilla:null},
   reviewForm:{mood:0,stars:{voccel:0,prussia:0,mh:0},wins:[],blocker:'',learnt:'',focus:'',notes:''},
   kbDragging:null,
+  pubOpenCo:{voccel:true,prussia:true,mh:true},
 };
 let focusInterval=null;
 
@@ -605,6 +1040,14 @@ function loadState(){
     DEFAULT_MISSIONS[co].forEach(m=>{if(!ex.includes(m.id))S.missions[co].push({...m});});
   });
   if(!S.cards||!S.cards.length) S.cards=[...DEFAULT_CARDS];
+  // Merge default publications - add any new ones not yet in saved state
+  if(!S.publicaciones||!S.publicaciones.length){
+    S.publicaciones=[...DEFAULT_PUBS];
+  } else {
+    const existingIds=new Set(S.publicaciones.map(p=>p.id));
+    const newPubs=DEFAULT_PUBS.filter(p=>!existingIds.has(p.id));
+    if(newPubs.length>0) S.publicaciones=[...S.publicaciones,...newPubs];
+  }
   if(!S.milestones||!S.milestones.length) S.milestones=[
     {id:'ms1',i:'🥗',t:'Gastos básicos',v:800},
     {id:'ms2',i:'🏠',t:'Alquiler propio',v:1500},
@@ -635,6 +1078,25 @@ function checkResets(){
   }
   // Check focus day reset
   if(S.focus.todayKey!==today){S.focus.log=[];S.focus.session=1;S.focus.todayKey=today;S.focus.running=false;}
+  // Ensure required state fields always exist
+  if(!S.pubOpenCo)S.pubOpenCo={voccel:true,prussia:true,mh:true};
+  if(!S.contacts)S.contacts=[];
+  if(!S.recordatorios)S.recordatorios=[];
+  if(!S.gastos)S.gastos=[];
+  if(!S.plantillas)S.plantillas=[
+    {id:'pl1',co:'voccel',tipo:'outreach',nombre:'Outreach SaaS frío',texto:'Hola [nombre], vi que trabajás en [empresa]. Desarrollé una herramienta que ayuda a gestionar presupuestos de construcción de forma automática. ¿Te interesaría ver una demo de 15 minutos? Sin compromiso.'},
+    {id:'pl2',co:'prussia',tipo:'consulta',nombre:'Respuesta consulta lámpara',texto:'Hola! Gracias por tu consulta. La lámpara [modelo] está disponible. El precio es $[precio] con envío incluido. ¿Te mando más fotos o querés coordinar para verla?'},
+    {id:'pl3',co:'mh',tipo:'propuesta',nombre:'Intro propuesta arquitectura',texto:'Hola [nombre], un placer. Estuve revisando el brief y me parece un proyecto muy interesante. Te preparo una propuesta con alcance, cronograma y honorarios para enviarte antes del [fecha].'},
+  ];
+  if(!S.ideas)S.ideas=[];
+  if(!S.currency)S.currency='USD';
+  if(!S.milestones||!S.milestones.length)S.milestones=[
+    {id:'ms1',i:'🥗',t:'Gastos básicos',v:800},
+    {id:'ms2',i:'🏠',t:'Alquiler propio',v:1500},
+    {id:'ms3',i:'✈️',t:'Reinversión',v:3000},
+    {id:'ms4',i:'🚀',t:'Escala real',v:5000},
+    {id:'ms5',i:'💎',t:'Full freedom',v:10000},
+  ];
 }
 
 function checkBadges(){
@@ -681,7 +1143,7 @@ function toast(m){
 // ═══════════════════════════════════════
 // NAV
 // ═══════════════════════════════════════
-const PAGE_TITLES={home:'Dashboard',focus:'Modo Focus',review:'Weekly Review',voccel:'Voccel',prussia:'Prussia',mh:'MH Arquitectura',kanban:'Kanban — Proyectos',calendar:'Calendario de contenido',pipeline:'Pipeline de ventas',cobros:'Cobros',simulator:'Simulador de ingresos',logros:'Logros',historial:'Historial XP'};
+const PAGE_TITLES={home:'Dashboard',focus:'Modo Focus',review:'Weekly Review',voccel:'Voccel',prussia:'Prussia',mh:'MH Arquitectura',kanban:'Kanban — Proyectos',calendar:'Calendario de contenido',pipeline:'Pipeline de ventas',cobros:'Cobros',simulator:'Simulador de ingresos',logros:'Logros',historial:'Historial XP',crm:'CRM — Contactos',recordatorios:'Recordatorios',publicaciones:'Publicaciones generadas',plantillas:'Plantillas de mensajes',ideas:'Log de ideas',gastos:'Registro de gastos'};
 
 function go(page){
   S.page=page;
@@ -727,6 +1189,12 @@ function render(){
   else if(p==='simulator')c.innerHTML=renderSimulator();
   else if(p==='logros')c.innerHTML=renderLogros();
   else if(p==='historial')c.innerHTML=renderHistorial();
+  else if(p==='crm')c.innerHTML=renderCRM();
+  else if(p==='recordatorios')c.innerHTML=renderRecordatorios();
+  else if(p==='gastos')c.innerHTML=renderGastos();
+  else if(p==='plantillas')c.innerHTML=renderPlantillas();
+  else if(p==='ideas')c.innerHTML=renderIdeas();
+  else if(p==='publicaciones')c.innerHTML=renderPublicaciones();
 }
 
 // ═══════════════════════════════════════
@@ -1262,16 +1730,48 @@ function delPost(){if(S.editing.post&&S.posts[S.editing.post]){delete S.posts[S.
 // ═══════════════════════════════════════
 function renderSimulator(){
   const sim=S.sim;
-  function sl(key,lbl,min,max,step,unit,color){
-    return`<div class="srow"><div class="slbl">${lbl}</div><input type="range" min="${min}" max="${max}" step="${step}" value="${sim[key]}" oninput="S.sim['${key}']=+this.value;updateSim()"><div class="sval" style="color:${color}">${sim[key]}${unit}</div></div>`;
+  const CUR=CURRENCIES[S.currency]||CURRENCIES.USD;
+  const sym=CUR.sym;
+  const r=CUR.toUSD; // 1 USD = 1/r local units, so local = usd/r
+  // Convert stored USD values to display currency
+  function dispVal(usdVal){
+    const v=usdVal/r;
+    if(S.currency==='PYG') return sym+(Math.round(v)).toLocaleString('es');
+    return sym+v.toFixed(0);
+  }
+  function sl(key,lbl,isCount,color){
+    const val=sim[key];
+    const display=isCount?val+'u':dispVal(val);
+    return`<div class="srow"><div class="slbl">${lbl}</div><input type="range" min="${isCount?0:Math.round(sim[key+'_min']||0)}" max="${isCount?100:Math.round(sim[key+'_max']||10000)}" step="${isCount?1:Math.round(sim[key+'_step']||1)}" value="${val}" oninput="S.sim['${key}']=+this.value;updateSim()"><div class="sval" style="color:${color}">${display}</div></div>`;
+  }
+  // Fixed sliders with USD internal values, display in chosen currency
+  function slF(key,lbl,minUSD,maxUSD,stepUSD,isCount,color){
+    const val=sim[key];
+    const display=isCount?val+'u':dispVal(val);
+    return`<div class="srow"><div class="slbl">${lbl}</div><input type="range" min="${minUSD}" max="${maxUSD}" step="${stepUSD}" value="${val}" oninput="S.sim['${key}']=+this.value;updateSim()"><div class="sval" style="color:${color}">${display}</div></div>`;
   }
   return`<div class="sim-grid">
     <div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--prussia)">●</span> Prussia — Lámparas</div>${sl('lamps','Ventas/mes',0,30,1,'u','var(--prussia)')}${sl('lprice','Precio promedio $',50,600,10,'','var(--prussia)')}</div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--voccel)">●</span> SaaS 1 — Precios construcción</div>${sl('s1','Clientes activos',0,100,1,'u','var(--voccel)')}${sl('s1p','Precio mensual $',19,199,10,'','var(--voccel)')}</div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:#9a9cf9">●</span> SaaS 2 — ERP</div>${sl('s2','Clientes activos',0,100,1,'u','#9a9cf9')}${sl('s2p','Precio mensual $',49,499,10,'','#9a9cf9')}</div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--muted)">●</span> Voccel — Servicios web</div>${sl('web','Proyectos/mes',0,8,1,'u','var(--muted)')}${sl('wp','Precio por proyecto $',300,3000,100,'','var(--muted)')}</div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--mh)">●</span> Consultoría / MH</div>${sl('cons','Horas/mes',0,80,5,'h','var(--mh)')}${sl('cp','Tarifa/hora $',30,150,10,'','var(--mh)')}</div>
+      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--prussia)">●</span> Prussia — Lámparas</div>
+        ${slF('lamps','Ventas/mes',0,30,1,true,'var(--prussia)')}
+        ${slF('lprice','Precio promedio',50,600,10,false,'var(--prussia)')}
+      </div>
+      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--voccel)">●</span> SaaS 1 — Precios construcción</div>
+        ${slF('s1','Clientes activos',0,100,1,true,'var(--voccel)')}
+        ${slF('s1p','Precio mensual',19,199,10,false,'var(--voccel)')}
+      </div>
+      <div class="sim-sec"><div class="sim-sec-t"><span style="color:#9a9cf9">●</span> SaaS 2 — ERP</div>
+        ${slF('s2','Clientes activos',0,100,1,true,'#9a9cf9')}
+        ${slF('s2p','Precio mensual',49,499,10,false,'#9a9cf9')}
+      </div>
+      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--muted)">●</span> Voccel — Servicios web</div>
+        ${slF('web','Proyectos/mes',0,8,1,true,'var(--muted)')}
+        ${slF('wp','Precio por proyecto',300,3000,100,false,'var(--muted)')}
+      </div>
+      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--mh)">●</span> Consultoría / MH</div>
+        ${slF('cons','Horas/mes',0,80,5,true,'var(--mh)')}
+        ${slF('cp','Tarifa/hora',30,150,10,false,'var(--mh)')}
+      </div>
     </div>
     <div id="sim-right">${simRight()}</div>
   </div>`;
@@ -1285,6 +1785,13 @@ function simCalc(){
 
 function simRight(){
   const {prussiaM,s1M,s2M,webM,consM,total}=simCalc();
+  const CUR=CURRENCIES[S.currency]||CURRENCIES.USD;
+  const r=CUR.toUSD;
+  function fmt(usd){
+    const v=usd/r;
+    if(S.currency==='PYG') return CUR.sym+(Math.round(v)).toLocaleString('es');
+    return CUR.sym+Math.round(v).toLocaleString('es');
+  }
   const bars=[{n:'Prussia',v:prussiaM,c:'var(--prussia)'},{n:'SaaS 1',v:s1M,c:'var(--voccel)'},{n:'SaaS 2',v:s2M,c:'#9a9cf9'},{n:'Web',v:webM,c:'var(--muted)'},{n:'Consultoría',v:consM,c:'var(--mh)'}];
   const maxB=Math.max(...bars.map(b=>b.v),1);
   const active=bars.filter(b=>b.v>0);
@@ -1303,10 +1810,10 @@ function simRight(){
         <div style="font-size:26px">${next.i}</div>
         <div style="flex:1">
           <div style="font-size:14px;font-weight:600;margin-bottom:2px">${next.t}</div>
-          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">Meta: $${next.v.toLocaleString()}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">Meta: ${fmt(next.v)}</div>
         </div>
         <div style="text-align:right">
-          <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--warn);font-weight:600">-$${gap.toLocaleString()}</div>
+          <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--warn);font-weight:600">-${fmt(gap)}</div>
           <div style="font-size:10px;color:var(--muted)">${monthsToNext?monthsToNext+' mes'+(monthsToNext===1?'':'es'):'sin ingresos aún'}</div>
         </div>
       </div>
@@ -1327,9 +1834,9 @@ function simRight(){
   ${nextGoalHtml}
   <div class="card" style="text-align:center;margin-bottom:10px">
     <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Ingreso mensual proyectado</div>
-    <div class="res-total">$${total.toLocaleString()}</div>
-    <div style="font-size:10px;color:var(--muted);margin-bottom:14px">$${(total*12).toLocaleString()} / año</div>
-    ${active.length?active.map(r=>`<div class="rb"><div class="rbl"><div class="rdot" style="background:${r.c}"></div><div class="rname">${r.n}</div></div><div class="rval" style="color:${r.c}">$${r.v.toLocaleString()}</div></div>`).join(''):'<div class="empty-hint">Mové los sliders para proyectar</div>'}
+    <div class="res-total">${fmt(total)}</div>
+    <div style="font-size:10px;color:var(--muted);margin-bottom:14px">${fmt(total*12)} / año</div>
+    ${active.length?active.map(b=>`<div class="rb"><div class="rbl"><div class="rdot" style="background:${b.c}"></div><div class="rname">${b.n}</div></div><div class="rval" style="color:${b.c}">${fmt(b.v)}</div></div>`).join(''):'<div class="empty-hint">Mové los sliders para proyectar</div>'}
   </div>
   <div class="card" style="margin-bottom:10px">
     <div class="barwrap">${bars.map(b=>`<div class="bc"><div class="bar" style="height:${Math.round(b.v/maxB*100)}px;background:${b.c}"></div><div class="blbl">${b.n}</div></div>`).join('')}</div>
@@ -1349,7 +1856,7 @@ function simRight(){
           <div class="ms-t">${m.t}</div>
           ${!reached&&months?`<div style="font-size:9px;color:var(--hint);margin-top:1px">${months} mes${months===1?'':'es'} proyectados</div>`:''}
         </div>
-        <div class="ms-v${reached?' ok':''}">${reached?'✓':'$'+m.v.toLocaleString()}</div>
+        <div class="ms-v${reached?' ok':''}">${reached?'✓':fmt(m.v)}</div>
         <div style="display:flex;gap:3px;margin-left:6px">
           <button style="font-size:9px;padding:2px 6px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer" onclick="openMilestoneModal('${m.id}')">✏</button>
           <button style="font-size:9px;padding:2px 6px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--danger);cursor:pointer" onclick="deleteMilestone('${m.id}')">✕</button>
@@ -1546,6 +2053,406 @@ function saveMission(){
   closeM('modal-mission');render();saveState();
 }
 
+
+// ═══════════════════════════════════════
+// CURRENCY
+// ═══════════════════════════════════════
+const CURRENCIES={USD:{sym:'$',label:'Dólares',toUSD:1},EUR:{sym:'€',label:'Euros',toUSD:1.08},PYG:{sym:'₲',label:'Guaraníes',toUSD:0.000133}};
+function fmtMoney(usdVal){
+  const c=CURRENCIES[S.currency]||CURRENCIES.USD;
+  const val=usdVal/c.toUSD;
+  if(S.currency==='PYG') return'₲'+Math.round(val).toLocaleString('es');
+  return c.sym+val.toFixed(2).replace(/\.00$/,'');
+}
+function toUSD(val){const c=CURRENCIES[S.currency]||CURRENCIES.USD;return val*c.toUSD;}
+
+// ═══════════════════════════════════════
+// EXPORT / IMPORT
+// ═══════════════════════════════════════
+function exportBackup(){
+  const data=JSON.stringify(S,null,2);
+  const blob=new Blob([data],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;a.download='hq-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();URL.revokeObjectURL(url);
+  toast('Backup exportado correctamente');
+}
+function importBackup(input){
+  const file=input.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=e=>{
+    try{
+      const data=JSON.parse(e.target.result);
+      S={...S,...data};
+      saveState();render();renderStreak();updateXPUI();
+      toast('Backup importado correctamente');
+    }catch(err){toast('Error: archivo inválido');}
+  };
+  reader.readAsText(file);
+  input.value='';
+}
+
+// ═══════════════════════════════════════
+// EMOJI PICKER
+// ═══════════════════════════════════════
+const EMOJIS=['🎯','💰','🏠','🚀','✈️','💎','🥗','🔥','⚡','📦','🛒','📱','💻','🎨','🏗️','📐','💡','🌟','🏆','🎉','📈','💵','💶','🪙','🛍️','🎁','🤝','📣','📸','🎬','✍️','📝','🔔','⏰','📅','🗓️','🧾','📊','🔑','🏅','👑','❤️','🌱','⭐','🌙','☀️','🌈','🦋','🐝','🎸','🎭'];
+let emojiTarget=null;
+function openEmojiPicker(targetId){
+  emojiTarget=targetId;
+  const q=document.getElementById('emoji-search');if(q)q.value='';
+  renderEmojiGrid('');
+  document.getElementById('modal-emoji').classList.add('open');
+}
+function renderEmojiGrid(filter){
+  const list=filter?EMOJIS.filter(e=>e.includes(filter)):EMOJIS;
+  document.getElementById('emoji-grid').innerHTML=list.map(e=>`<div onclick="selectEmoji('${e}')" style="font-size:22px;cursor:pointer;padding:6px;border-radius:6px;text-align:center;transition:background .1s" onmouseover="this.style.background='var(--bg4)'" onmouseout="this.style.background=''">${e}</div>`).join('');
+}
+function selectEmoji(e){
+  if(emojiTarget){const el=document.getElementById(emojiTarget);if(el)el.value=e;}
+  document.getElementById('modal-emoji').classList.remove('open');
+}
+
+// ═══════════════════════════════════════
+// CRM
+// ═══════════════════════════════════════
+function renderCRM(){
+  const contacts=S.contacts||[];
+  return`<div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+    <button class="btn-xs" onclick="openContactModal(null)">+ Nuevo contacto</button>
+  </div>
+  ${!contacts.length?'<div class="empty-hint" style="margin-top:40px">Sin contactos — agregá el primero</div>':''}
+  <div class="grid3">
+    ${contacts.map(c=>`<div class="card" style="border-left:3px solid ${CO_HEX[c.co]||'var(--border)'}">
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
+        <div>
+          <div style="font-size:14px;font-weight:600">${c.nombre}</div>
+          <div style="font-size:11px;color:var(--muted);margin-top:2px">${c.empresa||'—'}</div>
+        </div>
+        <span class="co-badge ${CO_CC[c.co]||''}">${CO_NAMES[c.co]||c.co}</span>
+      </div>
+      ${c.whatsapp?`<div style="font-size:11px;color:var(--muted);margin-bottom:3px">📱 ${c.whatsapp}</div>`:''}
+      ${c.email?`<div style="font-size:11px;color:var(--muted);margin-bottom:3px">✉️ ${c.email}</div>`:''}
+      ${c.notas?`<div style="font-size:11px;color:var(--hint);margin-top:6px;border-top:1px solid var(--border);padding-top:6px">${c.notas}</div>`:''}
+      <div style="display:flex;gap:5px;margin-top:10px">
+        ${c.whatsapp?`<a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" style="font-size:10px;padding:3px 9px;border-radius:20px;background:var(--successg);color:var(--success);text-decoration:none;border:1px solid var(--success)30">WhatsApp</a>`:''}
+        <button style="font-size:10px;padding:3px 9px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer" onclick="openContactModal('${c.id}')">Editar</button>
+      </div>
+    </div>`).join('')}
+  </div>`;
+}
+
+function openContactModal(id){
+  S.editing.contact=id||null;
+  const c=id?S.contacts.find(x=>x.id===id):null;
+  document.getElementById('ct-nombre').value=c?c.nombre:'';
+  document.getElementById('ct-empresa').value=c?c.empresa||'':'';
+  document.getElementById('ct-co').value=c?c.co:'voccel';
+  document.getElementById('ct-whatsapp').value=c?c.whatsapp||'':'';
+  document.getElementById('ct-email').value=c?c.email||'':'';
+  document.getElementById('ct-notas').value=c?c.notas||'':'';
+  document.getElementById('ct-del').style.display=id?'flex':'none';
+  document.getElementById('modal-contact').classList.add('open');
+}
+function saveContact(){
+  const nombre=document.getElementById('ct-nombre').value.trim();if(!nombre)return;
+  const obj={id:S.editing.contact||'ct'+Date.now(),nombre,empresa:document.getElementById('ct-empresa').value,co:document.getElementById('ct-co').value,whatsapp:document.getElementById('ct-whatsapp').value,email:document.getElementById('ct-email').value,notas:document.getElementById('ct-notas').value};
+  if(S.editing.contact){const i=S.contacts.findIndex(x=>x.id===S.editing.contact);if(i>=0)S.contacts[i]=obj;}
+  else{if(!S.contacts)S.contacts=[];S.contacts.unshift(obj);}
+  closeM('modal-contact');render();saveState();toast('Contacto guardado');
+}
+function delContact(){S.contacts=S.contacts.filter(x=>x.id!==S.editing.contact);closeM('modal-contact');render();saveState();}
+
+// ═══════════════════════════════════════
+// RECORDATORIOS
+// ═══════════════════════════════════════
+function renderRecordatorios(){
+  if(!S.recordatorios)S.recordatorios=[];
+  const today=todayStr();
+  const vencidos=S.recordatorios.filter(r=>!r.done&&r.fecha<today);
+  const hoy=S.recordatorios.filter(r=>!r.done&&r.fecha===today);
+  const proximos=S.recordatorios.filter(r=>!r.done&&r.fecha>today);
+  const hechos=S.recordatorios.filter(r=>r.done);
+
+  function recRow(r){
+    const vence=r.fecha<today&&!r.done;
+    return`<div class="lead-row" style="${vence?'border-left:3px solid var(--danger);':''}${r.done?'opacity:.4':''}">
+      <div style="flex:1">
+        <div style="font-size:12px;font-weight:${r.done?'400':'500'};${r.done?'text-decoration:line-through':''}"> ${r.texto}</div>
+        <div style="font-size:10px;color:${vence?'var(--danger)':'var(--muted)'};margin-top:2px">${r.fecha} · <span class="co-badge ${CO_CC[r.co]||''}" style="font-size:8px">${CO_NAMES[r.co]||r.co}</span></div>
+      </div>
+      ${!r.done?`<button style="font-size:10px;padding:3px 9px;border-radius:20px;border:1px solid var(--success)30;background:var(--successg);color:var(--success);cursor:pointer" onclick="doneRecordatorio('${r.id}')">✓ Listo</button>`:''}
+      <button style="font-size:10px;padding:3px 7px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;margin-left:4px" onclick="delRecordatorio('${r.id}')">✕</button>
+    </div>`;
+  }
+
+  return`<div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+    <button class="btn-xs" onclick="openRecordatorioModal()">+ Nuevo recordatorio</button>
+  </div>
+  ${vencidos.length?`<div style="font-size:10px;font-weight:700;color:var(--danger);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">⚠ Vencidos (${vencidos.length})</div>${vencidos.map(recRow).join('')}<div style="height:14px"></div>`:''}
+  ${hoy.length?`<div style="font-size:10px;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Hoy</div>${hoy.map(recRow).join('')}<div style="height:14px"></div>`:''}
+  ${proximos.length?`<div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Próximos</div>${proximos.map(recRow).join('')}<div style="height:14px"></div>`:''}
+  ${hechos.length?`<div style="font-size:10px;font-weight:700;color:var(--hint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Completados</div>${hechos.slice(0,5).map(recRow).join('')}`:''}
+  ${!S.recordatorios.length?'<div class="empty-hint" style="margin-top:40px">Sin recordatorios — agregá uno</div>':''}`;
+}
+
+function openRecordatorioModal(){
+  document.getElementById('rec-texto').value='';
+  document.getElementById('rec-fecha').value=todayStr();
+  document.getElementById('rec-co').value='voccel';
+  document.getElementById('modal-recordatorio').classList.add('open');
+}
+function saveRecordatorio(){
+  const texto=document.getElementById('rec-texto').value.trim();if(!texto)return;
+  if(!S.recordatorios)S.recordatorios=[];
+  S.recordatorios.push({id:'rec'+Date.now(),texto,fecha:document.getElementById('rec-fecha').value,co:document.getElementById('rec-co').value,done:false});
+  S.recordatorios.sort((a,b)=>a.fecha.localeCompare(b.fecha));
+  closeM('modal-recordatorio');render();saveState();toast('Recordatorio guardado');
+}
+function doneRecordatorio(id){const r=S.recordatorios.find(x=>x.id===id);if(r){r.done=true;addXP(5,'Recordatorio completado');render();saveState();}}
+function delRecordatorio(id){S.recordatorios=S.recordatorios.filter(x=>x.id!==id);render();saveState();}
+
+// ═══════════════════════════════════════
+// GASTOS
+// ═══════════════════════════════════════
+function renderGastos(){
+  if(!S.gastos)S.gastos=[];
+  const totalGastos=S.gastos.reduce((a,g)=>a+(+g.monto||0),0);
+  const totalCobrado=S.cobros.filter(c=>c.status==='cobrado').reduce((a,c)=>a+(+c.amount||0),0);
+  const ganancia=totalCobrado-totalGastos;
+  const byCo={voccel:0,prussia:0,mh:0,general:0};
+  S.gastos.forEach(g=>byCo[g.co]=(byCo[g.co]||0)+(+g.monto||0));
+
+  return`<div class="metrics">
+    <div class="metric"><div class="metric-val" style="color:var(--danger)">$${totalGastos.toFixed(0)}</div><div class="metric-lbl">Total gastos</div></div>
+    <div class="metric"><div class="metric-val" style="color:var(--success)">$${totalCobrado.toFixed(0)}</div><div class="metric-lbl">Total cobrado</div></div>
+    <div class="metric"><div class="metric-val" style="color:${ganancia>=0?'var(--success)':'var(--danger)'}">$${ganancia.toFixed(0)}</div><div class="metric-lbl">Ganancia real</div></div>
+    <div class="metric"><div class="metric-val">${totalCobrado>0?Math.round((ganancia/totalCobrado)*100):0}%</div><div class="metric-lbl">Margen</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Gastos por empresa</div>
+      ${['voccel','prussia','mh'].map(co=>`<div class="rb" style="margin-bottom:4px"><div class="rbl"><div class="rdot" style="background:${CO_HEX[co]}"></div><div class="rname">${CO_NAMES[co]}</div></div><div class="rval" style="color:var(--danger)">$${(byCo[co]||0).toFixed(0)}</div></div>`).join('')}
+      <button class="add-btn" onclick="openGastoModal()">+ Registrar gasto</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Últimos gastos</div>
+      ${S.gastos.slice(0,10).map(g=>`<div class="cobro-row">
+        <div><div class="cr-name">${g.desc}</div><div class="cr-sub">${CO_NAMES[g.co]||g.co} · ${g.fecha||''} · ${g.categoria||''}</div></div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="cr-amt" style="color:var(--danger)">-$${(+g.monto||0).toFixed(0)}</div>
+          <button style="font-size:9px;padding:1px 6px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--hint);cursor:pointer" onclick="delGasto('${g.id}')">✕</button>
+        </div>
+      </div>`).join('')}
+      ${!S.gastos.length?'<div class="empty-hint">Sin gastos registrados</div>':''}
+    </div>
+  </div>`;
+}
+
+function openGastoModal(){
+  document.getElementById('gasto-desc').value='';
+  document.getElementById('gasto-monto').value='';
+  document.getElementById('gasto-fecha').value=todayStr();
+  document.getElementById('modal-gasto').classList.add('open');
+}
+function saveGasto(){
+  const desc=document.getElementById('gasto-desc').value.trim();if(!desc)return;
+  if(!S.gastos)S.gastos=[];
+  S.gastos.unshift({id:'g'+Date.now(),desc,monto:document.getElementById('gasto-monto').value||0,co:document.getElementById('gasto-co').value,categoria:document.getElementById('gasto-cat').value,fecha:document.getElementById('gasto-fecha').value});
+  closeM('modal-gasto');render();saveState();toast('Gasto registrado');
+}
+function delGasto(id){S.gastos=S.gastos.filter(x=>x.id!==id);render();saveState();}
+
+// ═══════════════════════════════════════
+// PLANTILLAS
+// ═══════════════════════════════════════
+function renderPlantillas(){
+  if(!S.plantillas)S.plantillas=[];
+  const tipos=['outreach','propuesta','consulta','seguimiento','otro'];
+  return`<div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+    <button class="btn-xs" onclick="openPlantillaModal(null)">+ Nueva plantilla</button>
+  </div>
+  ${tipos.map(tipo=>{
+    const pl=S.plantillas.filter(p=>p.tipo===tipo);
+    if(!pl.length)return'';
+    return`<div style="margin-bottom:20px">
+      <div class="section-title">${tipo.charAt(0).toUpperCase()+tipo.slice(1)}<div class="section-line"></div></div>
+      <div class="grid2">
+        ${pl.map(p=>`<div class="card" style="border-left:3px solid ${CO_HEX[p.co]||'var(--border)'}">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+            <div style="font-size:13px;font-weight:600">${p.nombre}</div>
+            <span class="co-badge ${CO_CC[p.co]||''}">${CO_NAMES[p.co]||p.co}</span>
+          </div>
+          <div style="font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:10px;white-space:pre-wrap">${p.texto.slice(0,180)}${p.texto.length>180?'…':''}</div>
+          <div style="display:flex;gap:6px">
+            <button style="flex:1;padding:6px;border-radius:var(--r);border:none;background:var(--voccel);color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif" onclick="copyPlantilla('${p.id}')">Copiar texto</button>
+            <button style="padding:6px 10px;border-radius:var(--r);border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:11px;cursor:pointer" onclick="openPlantillaModal('${p.id}')">✏</button>
+            <button style="padding:6px 10px;border-radius:var(--r);border:1px solid var(--border2);background:transparent;color:var(--danger);font-size:11px;cursor:pointer" onclick="delPlantilla('${p.id}')">✕</button>
+          </div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }).join('')}
+  ${!S.plantillas.length?'<div class="empty-hint" style="margin-top:40px">Sin plantillas — las 3 predefinidas se cargan la primera vez</div>':''}`;
+}
+
+function copyPlantilla(id){
+  const p=S.plantillas.find(x=>x.id===id);if(!p)return;
+  navigator.clipboard.writeText(p.texto).then(()=>toast('Copiado al portapapeles ✓')).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=p.texto;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copiado ✓');
+  });
+}
+function openPlantillaModal(id){
+  S.editing.plantilla=id||null;
+  const p=id?S.plantillas.find(x=>x.id===id):null;
+  document.getElementById('pl-nombre').value=p?p.nombre:'';
+  document.getElementById('pl-co').value=p?p.co:'voccel';
+  document.getElementById('pl-tipo').value=p?p.tipo:'outreach';
+  document.getElementById('pl-texto').value=p?p.texto:'';
+  document.getElementById('pl-del').style.display=id?'flex':'none';
+  document.getElementById('modal-plantilla').classList.add('open');
+}
+function savePlantilla(){
+  const nombre=document.getElementById('pl-nombre').value.trim();if(!nombre)return;
+  const obj={id:S.editing.plantilla||'pl'+Date.now(),nombre,co:document.getElementById('pl-co').value,tipo:document.getElementById('pl-tipo').value,texto:document.getElementById('pl-texto').value};
+  if(S.editing.plantilla){const i=S.plantillas.findIndex(x=>x.id===S.editing.plantilla);if(i>=0)S.plantillas[i]=obj;}
+  else{if(!S.plantillas)S.plantillas=[];S.plantillas.push(obj);}
+  closeM('modal-plantilla');render();saveState();toast('Plantilla guardada');
+}
+function delPlantilla(id){S.plantillas=S.plantillas.filter(x=>x.id!==id);render();saveState();}
+
+// ═══════════════════════════════════════
+// IDEAS
+// ═══════════════════════════════════════
+function renderIdeas(){
+  if(!S.ideas)S.ideas=[];
+  const tags=[...new Set(S.ideas.map(i=>i.tag).filter(Boolean))];
+  return`<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+    <input id="idea-quick" placeholder="Anotá una idea rápida..." style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:9px 13px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none;min-width:200px" onkeydown="if(event.key==='Enter')quickIdea()">
+    <select id="idea-co-quick" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:9px 11px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none">
+      <option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option><option value="general">General</option>
+    </select>
+    <button class="btn-xs" onclick="quickIdea()">+ Agregar</button>
+    <button class="btn-xs" onclick="openIdeaModal()">+ Detallada</button>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:6px">
+    ${S.ideas.map(idea=>`<div class="card" style="padding:12px 14px;border-left:3px solid ${CO_HEX[idea.co]||'var(--border)'}">
+      <div style="display:flex;align-items:flex-start;gap:10px">
+        <div style="flex:1">
+          <div style="font-size:13px;font-weight:500;margin-bottom:3px">${idea.texto}</div>
+          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+            <span class="co-badge ${CO_CC[idea.co]||''}">${CO_NAMES[idea.co]||idea.co}</span>
+            ${idea.tag?`<span style="font-size:9px;padding:1px 7px;border-radius:20px;background:var(--bg5);color:var(--muted)">${idea.tag}</span>`:''}
+            <span style="font-size:9px;color:var(--hint)">${idea.fecha||''}</span>
+          </div>
+          ${idea.detalle?`<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">${idea.detalle}</div>`:''}
+        </div>
+        <button style="font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--hint);cursor:pointer;flex-shrink:0" onclick="delIdea('${idea.id}')">✕</button>
+      </div>
+    </div>`).join('')}
+    ${!S.ideas.length?'<div class="empty-hint" style="margin-top:40px">Sin ideas — escribí una arriba y presioná Enter</div>':''}
+  </div>`;
+}
+
+function quickIdea(){
+  const inp=document.getElementById('idea-quick');const co=document.getElementById('idea-co-quick').value;
+  const texto=inp.value.trim();if(!texto)return;
+  if(!S.ideas)S.ideas=[];
+  S.ideas.unshift({id:'idea'+Date.now(),texto,co,tag:'',detalle:'',fecha:todayStr()});
+  inp.value='';addXP(3,'Idea registrada');render();saveState();toast('Idea guardada');
+}
+function openIdeaModal(){
+  document.getElementById('idea-texto').value='';document.getElementById('idea-tag').value='';document.getElementById('idea-detalle').value='';document.getElementById('idea-co').value='voccel';
+  document.getElementById('modal-idea').classList.add('open');
+}
+function saveIdea(){
+  const texto=document.getElementById('idea-texto').value.trim();if(!texto)return;
+  if(!S.ideas)S.ideas=[];
+  S.ideas.unshift({id:'idea'+Date.now(),texto,co:document.getElementById('idea-co').value,tag:document.getElementById('idea-tag').value,detalle:document.getElementById('idea-detalle').value,fecha:todayStr()});
+  closeM('modal-idea');addXP(3,'Idea registrada');render();saveState();toast('Idea guardada');
+}
+function delIdea(id){S.ideas=S.ideas.filter(x=>x.id!==id);render();saveState();}
+
+// ═══════════════════════════════════════
+// PUBLICACIONES
+// ═══════════════════════════════════════
+function renderPublicaciones(){
+  if(!S.publicaciones)S.publicaciones=[];
+  if(!S.pubOpenCo)S.pubOpenCo={voccel:false,prussia:false,mh:false};
+  const cos=['voccel','prussia','mh'];
+  return`<div style="display:flex;justify-content:flex-end;margin-bottom:14px">
+    <button class="btn-xs" onclick="openPubModal(null)">+ Nueva publicación</button>
+  </div>
+  ${cos.map(co=>{
+    const pubs=S.publicaciones.filter(p=>p.co===co);
+    const isOpen=S.pubOpenCo[co]!==false;
+    const count=pubs.length;
+    // Group by red
+    const byRed={};
+    pubs.forEach(p=>{const r=p.red||'general';if(!byRed[r])byRed[r]=[];byRed[r].push(p);});
+    return`<div style="margin-bottom:10px;border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden">
+      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:var(--bg2);user-select:none" onclick="togglePubCo('${co}')">
+        <div style="width:10px;height:10px;border-radius:50%;background:${CO_HEX[co]};flex-shrink:0"></div>
+        <div style="font-size:14px;font-weight:600;flex:1;color:${CO_HEX[co]}">${CO_NAMES[co]}</div>
+        <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace">${count} publicaciones</div>
+        <div style="font-size:14px;color:var(--muted);transition:transform .2s;transform:rotate(${isOpen?'90':'0'}deg)">›</div>
+      </div>
+      ${isOpen?`<div style="padding:12px 16px;background:var(--bg);display:flex;flex-direction:column;gap:8px">
+        ${Object.entries(byRed).map(([red,items])=>`
+          <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin:4px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)">${red}</div>
+          ${items.map(p=>`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;border-left:3px solid ${CO_HEX[p.co]}">
+            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
+              <div style="font-size:13px;font-weight:600">${p.titulo}</div>
+              <div style="display:flex;gap:4px;flex-shrink:0;margin-left:8px">
+                <button onclick="openPubModal('${p.id}')" style="padding:3px 8px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:10px;cursor:pointer">✏</button>
+                <button onclick="delPub('${p.id}')" style="padding:3px 8px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--danger);font-size:10px;cursor:pointer">✕</button>
+              </div>
+            </div>
+            <div style="font-size:11px;color:var(--muted);line-height:1.7;white-space:pre-wrap;margin-bottom:10px;background:var(--bg3);border-radius:var(--r);padding:10px;max-height:160px;overflow-y:auto">${p.texto}</div>
+            <button id="copy-btn-${p.id}" style="width:100%;padding:8px;border-radius:var(--r);border:none;background:var(--voccel);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s" onclick="copyPub('${p.id}')">Copiar ✓</button>
+          </div>`).join('')}
+        `).join('')}
+        ${!count?'<div class="empty-hint">Sin publicaciones para esta empresa — agregá una</div>':''}
+      </div>`:''}
+    </div>`;
+  }).join('')}`;
+}
+
+function togglePubCo(co){
+  if(!S.pubOpenCo)S.pubOpenCo={voccel:true,prussia:true,mh:true};
+  S.pubOpenCo[co]=!S.pubOpenCo[co];
+  render();saveState();
+}
+
+function copyPub(id){
+  const p=S.publicaciones.find(x=>x.id===id);if(!p)return;
+  navigator.clipboard.writeText(p.texto).then(()=>{
+    toast('Copiado al portapapeles ✓');
+    const btn=document.getElementById('copy-btn-'+id);
+    if(btn){btn.textContent='¡Copiado!';btn.style.background='var(--success)';btn.style.color='#000';setTimeout(()=>{btn.textContent='Copiar ✓';btn.style.background='var(--voccel)';btn.style.color='#fff';},2000);}
+  }).catch(()=>{
+    const ta=document.createElement('textarea');ta.value=p.texto;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copiado ✓');
+  });
+}
+function openPubModal(id){
+  S.editing.pub=id||null;
+  const p=id?S.publicaciones.find(x=>x.id===id):null;
+  document.getElementById('pub-titulo').value=p?p.titulo:'';
+  document.getElementById('pub-co').value=p?p.co:'voccel';
+  document.getElementById('pub-red').value=p?p.red||'instagram':'instagram';
+  document.getElementById('pub-texto').value=p?p.texto:'';
+  document.getElementById('pub-del').style.display=id?'flex':'none';
+  document.getElementById('modal-pub').classList.add('open');
+}
+function savePub(){
+  const titulo=document.getElementById('pub-titulo').value.trim();if(!titulo)return;
+  const obj={id:S.editing.pub||'pub'+Date.now(),titulo,co:document.getElementById('pub-co').value,red:document.getElementById('pub-red').value,texto:document.getElementById('pub-texto').value};
+  if(S.editing.pub){const i=S.publicaciones.findIndex(x=>x.id===S.editing.pub);if(i>=0)S.publicaciones[i]=obj;}
+  else{if(!S.publicaciones)S.publicaciones=[];S.publicaciones.push(obj);}
+  closeM('modal-pub');render();saveState();toast('Publicación guardada');
+}
+function delPub(id){S.publicaciones=S.publicaciones.filter(x=>x.id!==id);render();saveState();}
+
 // ═══════════════════════════════════════
 // MODAL HELPERS
 // ═══════════════════════════════════════
@@ -1556,8 +2463,41 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelect
 // ═══════════════════════════════════════
 // INIT
 // ═══════════════════════════════════════
+// ── THEME SWITCHER ──
+function setTheme(name){
+  document.documentElement.setAttribute('data-theme',name);
+  localStorage.setItem('hq-theme',name);
+  const sel=document.getElementById('theme-sel');if(sel)sel.value=name;
+}
+// Restore saved theme
+(function(){
+  const saved=localStorage.getItem('hq-theme');
+  if(saved){document.documentElement.setAttribute('data-theme',saved);}
+})();
+
 loadState();
 render();
+// Init emoji picker
+renderEmojiGrid('');
+// Restore currency selector
+const csel=document.getElementById('currency-sel');
+if(csel&&S.currency)csel.value=S.currency;
+// Restore theme selector
+const tsel=document.getElementById('theme-sel');
+const savedTheme=localStorage.getItem('hq-theme');
+if(tsel&&savedTheme){tsel.value=savedTheme;document.documentElement.setAttribute('data-theme',savedTheme);}
+// Show reminder badge in nav
+(function checkReminders(){
+  if(!S.recordatorios)return;
+  const today=new Date().toISOString().slice(0,10);
+  const urgent=S.recordatorios.filter(r=>!r.done&&r.fecha<=today).length;
+  const el=document.getElementById('n-recordatorios');
+  if(el&&urgent>0){
+    const badge=document.createElement('span');
+    badge.style.cssText='font-family:DM Mono,monospace;font-size:9px;padding:1px 5px;border-radius:20px;background:var(--danger);color:#fff;margin-left:auto';
+    badge.textContent=urgent;el.appendChild(badge);
+  }
+})();
 </script>
 </body>
 </html>

@@ -1,0 +1,34 @@
+/* ── VAMPIRE: THE MASQUERADE ─────────────────────────────────
+   Elysium by night. Blood crimson on velvet black.
+   Deep red, dark burgundy, ivory. The eternal courts.
+──────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Courier+Prime&display=swap');
+:root{
+  --bg:#06000a;--bg2:#0d010f;--bg3:#160218;--bg4:#1e0422;--bg5:#27062e;
+  --border:#aa000018;--border2:#aa000032;--border3:#aa000055;
+  --text:#ecdce8;--muted:#906080;--hint:#3a1040;
+  --voccel:#cc1111;--voccelg:#cc111114;--voccelb:#cc111128;
+  --prussia:#880066;--prussiag:#88006614;--prussiab:#88006628;
+  --mh:#c8a0d0;--mhg:#c8a0d014;--mhb:#c8a0d028;
+  --success:#506850;--successg:#50685014;
+  --warn:#b8860b;--warng:#b8860b14;
+  --danger:#cc1111;--dangerg:#cc111114;
+  --r:3px;--r2:7px;--r3:12px;
+}
+body,*{font-family:'Crimson Pro',Georgia,serif!important}
+.brand-name{font-family:'Cinzel Decorative',serif!important;font-size:12px!important;color:var(--voccel)!important;text-shadow:0 0 20px #cc111180!important;letter-spacing:.04em!important;text-transform:uppercase!important}
+.brand-sub{font-family:'Courier Prime',monospace!important;font-size:7px!important;letter-spacing:.2em!important;color:var(--muted)!important}
+.page-title{font-family:'Cinzel Decorative',serif!important;font-size:17px!important;color:var(--voccel)!important;text-shadow:0 0 14px #cc111160!important;letter-spacing:.04em!important}
+.nav-section{font-family:'Courier Prime',monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:var(--hint)!important}
+.nav-item{font-size:15px!important;letter-spacing:.02em!important}
+.nav-item.active{border-left-color:var(--voccel)!important;text-shadow:0 0 8px #cc111150!important;background:var(--voccelg)!important}
+.card{border-radius:var(--r)!important;border:1px solid var(--border2)!important;box-shadow:inset 0 0 30px #cc11110a!important}
+.card-title{font-family:'Cinzel Decorative',serif!important;font-size:8px!important;letter-spacing:.1em!important}
+.metric-val{font-family:'Cinzel Decorative',serif!important;font-size:22px!important}
+.metric-lbl{font-family:'Courier Prime',monospace!important;font-size:9px!important;letter-spacing:.12em!important}
+.xp-fill{background:linear-gradient(90deg,#660011,var(--voccel),var(--prussia))!important;box-shadow:0 0 10px #cc111150!important}
+.sidebar{border-right:1px solid var(--border2)!important}
+.topbar{border-bottom:1px solid var(--border2)!important;background:var(--bg)!important}
+.btn-main{font-family:'Crimson Pro',serif!important;font-size:16px!important}
+.sm-day.done{background:var(--voccel)!important;box-shadow:0 0 8px #cc111160!important}
+.content::before{content:'✦';position:fixed;bottom:20px;right:20px;font-size:220px;color:#cc11110a;pointer-events:none;z-index:0;line-height:1}

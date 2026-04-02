@@ -1,0 +1,36 @@
+/* ── MAGE: THE ASCENSION ─────────────────────────────────────
+   Reality is Yours to Shape. Nine Spheres. Technocracy vs Traditions.
+   Deep violet #7c3aed, arcane purple, void blue, will-fire gold.
+──────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=Lato:ital,wght@0,300;0,400;0,700;1,400&family=Courier+Prime&display=swap');
+:root{
+  --bg:#06040f;--bg2:#0d0818;--bg3:#140d24;--bg4:#1c1232;--bg5:#241840;
+  --border:#7c3aed18;--border2:#7c3aed2c;--border3:#7c3aed4a;
+  --text:#e0d6f8;--muted:#8060c0;--hint:#2e1860;
+  --voccel:#9b59f5;--voccelg:#9b59f514;--voccelb:#9b59f528;
+  --prussia:#e040c0;--prussiag:#e040c014;--prussiab:#e040c028;
+  --mh:#40b8e0;--mhg:#40b8e014;--mhb:#40b8e028;
+  --success:#50e080;--successg:#50e08014;
+  --warn:#e0c040;--warng:#e0c04014;
+  --danger:#e04060;--dangerg:#e0406014;
+  --r:7px;--r2:13px;--r3:20px;
+}
+body,*{font-family:'Lato',sans-serif!important}
+.brand-name{font-family:'Metamorphous',serif!important;font-size:15px!important;color:var(--voccel)!important;text-shadow:0 0 22px #9b59f580,0 0 44px #9b59f530!important;letter-spacing:.04em!important}
+.brand-sub{font-family:'Courier Prime',monospace!important;font-size:8px!important;letter-spacing:.18em!important;color:var(--muted)!important}
+.page-title{font-family:'Metamorphous',serif!important;font-size:21px!important;color:var(--voccel)!important;text-shadow:0 0 16px #9b59f560!important}
+.nav-section{font-family:'Courier Prime',monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:var(--hint)!important}
+.nav-item{font-size:13px!important}
+.nav-item.active{background:var(--voccelg)!important;border-left-color:var(--voccel)!important;text-shadow:0 0 8px #9b59f550!important}
+.card{border-radius:var(--r2)!important;border:1px solid var(--border2)!important;box-shadow:0 0 20px #9b59f506,inset 0 0 40px #9b59f503!important}
+.card-title{font-family:'Metamorphous',serif!important;font-size:10px!important;letter-spacing:.08em!important}
+.metric-val{font-family:'Metamorphous',serif!important;font-size:24px!important;text-shadow:0 0 8px currentColor!important}
+.xp-fill{background:linear-gradient(90deg,#5020c0,var(--voccel),var(--prussia))!important;box-shadow:0 0 12px #9b59f550!important}
+.sidebar{border-right:1px solid var(--border2)!important;background-image:radial-gradient(circle at 50% 50%,#9b59f508 0%,transparent 70%)!important}
+.topbar{border-bottom:1px solid var(--border2)!important;background:var(--bg)!important}
+.btn-main{font-weight:700!important;box-shadow:0 0 14px #9b59f540!important;border-radius:var(--r)!important}
+.sm-day.done{background:var(--voccel)!important;box-shadow:0 0 8px var(--voccel)!important}
+.bv{background:#9b59f518!important;color:#c090ff!important}
+.bp{background:#e040c018!important;color:#ff90e0!important}
+.bm{background:#40b8e018!important;color:#90e0ff!important}
+.content::before{content:'✦ ✧ ✦';position:fixed;bottom:30px;right:30px;font-size:48px;color:#9b59f506;pointer-events:none;letter-spacing:16px;z-index:0}

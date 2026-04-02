@@ -1,0 +1,33 @@
+/* ── GOTH ────────────────────────────────────────────────────
+   Absolute black. Cold violet. Gothic script. Silver moonlight.
+   Deep purple, silver-white, onyx. Cathedral night.
+──────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Courier+Prime&display=swap');
+:root{
+  --bg:#020204;--bg2:#06060c;--bg3:#0a0a16;--bg4:#0f0f20;--bg5:#14142a;
+  --border:#9070d018;--border2:#9070d030;--border3:#9070d055;
+  --text:#d8d0f0;--muted:#7060a8;--hint:#2c2055;
+  --voccel:#a080e0;--voccelg:#a080e014;--voccelb:#a080e028;
+  --prussia:#c0c0d8;--prussiag:#c0c0d814;--prussiab:#c0c0d828;
+  --mh:#5068a0;--mhg:#5068a014;--mhb:#5068a028;
+  --success:#607050;--successg:#60705014;
+  --warn:#806840;--warng:#80684014;
+  --danger:#801828;--dangerg:#80182814;
+  --r:3px;--r2:6px;--r3:10px;
+}
+body,*{font-family:'EB Garamond',Georgia,serif!important}
+.brand-name{font-family:'UnifrakturMaguntia',cursive!important;font-size:22px!important;color:var(--voccel)!important;text-shadow:0 0 24px #a080e060!important}
+.brand-sub{font-family:'Courier Prime',monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:var(--muted)!important}
+.page-title{font-family:'UnifrakturMaguntia',cursive!important;font-size:26px!important;color:var(--voccel)!important;text-shadow:0 0 16px #a080e050!important}
+.nav-section{font-family:'Courier Prime',monospace!important;font-size:8px!important;letter-spacing:.22em!important;color:var(--hint)!important}
+.nav-item{font-size:15px!important}
+.nav-item.active{background:var(--voccelg)!important;border-left-color:var(--voccel)!important;text-shadow:0 0 8px #a080e040!important}
+.card{border-radius:var(--r)!important;border:1px solid var(--border2)!important;box-shadow:inset 0 0 30px #a080e004!important}
+.card-title{font-family:'EB Garamond',serif!important;font-style:italic!important;font-size:12px!important;letter-spacing:.1em!important}
+.metric-val{font-family:'UnifrakturMaguntia',cursive!important;font-size:28px!important}
+.xp-fill{background:linear-gradient(90deg,#5018a0,var(--voccel))!important;box-shadow:0 0 10px #a080e050!important}
+.sidebar{border-right:1px solid var(--border2)!important}
+.topbar{border-bottom:1px solid var(--border2)!important;background:var(--bg)!important}
+.btn-main{font-family:'EB Garamond',serif!important;font-size:16px!important;letter-spacing:.05em!important}
+.sm-day.done{background:var(--voccel)!important;box-shadow:0 0 8px var(--voccel)!important}
+.content::before{content:'☽ ✦ ☾';position:fixed;bottom:20px;right:20px;font-size:36px;color:#a080e006;pointer-events:none;letter-spacing:12px;z-index:0}

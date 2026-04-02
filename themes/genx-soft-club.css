@@ -1,0 +1,34 @@
+/* ── GEN X SOFT CLUB ─────────────────────────────────────────
+   Late-90s velvet lounge. Cigarette haze. Mauve and dusty rose.
+   Warm mauve #c8a0c0, dusty rose #f0c8b8, near-black velvet.
+──────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
+:root{
+  --bg:#0c0810;--bg2:#140e18;--bg3:#1c1422;--bg4:#241a2e;--bg5:#2c2038;
+  --border:#c8a0c018;--border2:#c8a0c028;--border3:#c8a0c045;
+  --text:#f0e4f0;--muted:#a880a8;--hint:#483060;
+  --voccel:#d4a8c8;--voccelg:#d4a8c814;--voccelb:#d4a8c828;
+  --prussia:#f0c8a8;--prussiag:#f0c8a814;--prussiab:#f0c8a828;
+  --mh:#a8c8d8;--mhg:#a8c8d814;--mhb:#a8c8d828;
+  --success:#a8d4a8;--successg:#a8d4a814;
+  --warn:#f0c8a8;--warng:#f0c8a814;
+  --danger:#d48090;--dangerg:#d4809014;
+  --r:10px;--r2:17px;--r3:24px;
+}
+body,*{font-family:'Space Grotesk',sans-serif!important;font-weight:300!important}
+.brand-name{font-family:'DM Serif Display',serif!important;font-style:italic!important;font-size:19px!important;color:var(--voccel)!important;letter-spacing:-.01em!important;font-weight:400!important}
+.brand-sub{font-size:8px!important;letter-spacing:.2em!important;color:var(--muted)!important}
+.page-title{font-family:'DM Serif Display',serif!important;font-style:italic!important;font-size:27px!important;font-weight:400!important;letter-spacing:-.02em!important;color:var(--text)!important}
+.nav-section{font-size:9px!important;letter-spacing:.2em!important;color:var(--hint)!important;font-weight:400!important}
+.nav-item{font-size:13px!important;font-weight:400!important}
+.nav-item:hover{text-shadow:0 0 14px #d4a8c840!important}
+.nav-item.active{background:var(--voccelg)!important;border-left-color:var(--voccel)!important;border-radius:0 var(--r) var(--r) 0!important}
+.card{border-radius:var(--r2)!important;border:1px solid var(--border2)!important}
+.card-title{font-weight:500!important;letter-spacing:.1em!important}
+.metric-val{font-family:'DM Serif Display',serif!important;font-size:28px!important;font-weight:400!important}
+.xp-fill{background:linear-gradient(90deg,var(--voccel),var(--prussia))!important}
+.sidebar{border-right:1px solid var(--border2)!important}
+.topbar{border-bottom:1px solid var(--border2)!important;background:var(--bg)!important}
+.btn-main{font-weight:500!important;border-radius:var(--r2)!important}
+.sm-day.done{background:var(--voccel)!important;color:var(--bg)!important}
+body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");pointer-events:none;z-index:9998}
