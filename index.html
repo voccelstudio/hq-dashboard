@@ -6,8 +6,8 @@
 <title>HQ — Command Center</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link id="theme-css" rel="stylesheet" href="">
-<style>@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
+<style>
+@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
@@ -333,255 +333,8 @@ select:focus{border-color:var(--border3)}
 ::-webkit-scrollbar{width:4px;height:4px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
-
-/* ═══════════════════════════════════════════════════════════
-   THEMES — all using html[data-theme] to override :root
-   Research sources: official game art, fan wikis, color palettes
-═══════════════════════════════════════════════════════════ */
-
-/* ── DARK ACADEMIA
-   Oxford stone, candlelight amber, aged parchment, ink brown.
-   Inspired by: leather-bound books, brass candelabras, gothic arches */
-html[data-theme="dark-academia"] {
-  --bg:#0c0904;--bg2:#14100a;--bg3:#1e1610;--bg4:#281e15;--bg5:#32261a;
-  --border:#c8a96e18;--border2:#c8a96e32;--border3:#c8a96e55;
-  --text:#ede0c4;--muted:#9e7a4a;--hint:#4a3218;
-  --voccel:#c8a96e;--voccelg:#c8a96e14;--voccelb:#c8a96e28;
-  --prussia:#a05030;--prussiag:#a0503014;--prussiab:#a0503028;
-  --mh:#6b8c5a;--mhg:#6b8c5a14;--mhb:#6b8c5a28;
-  --success:#6b8c5a;--successg:#6b8c5a14;--warn:#c8a96e;--warng:#c8a96e14;--danger:#8b2020;--dangerg:#8b202014;
-  --r:4px;--r2:8px;--r3:12px;
-}
-html[data-theme="dark-academia"] body,html[data-theme="dark-academia"] .sidebar,html[data-theme="dark-academia"] .main,html[data-theme="dark-academia"] .topbar,html[data-theme="dark-academia"] .card,html[data-theme="dark-academia"] .nav-item,html[data-theme="dark-academia"] .metric,html[data-theme="dark-academia"] button,html[data-theme="dark-academia"] input,html[data-theme="dark-academia"] select,html[data-theme="dark-academia"] textarea{font-family:'Cormorant Garamond',Georgia,serif!important}
-html[data-theme="dark-academia"] .brand-name{font-family:'IM Fell English',serif!important;font-size:19px!important;color:#c8a96e!important;text-shadow:0 0 20px #c8a96e50!important;letter-spacing:.04em!important}
-html[data-theme="dark-academia"] .brand-sub{font-family:monospace!important;font-size:8px!important;letter-spacing:.22em!important}
-html[data-theme="dark-academia"] .page-title{font-family:'IM Fell English',serif!important;font-style:italic!important;font-size:24px!important}
-html[data-theme="dark-academia"] .card-title{font-family:'IM Fell English',serif!important;font-style:italic!important;font-size:11px!important}
-html[data-theme="dark-academia"] .metric-val{font-family:'IM Fell English',serif!important;font-size:28px!important}
-html[data-theme="dark-academia"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:#4a3218!important}
-html[data-theme="dark-academia"] .nav-item.active{box-shadow:inset 0 0 16px #c8a96e14!important}
-html[data-theme="dark-academia"] .xp-fill{background:linear-gradient(90deg,#a05030,#c8a96e)!important}
-
-/* ── GOTH
-   Pure black velvet, cold violet, silver moonlight, bone white.
-   Inspired by: Sisters of Mercy, The Cure, Victorian mourning dress */
-html[data-theme="goth"] {
-  --bg:#010103;--bg2:#05050d;--bg3:#090916;--bg4:#0e0e20;--bg5:#13132a;
-  --border:#8865d018;--border2:#8865d032;--border3:#8865d055;
-  --text:#ddd5f5;--muted:#6855a8;--hint:#281848;
-  --voccel:#9975e0;--voccelg:#9975e014;--voccelb:#9975e028;
-  --prussia:#c8c8e0;--prussiag:#c8c8e014;--prussiab:#c8c8e028;
-  --mh:#4060a0;--mhg:#4060a014;--mhb:#4060a028;
-  --success:#507050;--successg:#50705014;--warn:#806840;--warng:#80684014;--danger:#801828;--dangerg:#80182814;
-  --r:3px;--r2:6px;--r3:10px;
-}
-html[data-theme="goth"] body{font-family:'EB Garamond',Georgia,serif!important}
-html[data-theme="goth"] .sidebar,html[data-theme="goth"] .main,html[data-theme="goth"] .topbar,html[data-theme="goth"] .content,html[data-theme="goth"] .card,html[data-theme="goth"] .nav-item,html[data-theme="goth"] .metric,html[data-theme="goth"] .modal,html[data-theme="goth"] button,html[data-theme="goth"] input,html[data-theme="goth"] select,html[data-theme="goth"] textarea{font-family:'EB Garamond',Georgia,serif!important}
-html[data-theme="goth"] .brand-name{font-family:'UnifrakturMaguntia',cursive!important;font-size:22px!important;color:#9975e0!important;text-shadow:0 0 24px #9975e060!important}
-html[data-theme="goth"] .page-title{font-family:'UnifrakturMaguntia',cursive!important;font-size:26px!important;color:#9975e0!important;text-shadow:0 0 16px #9975e050!important}
-html[data-theme="goth"] .metric-val{font-family:'UnifrakturMaguntia',cursive!important;font-size:28px!important}
-html[data-theme="goth"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.22em!important;color:#281848!important}
-html[data-theme="goth"] .nav-item.active{text-shadow:0 0 8px #9975e040!important}
-html[data-theme="goth"] .xp-fill{background:linear-gradient(90deg,#3a0880,#9975e0)!important;box-shadow:0 0 10px #9975e050!important}
-html[data-theme="goth"] .sm-day.done{box-shadow:0 0 8px #9975e0!important}
-
-/* ── VAMPIRE: THE MASQUERADE
-   True blood crimson #8B0000 + #CC0000 on absolute black velvet.
-   Deep burgundy #4A0010, ivory bone, Elysium night purple.
-   Source: VtM 5th Ed corebook, LARP official art */
-html[data-theme="vampire"] {
-  --bg:#04000a;--bg2:#0a0010;--bg3:#120018;--bg4:#1a0022;--bg5:#22002e;
-  --border:#cc000018;--border2:#cc000035;--border3:#cc000058;
-  --text:#f0e0e8;--muted:#903060;--hint:#400018;
-  --voccel:#cc0000;--voccelg:#cc000014;--voccelb:#cc000028;
-  --prussia:#800050;--prussiag:#80005014;--prussiab:#80005028;
-  --mh:#e8c0d8;--mhg:#e8c0d814;--mhb:#e8c0d828;
-  --success:#405040;--successg:#40504014;--warn:#b8860b;--warng:#b8860b14;--danger:#cc0000;--dangerg:#cc000014;
-  --r:3px;--r2:6px;--r3:10px;
-}
-html[data-theme="vampire"] body,html[data-theme="vampire"] .sidebar,html[data-theme="vampire"] .main,html[data-theme="vampire"] .topbar,html[data-theme="vampire"] .card,html[data-theme="vampire"] .nav-item,html[data-theme="vampire"] .metric,html[data-theme="vampire"] button,html[data-theme="vampire"] input,html[data-theme="vampire"] select,html[data-theme="vampire"] textarea{font-family:'Crimson Pro',Georgia,serif!important}
-html[data-theme="vampire"] .brand-name{font-family:'Cinzel Decorative',serif!important;font-size:12px!important;color:#cc0000!important;text-shadow:0 0 22px #cc000090!important;text-transform:uppercase!important;letter-spacing:.04em!important}
-html[data-theme="vampire"] .page-title{font-family:'Cinzel Decorative',serif!important;font-size:16px!important;color:#cc0000!important;text-shadow:0 0 16px #cc000060!important}
-html[data-theme="vampire"] .card-title{font-family:'Cinzel Decorative',serif!important;font-size:8px!important;letter-spacing:.1em!important}
-html[data-theme="vampire"] .metric-val{font-family:'Cinzel Decorative',serif!important;font-size:22px!important}
-html[data-theme="vampire"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:#400018!important}
-html[data-theme="vampire"] .nav-item.active{text-shadow:0 0 8px #cc000050!important}
-html[data-theme="vampire"] .xp-fill{background:linear-gradient(90deg,#660011,#cc0000,#800050)!important;box-shadow:0 0 10px #cc000050!important}
-html[data-theme="vampire"] .sm-day.done{background:#cc0000!important;box-shadow:0 0 8px #cc000060!important}
-html[data-theme="vampire"] .card{box-shadow:inset 0 0 30px #cc00000a!important}
-
-/* ── MATRIX
-   Exact Matrix green #00ff41 (confirmed from film color grading).
-   Pure black #000400, medium green #008f20, dark #004010.
-   VT323 monospace, CRT scanlines, phosphor glow. */
-html[data-theme="matrix"] {
-  --bg:#000400;--bg2:#010901;--bg3:#021202;--bg4:#031a03;--bg5:#042204;
-  --border:#00ff4112;--border2:#00ff4126;--border3:#00ff4145;
-  --text:#00ff41;--muted:#00a020;--hint:#004510;
-  --voccel:#00ff41;--voccelg:#00ff4110;--voccelb:#00ff4120;
-  --prussia:#00dd33;--prussiag:#00dd3310;--prussiab:#00dd3320;
-  --mh:#50ff20;--mhg:#50ff2010;--mhb:#50ff2020;
-  --success:#00ff41;--successg:#00ff4112;--warn:#ccff00;--warng:#ccff0012;--danger:#ff0033;--dangerg:#ff003312;
-  --r:0px;--r2:1px;--r3:2px;
-}
-html[data-theme="matrix"] body,html[data-theme="matrix"] .sidebar,html[data-theme="matrix"] .main,html[data-theme="matrix"] .topbar,html[data-theme="matrix"] .card,html[data-theme="matrix"] .nav-item,html[data-theme="matrix"] .metric,html[data-theme="matrix"] button,html[data-theme="matrix"] input,html[data-theme="matrix"] select,html[data-theme="matrix"] textarea{font-family:'Share Tech Mono',monospace!important;color:#00ff41}
-html[data-theme="matrix"] .brand-name{font-family:'VT323',monospace!important;font-size:24px!important;color:#00ff41!important;text-shadow:0 0 10px #00ff41,0 0 22px #00ff4160!important;letter-spacing:.1em!important}
-html[data-theme="matrix"] .page-title{font-family:'VT323',monospace!important;font-size:30px!important;color:#00ff41!important;text-shadow:0 0 10px #00ff41!important}
-html[data-theme="matrix"] .metric-val{font-family:'VT323',monospace!important;font-size:32px!important;text-shadow:0 0 8px currentColor!important}
-html[data-theme="matrix"] .nav-item.active::before{content:'> ';color:#00ff41;font-size:12px}
-html[data-theme="matrix"] .xp-fill{background:#00ff41!important;box-shadow:0 0 8px #00ff41!important}
-html[data-theme="matrix"] .btn-main{background:transparent!important;border:1px solid #00ff41!important;color:#00ff41!important;text-shadow:0 0 6px #00ff41!important;box-shadow:0 0 10px #00ff4130!important}
-html[data-theme="matrix"] .card{border-radius:0!important;box-shadow:0 0 8px #00ff4108,inset 0 0 20px #00ff4103!important}
-html[data-theme="matrix"] body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,#00000018 2px,#00000018 4px);pointer-events:none;z-index:9999}
-
-/* ── SOLARPUNK
-   Leaf green #6abf5e, solar amber #f5c842, sky teal #42c8c0.
-   Deep forest bg, organic rounded corners, hopeful warmth.
-   Source: Becky Chambers aesthetic, solar/botanical references */
-html[data-theme="solarpunk"] {
-  --bg:#080f08;--bg2:#0e180c;--bg3:#142212;--bg4:#1a2c18;--bg5:#213818;
-  --border:#7acc5e18;--border2:#7acc5e2c;--border3:#7acc5e48;
-  --text:#e8f5dc;--muted:#7ab85a;--hint:#2d5228;
-  --voccel:#7acc5e;--voccelg:#7acc5e14;--voccelb:#7acc5e28;
-  --prussia:#f5c842;--prussiag:#f5c84214;--prussiab:#f5c84228;
-  --mh:#42c8c0;--mhg:#42c8c014;--mhb:#42c8c028;
-  --success:#7acc5e;--successg:#7acc5e14;--warn:#f5c842;--warng:#f5c84214;--danger:#f56040;--dangerg:#f5604014;
-  --r:12px;--r2:20px;--r3:28px;
-}
-html[data-theme="solarpunk"] body,html[data-theme="solarpunk"] .sidebar,html[data-theme="solarpunk"] .main,html[data-theme="solarpunk"] .topbar,html[data-theme="solarpunk"] .card,html[data-theme="solarpunk"] .nav-item,html[data-theme="solarpunk"] .metric,html[data-theme="solarpunk"] button,html[data-theme="solarpunk"] input,html[data-theme="solarpunk"] select,html[data-theme="solarpunk"] textarea{font-family:'Nunito',sans-serif!important}
-html[data-theme="solarpunk"] .brand-name{font-family:'Playfair Display',serif!important;font-style:italic!important;font-size:18px!important;color:#7acc5e!important}
-html[data-theme="solarpunk"] .page-title{font-family:'Playfair Display',serif!important;font-style:italic!important;font-size:26px!important}
-html[data-theme="solarpunk"] .metric-val{font-family:'Playfair Display',serif!important;font-size:28px!important}
-html[data-theme="solarpunk"] .nav-item.active{border-radius:0 20px 20px 0!important}
-html[data-theme="solarpunk"] .xp-fill{background:linear-gradient(90deg,#7acc5e,#f5c842,#42c8c0)!important}
-html[data-theme="solarpunk"] .sm-day.done{color:#000!important}
-
-/* ── MARATHON (Bungie 1994)
-   Security terminal teal #00e8c0 on absolute black #000c0a.
-   Pfhor purple #6040a0, warning amber, Orbitron display font.
-   Source: original Marathon trilogy HUD colors, terminal interface */
-html[data-theme="marathon"] {
-  --bg:#000c0a;--bg2:#001510;--bg3:#001e18;--bg4:#002822;--bg5:#003230;
-  --border:#00e8c016;--border2:#00e8c028;--border3:#00e8c045;
-  --text:#c0fff8;--muted:#409888;--hint:#103830;
-  --voccel:#00e8c0;--voccelg:#00e8c012;--voccelb:#00e8c028;
-  --prussia:#6040a0;--prussiag:#6040a012;--prussiab:#6040a028;
-  --mh:#40ffe0;--mhg:#40ffe012;--mhb:#40ffe028;
-  --success:#40ffe0;--successg:#40ffe012;--warn:#f0e040;--warng:#f0e04012;--danger:#ff4040;--dangerg:#ff404012;
-  --r:0px;--r2:0px;--r3:2px;
-}
-html[data-theme="marathon"] body,html[data-theme="marathon"] .sidebar,html[data-theme="marathon"] .main,html[data-theme="marathon"] .topbar,html[data-theme="marathon"] .card,html[data-theme="marathon"] .nav-item,html[data-theme="marathon"] .metric,html[data-theme="marathon"] button,html[data-theme="marathon"] input,html[data-theme="marathon"] select,html[data-theme="marathon"] textarea{font-family:'Share Tech Mono',monospace!important}
-html[data-theme="marathon"] .brand-name{font-family:'Orbitron',sans-serif!important;font-size:13px!important;font-weight:900!important;color:#00e8c0!important;text-shadow:0 0 18px #00e8c090,0 0 36px #00e8c040!important;letter-spacing:.16em!important;text-transform:uppercase!important}
-html[data-theme="marathon"] .page-title{font-family:'Orbitron',sans-serif!important;font-size:18px!important;font-weight:700!important;text-transform:uppercase!important;color:#00e8c0!important;text-shadow:0 0 14px #00e8c070!important}
-html[data-theme="marathon"] .card-title{font-family:'Orbitron',sans-serif!important;font-size:9px!important;letter-spacing:.22em!important;text-transform:uppercase!important}
-html[data-theme="marathon"] .metric-val{font-family:'Orbitron',sans-serif!important;font-size:24px!important;font-weight:700!important;text-shadow:0 0 8px currentColor!important}
-html[data-theme="marathon"] .nav-item.active::before{content:'>> ';color:#00e8c0}
-html[data-theme="marathon"] .nav-item{text-transform:uppercase!important;font-size:11px!important}
-html[data-theme="marathon"] .xp-fill{background:#00e8c0!important;box-shadow:0 0 10px #00e8c0!important}
-html[data-theme="marathon"] .btn-main{background:transparent!important;border:1px solid #00e8c0!important;color:#00e8c0!important;box-shadow:0 0 12px #00e8c040!important;border-radius:0!important}
-html[data-theme="marathon"] .card{border-radius:0!important;border-top:2px solid rgba(0,232,192,.3)!important}
-html[data-theme="marathon"] body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,#00e8c802 3px,#00e8c802 4px);pointer-events:none;z-index:9999}
-
-/* ── MASS EFFECT (Alliance / Normandy)
-   N7 blue #1e90ff, biotic violet #8040d0, Normandy cyan #00c8ff.
-   Deep navy #030c14. Holographic grid. Rajdhani military font.
-   Source: ME2/ME3 UI, N7 color codes, Normandy interior art */
-html[data-theme="mass-effect"] {
-  --bg:#030c14;--bg2:#071422;--bg3:#0b1d30;--bg4:#0f273e;--bg5:#13304c;
-  --border:#1e90ff16;--border2:#1e90ff28;--border3:#1e90ff48;
-  --text:#c0e4ff;--muted:#4e8ab8;--hint:#162a40;
-  --voccel:#1e90ff;--voccelg:#1e90ff12;--voccelb:#1e90ff28;
-  --prussia:#00c8ff;--prussiag:#00c8ff12;--prussiab:#00c8ff28;
-  --mh:#40e8d0;--mhg:#40e8d012;--mhb:#40e8d028;
-  --success:#40e8d0;--successg:#40e8d012;--warn:#f5c842;--warng:#f5c84212;--danger:#ff4840;--dangerg:#ff484012;
-  --r:3px;--r2:5px;--r3:8px;
-}
-html[data-theme="mass-effect"] body,html[data-theme="mass-effect"] .sidebar,html[data-theme="mass-effect"] .main,html[data-theme="mass-effect"] .topbar,html[data-theme="mass-effect"] .card,html[data-theme="mass-effect"] .nav-item,html[data-theme="mass-effect"] .metric,html[data-theme="mass-effect"] button,html[data-theme="mass-effect"] input,html[data-theme="mass-effect"] select,html[data-theme="mass-effect"] textarea{font-family:'Exo 2',sans-serif!important}
-html[data-theme="mass-effect"] .brand-name{font-family:'Rajdhani',sans-serif!important;font-size:17px!important;font-weight:700!important;color:#1e90ff!important;letter-spacing:.14em!important;text-shadow:0 0 14px #1e90ff80!important;text-transform:uppercase!important}
-html[data-theme="mass-effect"] .page-title{font-family:'Rajdhani',sans-serif!important;font-size:22px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.12em!important;color:#1e90ff!important;text-shadow:0 0 12px #1e90ff60!important}
-html[data-theme="mass-effect"] .card-title{font-family:'Rajdhani',sans-serif!important;font-weight:700!important;font-size:11px!important;letter-spacing:.16em!important;text-transform:uppercase!important}
-html[data-theme="mass-effect"] .metric-val{font-family:'Rajdhani',sans-serif!important;font-size:28px!important;font-weight:700!important;text-shadow:0 0 8px currentColor!important}
-html[data-theme="mass-effect"] .metric-lbl{font-family:'Rajdhani',sans-serif!important;font-size:10px!important;letter-spacing:.16em!important;text-transform:uppercase!important}
-html[data-theme="mass-effect"] .nav-item{font-family:'Rajdhani',sans-serif!important;font-weight:500!important;font-size:14px!important;text-transform:uppercase!important}
-html[data-theme="mass-effect"] .nav-section{font-family:'Rajdhani',sans-serif!important;font-size:9px!important;letter-spacing:.3em!important;text-transform:uppercase!important;color:#162a40!important}
-html[data-theme="mass-effect"] .xp-fill{background:linear-gradient(90deg,#1e90ff,#40e8d0)!important;box-shadow:0 0 8px #1e90ff60!important}
-html[data-theme="mass-effect"] .btn-main{font-family:'Rajdhani',sans-serif!important;font-weight:700!important;text-transform:uppercase!important;box-shadow:0 0 14px #1e90ff40!important}
-html[data-theme="mass-effect"] .card{box-shadow:0 0 15px #1e90ff06,inset 0 0 30px #1e90ff03!important}
-html[data-theme="mass-effect"] .sm-day.done{box-shadow:0 0 6px #1e90ff!important}
-
-/* ── MASS EFFECT: CERBERUS
-   The Illusive Man's palette: burnt orange #ff6200, amber #ffaa00, char black.
-   TIM's office: warm tungsten glow, obsidian, orange holographics.
-   Source: ME2 Cerberus HQ, TIM's chair scene color grade */
-html[data-theme="cerberus"] {
-  --bg:#080400;--bg2:#100800;--bg3:#181000;--bg4:#201800;--bg5:#282000;
-  --border:#ff620016;--border2:#ff620030;--border3:#ff620052;
-  --text:#ffe8c0;--muted:#c07030;--hint:#582808;
-  --voccel:#ff6200;--voccelg:#ff620014;--voccelb:#ff620028;
-  --prussia:#ffaa00;--prussiag:#ffaa0014;--prussiab:#ffaa0028;
-  --mh:#ff3000;--mhg:#ff300014;--mhb:#ff300028;
-  --success:#a8cc00;--successg:#a8cc0014;--warn:#ffaa00;--warng:#ffaa0014;--danger:#ff2000;--dangerg:#ff200014;
-  --r:2px;--r2:4px;--r3:6px;
-}
-html[data-theme="cerberus"] body,html[data-theme="cerberus"] .sidebar,html[data-theme="cerberus"] .main,html[data-theme="cerberus"] .topbar,html[data-theme="cerberus"] .card,html[data-theme="cerberus"] .nav-item,html[data-theme="cerberus"] .metric,html[data-theme="cerberus"] button,html[data-theme="cerberus"] input,html[data-theme="cerberus"] select,html[data-theme="cerberus"] textarea{font-family:'Rajdhani',sans-serif!important}
-html[data-theme="cerberus"] .brand-name{font-size:15px!important;font-weight:700!important;color:#ff6200!important;letter-spacing:.22em!important;text-shadow:0 0 16px #ff620090!important;text-transform:uppercase!important}
-html[data-theme="cerberus"] .page-title{font-size:22px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.16em!important;color:#ff6200!important;text-shadow:0 0 14px #ff620070!important}
-html[data-theme="cerberus"] .card-title{font-weight:700!important;font-size:10px!important;letter-spacing:.2em!important;text-transform:uppercase!important;color:#ff6200!important}
-html[data-theme="cerberus"] .metric-val{font-size:28px!important;font-weight:700!important}
-html[data-theme="cerberus"] .nav-item{font-weight:600!important;font-size:14px!important;text-transform:uppercase!important}
-html[data-theme="cerberus"] .nav-section{font-size:8px!important;letter-spacing:.3em!important;text-transform:uppercase!important;color:#582808!important}
-html[data-theme="cerberus"] .xp-fill{background:linear-gradient(90deg,#ff3000,#ff6200,#ffaa00)!important;box-shadow:0 0 10px #ff620060!important}
-html[data-theme="cerberus"] .btn-main{background:transparent!important;border:1px solid #ff6200!important;color:#ff6200!important;box-shadow:0 0 14px #ff620040!important}
-html[data-theme="cerberus"] .btn-main:hover{background:#ff620014!important;box-shadow:0 0 22px #ff620060!important}
-html[data-theme="cerberus"] .sm-day.done{background:#ff6200!important;color:#000!important;box-shadow:0 0 8px #ff6200!important}
-
-/* ── MAGE: THE ASCENSION
-   Tradition violet #7c3aed, Technocracy blue-grey, Paradox crimson.
-   Void purple #4a1090, will-fire gold #e0c040, sphere arcane teal.
-   Source: M:tA 20th Anniversary art, sphere color assignments */
-html[data-theme="mage"] {
-  --bg:#06040f;--bg2:#0d0818;--bg3:#140d24;--bg4:#1c1232;--bg5:#241840;
-  --border:#7c3aed18;--border2:#7c3aed2c;--border3:#7c3aed4a;
-  --text:#e0d6f8;--muted:#8060c0;--hint:#2e1860;
-  --voccel:#9b59f5;--voccelg:#9b59f514;--voccelb:#9b59f528;
-  --prussia:#e040c0;--prussiag:#e040c014;--prussiab:#e040c028;
-  --mh:#40b8e0;--mhg:#40b8e014;--mhb:#40b8e028;
-  --success:#50e080;--successg:#50e08014;--warn:#e0c040;--warng:#e0c04014;--danger:#e04060;--dangerg:#e0406014;
-  --r:7px;--r2:13px;--r3:20px;
-}
-html[data-theme="mage"] body,html[data-theme="mage"] .sidebar,html[data-theme="mage"] .main,html[data-theme="mage"] .topbar,html[data-theme="mage"] .card,html[data-theme="mage"] .nav-item,html[data-theme="mage"] .metric,html[data-theme="mage"] button,html[data-theme="mage"] input,html[data-theme="mage"] select,html[data-theme="mage"] textarea{font-family:'Lato',sans-serif!important}
-html[data-theme="mage"] .brand-name{font-family:'Metamorphous',serif!important;font-size:15px!important;color:#9b59f5!important;text-shadow:0 0 22px #9b59f580,0 0 44px #9b59f530!important}
-html[data-theme="mage"] .page-title{font-family:'Metamorphous',serif!important;font-size:21px!important;color:#9b59f5!important;text-shadow:0 0 16px #9b59f560!important}
-html[data-theme="mage"] .card-title{font-family:'Metamorphous',serif!important;font-size:10px!important}
-html[data-theme="mage"] .metric-val{font-family:'Metamorphous',serif!important;font-size:24px!important;text-shadow:0 0 8px currentColor!important}
-html[data-theme="mage"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:#2e1860!important}
-html[data-theme="mage"] .xp-fill{background:linear-gradient(90deg,#5020c0,#9b59f5,#e040c0)!important;box-shadow:0 0 12px #9b59f550!important}
-html[data-theme="mage"] .sm-day.done{box-shadow:0 0 8px #9b59f5!important}
-
-/* ── GEN X SOFT CLUB
-   Silver #c0c0c8, powder blue #a8c8e8, dusty mauve #b890b0.
-   Near-black velvet, cigarette haze, late-90s lounge.
-   Inspired by: Trip-hop era, Portishead, Air, Massive Attack visuals */
-html[data-theme="genx"] {
-  --bg:#0a0810;--bg2:#121018;--bg3:#1a1822;--bg4:#22202c;--bg5:#2a2836;
-  --border:#b8b8d018;--border2:#b8b8d028;--border3:#b8b8d045;
-  --text:#e8e4f0;--muted:#9090b0;--hint:#404060;
-  --voccel:#c0c0d8;--voccelg:#c0c0d814;--voccelb:#c0c0d828;
-  --prussia:#a8c8e8;--prussiag:#a8c8e814;--prussiab:#a8c8e828;
-  --mh:#b890b0;--mhg:#b890b014;--mhb:#b890b028;
-  --success:#90b090;--successg:#90b09014;--warn:#d8c090;--warng:#d8c09014;--danger:#c87880;--dangerg:#c8788014;
-  --r:10px;--r2:17px;--r3:24px;
-}
-html[data-theme="genx"] body,html[data-theme="genx"] .sidebar,html[data-theme="genx"] .main,html[data-theme="genx"] .topbar,html[data-theme="genx"] .card,html[data-theme="genx"] .nav-item,html[data-theme="genx"] .metric,html[data-theme="genx"] button,html[data-theme="genx"] input,html[data-theme="genx"] select,html[data-theme="genx"] textarea{font-family:'Space Grotesk',sans-serif!important;font-weight:300!important}
-html[data-theme="genx"] .brand-name{font-family:'DM Serif Display',serif!important;font-style:italic!important;font-size:19px!important;color:#c0c0d8!important;font-weight:400!important}
-html[data-theme="genx"] .page-title{font-family:'DM Serif Display',serif!important;font-style:italic!important;font-size:27px!important;font-weight:400!important}
-html[data-theme="genx"] .metric-val{font-family:'DM Serif Display',serif!important;font-size:28px!important;font-weight:400!important}
-html[data-theme="genx"] .nav-section{font-size:9px!important;letter-spacing:.2em!important;color:#404060!important}
-html[data-theme="genx"] .xp-fill{background:linear-gradient(90deg,#9090b0,#c0c0d8,#a8c8e8)!important}
-html[data-theme="genx"] .sm-day.done{background:#c0c0d8!important;color:#0a0810!important}
-html[data-theme="genx"] .nav-item.active{border-radius:0 17px 17px 0!important}
-
 </style>
+<link rel="stylesheet" href="themes/themes.css">
 </head>
 <body>
 
@@ -655,6 +408,18 @@ html[data-theme="genx"] .nav-item.active{border-radius:0 17px 17px 0!important}
       <option value="cerberus">Mass Effect: Cerberus</option>
       <option value="mage">Mage: The Ascension</option>
       <option value="genx">Gen X Soft Club</option>
+      <optgroup label="── Nuevos ──">
+      <option value="vaporwave">Vaporwave</option>
+      <option value="lofi">Lo-Fi / Chill</option>
+      <option value="darkwave">Darkwave / Cold Wave</option>
+      <option value="cyberpunk">Cyberpunk 2077</option>
+      <option value="horror">Cosmic Horror</option>
+      <option value="retrofuture">Retrofuturismo / Space Age</option>
+      <option value="anime">Anime / Shonen</option>
+      <option value="industrial">Post-Punk / Industrial</option>
+      <option value="neonoir">Neo-Noir / Blade Runner</option>
+      <option value="win95">Windows 95</option>
+      </optgroup>
     </select>
     <select id="currency-sel" style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:4px 9px;color:var(--text);font-family:'Outfit',sans-serif;font-size:11px;outline:none;cursor:pointer" onchange="S.currency=this.value;saveState();updateSim&&updateSim()">
       <option value="USD">$ USD</option>

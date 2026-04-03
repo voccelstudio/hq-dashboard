@@ -1,0 +1,556 @@
+/* ═══════════════════════════════════════════════════════════
+   THEMES — all using html[data-theme] to override :root
+   Research sources: official game art, fan wikis, color palettes
+═══════════════════════════════════════════════════════════ */
+
+/* ── DARK ACADEMIA
+   Oxford stone, candlelight amber, aged parchment, ink brown.
+   Inspired by: leather-bound books, brass candelabras, gothic arches */
+html[data-theme="dark-academia"] {
+  --bg:#0c0904;--bg2:#14100a;--bg3:#1e1610;--bg4:#281e15;--bg5:#32261a;
+  --border:#c8a96e18;--border2:#c8a96e32;--border3:#c8a96e55;
+  --text:#ede0c4;--muted:#9e7a4a;--hint:#4a3218;
+  --voccel:#c8a96e;--voccelg:#c8a96e14;--voccelb:#c8a96e28;
+  --prussia:#a05030;--prussiag:#a0503014;--prussiab:#a0503028;
+  --mh:#6b8c5a;--mhg:#6b8c5a14;--mhb:#6b8c5a28;
+  --success:#6b8c5a;--successg:#6b8c5a14;--warn:#c8a96e;--warng:#c8a96e14;--danger:#8b2020;--dangerg:#8b202014;
+  --r:4px;--r2:8px;--r3:12px;
+}
+html[data-theme="dark-academia"] body,html[data-theme="dark-academia"] .sidebar,html[data-theme="dark-academia"] .main,html[data-theme="dark-academia"] .topbar,html[data-theme="dark-academia"] .card,html[data-theme="dark-academia"] .nav-item,html[data-theme="dark-academia"] .metric,html[data-theme="dark-academia"] button,html[data-theme="dark-academia"] input,html[data-theme="dark-academia"] select,html[data-theme="dark-academia"] textarea{font-family:'Cormorant Garamond',Georgia,serif!important}
+html[data-theme="dark-academia"] .brand-name{font-family:'IM Fell English',serif!important;font-size:19px!important;color:#c8a96e!important;text-shadow:0 0 20px #c8a96e50!important;letter-spacing:.04em!important}
+html[data-theme="dark-academia"] .brand-sub{font-family:monospace!important;font-size:8px!important;letter-spacing:.22em!important}
+html[data-theme="dark-academia"] .page-title{font-family:'IM Fell English',serif!important;font-style:italic!important;font-size:24px!important}
+html[data-theme="dark-academia"] .card-title{font-family:'IM Fell English',serif!important;font-style:italic!important;font-size:11px!important}
+html[data-theme="dark-academia"] .metric-val{font-family:'IM Fell English',serif!important;font-size:28px!important}
+html[data-theme="dark-academia"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:#4a3218!important}
+html[data-theme="dark-academia"] .nav-item.active{box-shadow:inset 0 0 16px #c8a96e14!important}
+html[data-theme="dark-academia"] .xp-fill{background:linear-gradient(90deg,#a05030,#c8a96e)!important}
+
+/* ── GOTH
+   Pure black velvet, cold violet, silver moonlight, bone white.
+   Inspired by: Sisters of Mercy, The Cure, Victorian mourning dress */
+html[data-theme="goth"] {
+  --bg:#010103;--bg2:#05050d;--bg3:#090916;--bg4:#0e0e20;--bg5:#13132a;
+  --border:#8865d018;--border2:#8865d032;--border3:#8865d055;
+  --text:#ddd5f5;--muted:#6855a8;--hint:#281848;
+  --voccel:#9975e0;--voccelg:#9975e014;--voccelb:#9975e028;
+  --prussia:#c8c8e0;--prussiag:#c8c8e014;--prussiab:#c8c8e028;
+  --mh:#4060a0;--mhg:#4060a014;--mhb:#4060a028;
+  --success:#507050;--successg:#50705014;--warn:#806840;--warng:#80684014;--danger:#801828;--dangerg:#80182814;
+  --r:3px;--r2:6px;--r3:10px;
+}
+html[data-theme="goth"] body{font-family:'EB Garamond',Georgia,serif!important}
+html[data-theme="goth"] .sidebar,html[data-theme="goth"] .main,html[data-theme="goth"] .topbar,html[data-theme="goth"] .content,html[data-theme="goth"] .card,html[data-theme="goth"] .nav-item,html[data-theme="goth"] .metric,html[data-theme="goth"] .modal,html[data-theme="goth"] button,html[data-theme="goth"] input,html[data-theme="goth"] select,html[data-theme="goth"] textarea{font-family:'EB Garamond',Georgia,serif!important}
+html[data-theme="goth"] .brand-name{font-family:'UnifrakturMaguntia',cursive!important;font-size:22px!important;color:#9975e0!important;text-shadow:0 0 24px #9975e060!important}
+html[data-theme="goth"] .page-title{font-family:'UnifrakturMaguntia',cursive!important;font-size:26px!important;color:#9975e0!important;text-shadow:0 0 16px #9975e050!important}
+html[data-theme="goth"] .metric-val{font-family:'UnifrakturMaguntia',cursive!important;font-size:28px!important}
+html[data-theme="goth"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.22em!important;color:#281848!important}
+html[data-theme="goth"] .nav-item.active{text-shadow:0 0 8px #9975e040!important}
+html[data-theme="goth"] .xp-fill{background:linear-gradient(90deg,#3a0880,#9975e0)!important;box-shadow:0 0 10px #9975e050!important}
+html[data-theme="goth"] .sm-day.done{box-shadow:0 0 8px #9975e0!important}
+
+/* ── VAMPIRE: THE MASQUERADE
+   True blood crimson #8B0000 + #CC0000 on absolute black velvet.
+   Deep burgundy #4A0010, ivory bone, Elysium night purple.
+   Source: VtM 5th Ed corebook, LARP official art */
+html[data-theme="vampire"] {
+  --bg:#04000a;--bg2:#0a0010;--bg3:#120018;--bg4:#1a0022;--bg5:#22002e;
+  --border:#cc000018;--border2:#cc000035;--border3:#cc000058;
+  --text:#f0e0e8;--muted:#903060;--hint:#400018;
+  --voccel:#cc0000;--voccelg:#cc000014;--voccelb:#cc000028;
+  --prussia:#800050;--prussiag:#80005014;--prussiab:#80005028;
+  --mh:#e8c0d8;--mhg:#e8c0d814;--mhb:#e8c0d828;
+  --success:#405040;--successg:#40504014;--warn:#b8860b;--warng:#b8860b14;--danger:#cc0000;--dangerg:#cc000014;
+  --r:3px;--r2:6px;--r3:10px;
+}
+html[data-theme="vampire"] body,html[data-theme="vampire"] .sidebar,html[data-theme="vampire"] .main,html[data-theme="vampire"] .topbar,html[data-theme="vampire"] .card,html[data-theme="vampire"] .nav-item,html[data-theme="vampire"] .metric,html[data-theme="vampire"] button,html[data-theme="vampire"] input,html[data-theme="vampire"] select,html[data-theme="vampire"] textarea{font-family:'Crimson Pro',Georgia,serif!important}
+html[data-theme="vampire"] .brand-name{font-family:'Cinzel Decorative',serif!important;font-size:12px!important;color:#cc0000!important;text-shadow:0 0 22px #cc000090!important;text-transform:uppercase!important;letter-spacing:.04em!important}
+html[data-theme="vampire"] .page-title{font-family:'Cinzel Decorative',serif!important;font-size:16px!important;color:#cc0000!important;text-shadow:0 0 16px #cc000060!important}
+html[data-theme="vampire"] .card-title{font-family:'Cinzel Decorative',serif!important;font-size:8px!important;letter-spacing:.1em!important}
+html[data-theme="vampire"] .metric-val{font-family:'Cinzel Decorative',serif!important;font-size:22px!important}
+html[data-theme="vampire"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:#400018!important}
+html[data-theme="vampire"] .nav-item.active{text-shadow:0 0 8px #cc000050!important}
+html[data-theme="vampire"] .xp-fill{background:linear-gradient(90deg,#660011,#cc0000,#800050)!important;box-shadow:0 0 10px #cc000050!important}
+html[data-theme="vampire"] .sm-day.done{background:#cc0000!important;box-shadow:0 0 8px #cc000060!important}
+html[data-theme="vampire"] .card{box-shadow:inset 0 0 30px #cc00000a!important}
+
+/* ── MATRIX
+   Exact Matrix green #00ff41 (confirmed from film color grading).
+   Pure black #000400, medium green #008f20, dark #004010.
+   VT323 monospace, CRT scanlines, phosphor glow. */
+html[data-theme="matrix"] {
+  --bg:#000400;--bg2:#010901;--bg3:#021202;--bg4:#031a03;--bg5:#042204;
+  --border:#00ff4112;--border2:#00ff4126;--border3:#00ff4145;
+  --text:#00ff41;--muted:#00a020;--hint:#004510;
+  --voccel:#00ff41;--voccelg:#00ff4110;--voccelb:#00ff4120;
+  --prussia:#00dd33;--prussiag:#00dd3310;--prussiab:#00dd3320;
+  --mh:#50ff20;--mhg:#50ff2010;--mhb:#50ff2020;
+  --success:#00ff41;--successg:#00ff4112;--warn:#ccff00;--warng:#ccff0012;--danger:#ff0033;--dangerg:#ff003312;
+  --r:0px;--r2:1px;--r3:2px;
+}
+html[data-theme="matrix"] body,html[data-theme="matrix"] .sidebar,html[data-theme="matrix"] .main,html[data-theme="matrix"] .topbar,html[data-theme="matrix"] .card,html[data-theme="matrix"] .nav-item,html[data-theme="matrix"] .metric,html[data-theme="matrix"] button,html[data-theme="matrix"] input,html[data-theme="matrix"] select,html[data-theme="matrix"] textarea{font-family:'Share Tech Mono',monospace!important;color:#00ff41}
+html[data-theme="matrix"] .brand-name{font-family:'VT323',monospace!important;font-size:24px!important;color:#00ff41!important;text-shadow:0 0 10px #00ff41,0 0 22px #00ff4160!important;letter-spacing:.1em!important}
+html[data-theme="matrix"] .page-title{font-family:'VT323',monospace!important;font-size:30px!important;color:#00ff41!important;text-shadow:0 0 10px #00ff41!important}
+html[data-theme="matrix"] .metric-val{font-family:'VT323',monospace!important;font-size:32px!important;text-shadow:0 0 8px currentColor!important}
+html[data-theme="matrix"] .nav-item.active::before{content:'> ';color:#00ff41;font-size:12px}
+html[data-theme="matrix"] .xp-fill{background:#00ff41!important;box-shadow:0 0 8px #00ff41!important}
+html[data-theme="matrix"] .btn-main{background:transparent!important;border:1px solid #00ff41!important;color:#00ff41!important;text-shadow:0 0 6px #00ff41!important;box-shadow:0 0 10px #00ff4130!important}
+html[data-theme="matrix"] .card{border-radius:0!important;box-shadow:0 0 8px #00ff4108,inset 0 0 20px #00ff4103!important}
+html[data-theme="matrix"] body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,#00000018 2px,#00000018 4px);pointer-events:none;z-index:9999}
+
+/* ── SOLARPUNK
+   Leaf green #6abf5e, solar amber #f5c842, sky teal #42c8c0.
+   Deep forest bg, organic rounded corners, hopeful warmth.
+   Source: Becky Chambers aesthetic, solar/botanical references */
+html[data-theme="solarpunk"] {
+  --bg:#080f08;--bg2:#0e180c;--bg3:#142212;--bg4:#1a2c18;--bg5:#213818;
+  --border:#7acc5e18;--border2:#7acc5e2c;--border3:#7acc5e48;
+  --text:#e8f5dc;--muted:#7ab85a;--hint:#2d5228;
+  --voccel:#7acc5e;--voccelg:#7acc5e14;--voccelb:#7acc5e28;
+  --prussia:#f5c842;--prussiag:#f5c84214;--prussiab:#f5c84228;
+  --mh:#42c8c0;--mhg:#42c8c014;--mhb:#42c8c028;
+  --success:#7acc5e;--successg:#7acc5e14;--warn:#f5c842;--warng:#f5c84214;--danger:#f56040;--dangerg:#f5604014;
+  --r:12px;--r2:20px;--r3:28px;
+}
+html[data-theme="solarpunk"] body,html[data-theme="solarpunk"] .sidebar,html[data-theme="solarpunk"] .main,html[data-theme="solarpunk"] .topbar,html[data-theme="solarpunk"] .card,html[data-theme="solarpunk"] .nav-item,html[data-theme="solarpunk"] .metric,html[data-theme="solarpunk"] button,html[data-theme="solarpunk"] input,html[data-theme="solarpunk"] select,html[data-theme="solarpunk"] textarea{font-family:'Nunito',sans-serif!important}
+html[data-theme="solarpunk"] .brand-name{font-family:'Playfair Display',serif!important;font-style:italic!important;font-size:18px!important;color:#7acc5e!important}
+html[data-theme="solarpunk"] .page-title{font-family:'Playfair Display',serif!important;font-style:italic!important;font-size:26px!important}
+html[data-theme="solarpunk"] .metric-val{font-family:'Playfair Display',serif!important;font-size:28px!important}
+html[data-theme="solarpunk"] .nav-item.active{border-radius:0 20px 20px 0!important}
+html[data-theme="solarpunk"] .xp-fill{background:linear-gradient(90deg,#7acc5e,#f5c842,#42c8c0)!important}
+html[data-theme="solarpunk"] .sm-day.done{color:#000!important}
+
+/* ── MARATHON (Bungie 1994)
+   Security terminal teal #00e8c0 on absolute black #000c0a.
+   Pfhor purple #6040a0, warning amber, Orbitron display font.
+   Source: original Marathon trilogy HUD colors, terminal interface */
+html[data-theme="marathon"] {
+  --bg:#000c0a;--bg2:#001510;--bg3:#001e18;--bg4:#002822;--bg5:#003230;
+  --border:#00e8c016;--border2:#00e8c028;--border3:#00e8c045;
+  --text:#c0fff8;--muted:#409888;--hint:#103830;
+  --voccel:#00e8c0;--voccelg:#00e8c012;--voccelb:#00e8c028;
+  --prussia:#6040a0;--prussiag:#6040a012;--prussiab:#6040a028;
+  --mh:#40ffe0;--mhg:#40ffe012;--mhb:#40ffe028;
+  --success:#40ffe0;--successg:#40ffe012;--warn:#f0e040;--warng:#f0e04012;--danger:#ff4040;--dangerg:#ff404012;
+  --r:0px;--r2:0px;--r3:2px;
+}
+html[data-theme="marathon"] body,html[data-theme="marathon"] .sidebar,html[data-theme="marathon"] .main,html[data-theme="marathon"] .topbar,html[data-theme="marathon"] .card,html[data-theme="marathon"] .nav-item,html[data-theme="marathon"] .metric,html[data-theme="marathon"] button,html[data-theme="marathon"] input,html[data-theme="marathon"] select,html[data-theme="marathon"] textarea{font-family:'Share Tech Mono',monospace!important}
+html[data-theme="marathon"] .brand-name{font-family:'Orbitron',sans-serif!important;font-size:13px!important;font-weight:900!important;color:#00e8c0!important;text-shadow:0 0 18px #00e8c090,0 0 36px #00e8c040!important;letter-spacing:.16em!important;text-transform:uppercase!important}
+html[data-theme="marathon"] .page-title{font-family:'Orbitron',sans-serif!important;font-size:18px!important;font-weight:700!important;text-transform:uppercase!important;color:#00e8c0!important;text-shadow:0 0 14px #00e8c070!important}
+html[data-theme="marathon"] .card-title{font-family:'Orbitron',sans-serif!important;font-size:9px!important;letter-spacing:.22em!important;text-transform:uppercase!important}
+html[data-theme="marathon"] .metric-val{font-family:'Orbitron',sans-serif!important;font-size:24px!important;font-weight:700!important;text-shadow:0 0 8px currentColor!important}
+html[data-theme="marathon"] .nav-item.active::before{content:'>> ';color:#00e8c0}
+html[data-theme="marathon"] .nav-item{text-transform:uppercase!important;font-size:11px!important}
+html[data-theme="marathon"] .xp-fill{background:#00e8c0!important;box-shadow:0 0 10px #00e8c0!important}
+html[data-theme="marathon"] .btn-main{background:transparent!important;border:1px solid #00e8c0!important;color:#00e8c0!important;box-shadow:0 0 12px #00e8c040!important;border-radius:0!important}
+html[data-theme="marathon"] .card{border-radius:0!important;border-top:2px solid rgba(0,232,192,.3)!important}
+html[data-theme="marathon"] body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,#00e8c802 3px,#00e8c802 4px);pointer-events:none;z-index:9999}
+
+/* ── MASS EFFECT (Alliance / Normandy)
+   N7 blue #1e90ff, biotic violet #8040d0, Normandy cyan #00c8ff.
+   Deep navy #030c14. Holographic grid. Rajdhani military font.
+   Source: ME2/ME3 UI, N7 color codes, Normandy interior art */
+html[data-theme="mass-effect"] {
+  --bg:#030c14;--bg2:#071422;--bg3:#0b1d30;--bg4:#0f273e;--bg5:#13304c;
+  --border:#1e90ff16;--border2:#1e90ff28;--border3:#1e90ff48;
+  --text:#c0e4ff;--muted:#4e8ab8;--hint:#162a40;
+  --voccel:#1e90ff;--voccelg:#1e90ff12;--voccelb:#1e90ff28;
+  --prussia:#00c8ff;--prussiag:#00c8ff12;--prussiab:#00c8ff28;
+  --mh:#40e8d0;--mhg:#40e8d012;--mhb:#40e8d028;
+  --success:#40e8d0;--successg:#40e8d012;--warn:#f5c842;--warng:#f5c84212;--danger:#ff4840;--dangerg:#ff484012;
+  --r:3px;--r2:5px;--r3:8px;
+}
+html[data-theme="mass-effect"] body,html[data-theme="mass-effect"] .sidebar,html[data-theme="mass-effect"] .main,html[data-theme="mass-effect"] .topbar,html[data-theme="mass-effect"] .card,html[data-theme="mass-effect"] .nav-item,html[data-theme="mass-effect"] .metric,html[data-theme="mass-effect"] button,html[data-theme="mass-effect"] input,html[data-theme="mass-effect"] select,html[data-theme="mass-effect"] textarea{font-family:'Exo 2',sans-serif!important}
+html[data-theme="mass-effect"] .brand-name{font-family:'Rajdhani',sans-serif!important;font-size:17px!important;font-weight:700!important;color:#1e90ff!important;letter-spacing:.14em!important;text-shadow:0 0 14px #1e90ff80!important;text-transform:uppercase!important}
+html[data-theme="mass-effect"] .page-title{font-family:'Rajdhani',sans-serif!important;font-size:22px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.12em!important;color:#1e90ff!important;text-shadow:0 0 12px #1e90ff60!important}
+html[data-theme="mass-effect"] .card-title{font-family:'Rajdhani',sans-serif!important;font-weight:700!important;font-size:11px!important;letter-spacing:.16em!important;text-transform:uppercase!important}
+html[data-theme="mass-effect"] .metric-val{font-family:'Rajdhani',sans-serif!important;font-size:28px!important;font-weight:700!important;text-shadow:0 0 8px currentColor!important}
+html[data-theme="mass-effect"] .metric-lbl{font-family:'Rajdhani',sans-serif!important;font-size:10px!important;letter-spacing:.16em!important;text-transform:uppercase!important}
+html[data-theme="mass-effect"] .nav-item{font-family:'Rajdhani',sans-serif!important;font-weight:500!important;font-size:14px!important;text-transform:uppercase!important}
+html[data-theme="mass-effect"] .nav-section{font-family:'Rajdhani',sans-serif!important;font-size:9px!important;letter-spacing:.3em!important;text-transform:uppercase!important;color:#162a40!important}
+html[data-theme="mass-effect"] .xp-fill{background:linear-gradient(90deg,#1e90ff,#40e8d0)!important;box-shadow:0 0 8px #1e90ff60!important}
+html[data-theme="mass-effect"] .btn-main{font-family:'Rajdhani',sans-serif!important;font-weight:700!important;text-transform:uppercase!important;box-shadow:0 0 14px #1e90ff40!important}
+html[data-theme="mass-effect"] .card{box-shadow:0 0 15px #1e90ff06,inset 0 0 30px #1e90ff03!important}
+html[data-theme="mass-effect"] .sm-day.done{box-shadow:0 0 6px #1e90ff!important}
+
+/* ── MASS EFFECT: CERBERUS
+   The Illusive Man's palette: burnt orange #ff6200, amber #ffaa00, char black.
+   TIM's office: warm tungsten glow, obsidian, orange holographics.
+   Source: ME2 Cerberus HQ, TIM's chair scene color grade */
+html[data-theme="cerberus"] {
+  --bg:#080400;--bg2:#100800;--bg3:#181000;--bg4:#201800;--bg5:#282000;
+  --border:#ff620016;--border2:#ff620030;--border3:#ff620052;
+  --text:#ffe8c0;--muted:#c07030;--hint:#582808;
+  --voccel:#ff6200;--voccelg:#ff620014;--voccelb:#ff620028;
+  --prussia:#ffaa00;--prussiag:#ffaa0014;--prussiab:#ffaa0028;
+  --mh:#ff3000;--mhg:#ff300014;--mhb:#ff300028;
+  --success:#a8cc00;--successg:#a8cc0014;--warn:#ffaa00;--warng:#ffaa0014;--danger:#ff2000;--dangerg:#ff200014;
+  --r:2px;--r2:4px;--r3:6px;
+}
+html[data-theme="cerberus"] body,html[data-theme="cerberus"] .sidebar,html[data-theme="cerberus"] .main,html[data-theme="cerberus"] .topbar,html[data-theme="cerberus"] .card,html[data-theme="cerberus"] .nav-item,html[data-theme="cerberus"] .metric,html[data-theme="cerberus"] button,html[data-theme="cerberus"] input,html[data-theme="cerberus"] select,html[data-theme="cerberus"] textarea{font-family:'Rajdhani',sans-serif!important}
+html[data-theme="cerberus"] .brand-name{font-size:15px!important;font-weight:700!important;color:#ff6200!important;letter-spacing:.22em!important;text-shadow:0 0 16px #ff620090!important;text-transform:uppercase!important}
+html[data-theme="cerberus"] .page-title{font-size:22px!important;font-weight:700!important;text-transform:uppercase!important;letter-spacing:.16em!important;color:#ff6200!important;text-shadow:0 0 14px #ff620070!important}
+html[data-theme="cerberus"] .card-title{font-weight:700!important;font-size:10px!important;letter-spacing:.2em!important;text-transform:uppercase!important;color:#ff6200!important}
+html[data-theme="cerberus"] .metric-val{font-size:28px!important;font-weight:700!important}
+html[data-theme="cerberus"] .nav-item{font-weight:600!important;font-size:14px!important;text-transform:uppercase!important}
+html[data-theme="cerberus"] .nav-section{font-size:8px!important;letter-spacing:.3em!important;text-transform:uppercase!important;color:#582808!important}
+html[data-theme="cerberus"] .xp-fill{background:linear-gradient(90deg,#ff3000,#ff6200,#ffaa00)!important;box-shadow:0 0 10px #ff620060!important}
+html[data-theme="cerberus"] .btn-main{background:transparent!important;border:1px solid #ff6200!important;color:#ff6200!important;box-shadow:0 0 14px #ff620040!important}
+html[data-theme="cerberus"] .btn-main:hover{background:#ff620014!important;box-shadow:0 0 22px #ff620060!important}
+html[data-theme="cerberus"] .sm-day.done{background:#ff6200!important;color:#000!important;box-shadow:0 0 8px #ff6200!important}
+
+/* ── MAGE: THE ASCENSION
+   Tradition violet #7c3aed, Technocracy blue-grey, Paradox crimson.
+   Void purple #4a1090, will-fire gold #e0c040, sphere arcane teal.
+   Source: M:tA 20th Anniversary art, sphere color assignments */
+html[data-theme="mage"] {
+  --bg:#06040f;--bg2:#0d0818;--bg3:#140d24;--bg4:#1c1232;--bg5:#241840;
+  --border:#7c3aed18;--border2:#7c3aed2c;--border3:#7c3aed4a;
+  --text:#e0d6f8;--muted:#8060c0;--hint:#2e1860;
+  --voccel:#9b59f5;--voccelg:#9b59f514;--voccelb:#9b59f528;
+  --prussia:#e040c0;--prussiag:#e040c014;--prussiab:#e040c028;
+  --mh:#40b8e0;--mhg:#40b8e014;--mhb:#40b8e028;
+  --success:#50e080;--successg:#50e08014;--warn:#e0c040;--warng:#e0c04014;--danger:#e04060;--dangerg:#e0406014;
+  --r:7px;--r2:13px;--r3:20px;
+}
+html[data-theme="mage"] body,html[data-theme="mage"] .sidebar,html[data-theme="mage"] .main,html[data-theme="mage"] .topbar,html[data-theme="mage"] .card,html[data-theme="mage"] .nav-item,html[data-theme="mage"] .metric,html[data-theme="mage"] button,html[data-theme="mage"] input,html[data-theme="mage"] select,html[data-theme="mage"] textarea{font-family:'Lato',sans-serif!important}
+html[data-theme="mage"] .brand-name{font-family:'Metamorphous',serif!important;font-size:15px!important;color:#9b59f5!important;text-shadow:0 0 22px #9b59f580,0 0 44px #9b59f530!important}
+html[data-theme="mage"] .page-title{font-family:'Metamorphous',serif!important;font-size:21px!important;color:#9b59f5!important;text-shadow:0 0 16px #9b59f560!important}
+html[data-theme="mage"] .card-title{font-family:'Metamorphous',serif!important;font-size:10px!important}
+html[data-theme="mage"] .metric-val{font-family:'Metamorphous',serif!important;font-size:24px!important;text-shadow:0 0 8px currentColor!important}
+html[data-theme="mage"] .nav-section{font-family:monospace!important;font-size:8px!important;letter-spacing:.2em!important;color:#2e1860!important}
+html[data-theme="mage"] .xp-fill{background:linear-gradient(90deg,#5020c0,#9b59f5,#e040c0)!important;box-shadow:0 0 12px #9b59f550!important}
+html[data-theme="mage"] .sm-day.done{box-shadow:0 0 8px #9b59f5!important}
+
+/* ── GEN X SOFT CLUB
+   Silver #c0c0c8, powder blue #a8c8e8, dusty mauve #b890b0.
+   Near-black velvet, cigarette haze, late-90s lounge.
+   Inspired by: Trip-hop era, Portishead, Air, Massive Attack visuals */
+html[data-theme="genx"] {
+  --bg:#0a0810;--bg2:#121018;--bg3:#1a1822;--bg4:#22202c;--bg5:#2a2836;
+  --border:#b8b8d018;--border2:#b8b8d028;--border3:#b8b8d045;
+  --text:#e8e4f0;--muted:#9090b0;--hint:#404060;
+  --voccel:#c0c0d8;--voccelg:#c0c0d814;--voccelb:#c0c0d828;
+  --prussia:#a8c8e8;--prussiag:#a8c8e814;--prussiab:#a8c8e828;
+  --mh:#b890b0;--mhg:#b890b014;--mhb:#b890b028;
+  --success:#90b090;--successg:#90b09014;--warn:#d8c090;--warng:#d8c09014;--danger:#c87880;--dangerg:#c8788014;
+  --r:10px;--r2:17px;--r3:24px;
+}
+html[data-theme="genx"] body,html[data-theme="genx"] .sidebar,html[data-theme="genx"] .main,html[data-theme="genx"] .topbar,html[data-theme="genx"] .card,html[data-theme="genx"] .nav-item,html[data-theme="genx"] .metric,html[data-theme="genx"] button,html[data-theme="genx"] input,html[data-theme="genx"] select,html[data-theme="genx"] textarea{font-family:'Space Grotesk',sans-serif!important;font-weight:300!important}
+html[data-theme="genx"] .brand-name{font-family:'DM Serif Display',serif!important;font-style:italic!important;font-size:19px!important;color:#c0c0d8!important;font-weight:400!important}
+html[data-theme="genx"] .page-title{font-family:'DM Serif Display',serif!important;font-style:italic!important;font-size:27px!important;font-weight:400!important}
+html[data-theme="genx"] .metric-val{font-family:'DM Serif Display',serif!important;font-size:28px!important;font-weight:400!important}
+html[data-theme="genx"] .nav-section{font-size:9px!important;letter-spacing:.2em!important;color:#404060!important}
+html[data-theme="genx"] .xp-fill{background:linear-gradient(90deg,#9090b0,#c0c0d8,#a8c8e8)!important}
+html[data-theme="genx"] .sm-day.done{background:#c0c0d8!important;color:#0a0810!important}
+html[data-theme="genx"] .nav-item.active{border-radius:0 17px 17px 0!important}
+
+/* ── VAPORWAVE
+   Mallsoft aesthetic. Sunset gradient purple→pink→cyan. Grid floors.
+   #ff71ce hot pink, #01cdfe cyan, #b967ff purple, #05ffa1 mint.
+   Source: 珍しいねこ album art, Windows 96, 2814 */
+@import url('https://fonts.googleapis.com/css2?family=VT323&family=Quicksand:wght@400;500;600;700&display=swap');
+html[data-theme="vaporwave"]{
+  --bg:#0d0015;--bg2:#160020;--bg3:#1e0030;--bg4:#280040;--bg5:#320050;
+  --border:#ff71ce18;--border2:#ff71ce30;--border3:#ff71ce52;
+  --text:#f0e0ff;--muted:#c060c0;--hint:#601060;
+  --voccel:#ff71ce;--voccelg:#ff71ce14;--voccelb:#ff71ce28;
+  --prussia:#01cdfe;--prussiag:#01cdfe14;--prussiab:#01cdfe28;
+  --mh:#05ffa1;--mhg:#05ffa114;--mhb:#05ffa128;
+  --success:#05ffa1;--successg:#05ffa114;--warn:#fffb96;--warng:#fffb9614;--danger:#ff4488;--dangerg:#ff448814;
+  --r:8px;--r2:16px;--r3:24px;
+}
+html[data-theme="vaporwave"] body,html[data-theme="vaporwave"] .sidebar,html[data-theme="vaporwave"] .main,html[data-theme="vaporwave"] .card,html[data-theme="vaporwave"] .nav-item,html[data-theme="vaporwave"] button,html[data-theme="vaporwave"] input,html[data-theme="vaporwave"] select,html[data-theme="vaporwave"] textarea{font-family:'Quicksand',sans-serif!important}
+html[data-theme="vaporwave"] .brand-name{font-family:'VT323',monospace!important;font-size:26px!important;color:#ff71ce!important;text-shadow:0 0 20px #ff71ce80,2px 2px 0 #01cdfe!important;letter-spacing:.1em!important}
+html[data-theme="vaporwave"] .brand-sub{font-family:'VT323',monospace!important;font-size:13px!important;letter-spacing:.2em!important;color:#c060c0!important}
+html[data-theme="vaporwave"] .page-title{font-family:'VT323',monospace!important;font-size:34px!important;color:#ff71ce!important;text-shadow:2px 2px 0 #01cdfe,0 0 20px #ff71ce60!important;letter-spacing:.08em!important}
+html[data-theme="vaporwave"] .card{border-radius:var(--r2)!important;border:1px solid #ff71ce20!important;background:linear-gradient(135deg,#160020,#1a0028)!important;box-shadow:0 0 20px #ff71ce08,inset 0 0 40px #01cdfe04!important}
+html[data-theme="vaporwave"] .card-title{font-size:13px!important;letter-spacing:.1em!important;color:#01cdfe!important}
+html[data-theme="vaporwave"] .metric-val{font-family:'VT323',monospace!important;font-size:34px!important;text-shadow:0 0 10px currentColor!important}
+html[data-theme="vaporwave"] .nav-section{font-family:'VT323',monospace!important;font-size:13px!important;letter-spacing:.2em!important;color:#601060!important}
+html[data-theme="vaporwave"] .nav-item.active{background:linear-gradient(90deg,#ff71ce14,transparent)!important;border-left-color:#ff71ce!important}
+html[data-theme="vaporwave"] .xp-fill{background:linear-gradient(90deg,#b967ff,#ff71ce,#01cdfe)!important;box-shadow:0 0 10px #ff71ce60!important}
+html[data-theme="vaporwave"] .sm-day.done{background:linear-gradient(135deg,#ff71ce,#b967ff)!important;color:#000!important}
+html[data-theme="vaporwave"] .sidebar{border-right:1px solid #ff71ce20!important}
+html[data-theme="vaporwave"] .topbar{border-bottom:1px solid #ff71ce20!important;background:var(--bg)!important}
+html[data-theme="vaporwave"] body::before{content:'';position:fixed;bottom:0;left:0;right:0;height:40%;background:linear-gradient(0deg,#ff71ce04,transparent),repeating-linear-gradient(90deg,transparent,transparent 60px,#ff71ce06 60px,#ff71ce06 61px),repeating-linear-gradient(0deg,transparent,transparent 60px,#ff71ce04 60px,#ff71ce04 61px);pointer-events:none;z-index:0;perspective:400px}
+
+/* ── LO-FI / CHILL HOP
+   Warm cassette grain. Amber desk lamp. Rain on window.
+   #d4a574 warm amber, #8b7355 coffee brown, #c8b99a cream.
+   Inspired by: lofi girl stream palette, cassette tape aesthetics */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+html[data-theme="lofi"]{
+  --bg:#0f0c08;--bg2:#1a1510;--bg3:#251e18;--bg4:#302720;--bg5:#3b3028;
+  --border:#d4a57418;--border2:#d4a57430;--border3:#d4a57450;
+  --text:#f0e8d8;--muted:#a08060;--hint:#504030;
+  --voccel:#d4a574;--voccelg:#d4a57414;--voccelb:#d4a57428;
+  --prussia:#7ec8a0;--prussiag:#7ec8a014;--prussiab:#7ec8a028;
+  --mh:#c8a87e;--mhg:#c8a87e14;--mhb:#c8a87e28;
+  --success:#7ec8a0;--successg:#7ec8a014;--warn:#d4a574;--warng:#d4a57414;--danger:#c87870;--dangerg:#c8787014;
+  --r:10px;--r2:18px;--r3:26px;
+}
+html[data-theme="lofi"] body,html[data-theme="lofi"] .sidebar,html[data-theme="lofi"] .main,html[data-theme="lofi"] .card,html[data-theme="lofi"] .nav-item,html[data-theme="lofi"] button,html[data-theme="lofi"] input,html[data-theme="lofi"] select,html[data-theme="lofi"] textarea{font-family:'Caveat',cursive!important;font-size:17px!important}
+html[data-theme="lofi"] .brand-name{font-size:22px!important;color:#d4a574!important;font-weight:700!important;letter-spacing:.02em!important}
+html[data-theme="lofi"] .brand-sub{font-family:'IBM Plex Mono',monospace!important;font-size:9px!important;letter-spacing:.18em!important;color:var(--muted)!important}
+html[data-theme="lofi"] .page-title{font-size:30px!important;font-weight:700!important;color:var(--text)!important}
+html[data-theme="lofi"] .metric-val{font-family:'IBM Plex Mono',monospace!important;font-size:28px!important;font-weight:500!important}
+html[data-theme="lofi"] .card{border-radius:var(--r2)!important;border:1px solid var(--border2)!important;box-shadow:2px 3px 12px #00000030!important}
+html[data-theme="lofi"] .card-title{font-family:'IBM Plex Mono',monospace!important;font-size:11px!important;letter-spacing:.12em!important}
+html[data-theme="lofi"] .nav-section{font-family:'IBM Plex Mono',monospace!important;font-size:9px!important;letter-spacing:.18em!important;color:var(--hint)!important}
+html[data-theme="lofi"] .nav-item.active{border-left-color:var(--voccel)!important;background:var(--voccelg)!important;border-radius:0 var(--r2) var(--r2) 0!important}
+html[data-theme="lofi"] .xp-fill{background:linear-gradient(90deg,#c8905a,#d4a574,#7ec8a0)!important}
+html[data-theme="lofi"] .sidebar{border-right:1px solid var(--border2)!important}
+html[data-theme="lofi"] .topbar{border-bottom:1px solid var(--border2)!important;background:var(--bg)!important}
+html[data-theme="lofi"] .sm-day.done{background:var(--voccel)!important;color:#0f0c08!important}
+html[data-theme="lofi"] body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.045'/%3E%3C/svg%3E");pointer-events:none;z-index:9998}
+
+/* ── DARKWAVE
+   Post-punk electronic. Cold synth blue-grey. Bauhaus.
+   #1a1a2e midnight navy, #4a4a6a slate, #e0e0ff ice lavender.
+   Inspired by: Clan of Xymox, Sisters of Mercy cold wave era */
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
+html[data-theme="darkwave"]{
+  --bg:#060810;--bg2:#0c1020;--bg3:#121830;--bg4:#182040;--bg5:#1e2850;
+  --border:#6070d018;--border2:#6070d030;--border3:#6070d050;
+  --text:#d0d8f8;--muted:#6070a0;--hint:#202840;
+  --voccel:#8090e0;--voccelg:#8090e014;--voccelb:#8090e028;
+  --prussia:#50a0c8;--prussiag:#50a0c814;--prussiab:#50a0c828;
+  --mh:#90c0e0;--mhg:#90c0e014;--mhb:#90c0e028;
+  --success:#80c890;--successg:#80c89014;--warn:#c8c070;--warng:#c8c07014;--danger:#c06070;--dangerg:#c0607014;
+  --r:2px;--r2:4px;--r3:6px;
+}
+html[data-theme="darkwave"] body,html[data-theme="darkwave"] .sidebar,html[data-theme="darkwave"] .main,html[data-theme="darkwave"] .card,html[data-theme="darkwave"] .nav-item,html[data-theme="darkwave"] button,html[data-theme="darkwave"] input,html[data-theme="darkwave"] select,html[data-theme="darkwave"] textarea{font-family:'Oswald',sans-serif!important}
+html[data-theme="darkwave"] .brand-name{font-size:18px!important;font-weight:600!important;color:#8090e0!important;letter-spacing:.25em!important;text-transform:uppercase!important}
+html[data-theme="darkwave"] .brand-sub{font-family:'IBM Plex Mono',monospace!important;font-size:8px!important;letter-spacing:.3em!important;color:var(--muted)!important;text-transform:uppercase!important}
+html[data-theme="darkwave"] .page-title{font-size:26px!important;font-weight:600!important;letter-spacing:.2em!important;text-transform:uppercase!important;color:#8090e0!important}
+html[data-theme="darkwave"] .card{border-radius:0!important;border:1px solid var(--border2)!important;border-top:2px solid var(--border3)!important}
+html[data-theme="darkwave"] .card-title{font-family:'IBM Plex Mono',monospace!important;font-size:10px!important;letter-spacing:.22em!important;text-transform:uppercase!important}
+html[data-theme="darkwave"] .metric-val{font-family:'IBM Plex Mono',monospace!important;font-size:28px!important;text-shadow:0 0 8px currentColor!important}
+html[data-theme="darkwave"] .nav-section{font-family:'IBM Plex Mono',monospace!important;font-size:8px!important;letter-spacing:.3em!important;color:var(--hint)!important;text-transform:uppercase!important}
+html[data-theme="darkwave"] .nav-item{font-weight:400!important;letter-spacing:.1em!important;text-transform:uppercase!important;font-size:13px!important}
+html[data-theme="darkwave"] .nav-item.active{border-left-color:#8090e0!important;background:var(--voccelg)!important;text-shadow:0 0 8px #8090e040!important}
+html[data-theme="darkwave"] .xp-fill{background:linear-gradient(90deg,#404080,#8090e0,#50a0c8)!important;box-shadow:0 0 8px #8090e050!important}
+html[data-theme="darkwave"] .sidebar{border-right:1px solid var(--border2)!important}
+html[data-theme="darkwave"] .topbar{border-bottom:2px solid var(--border2)!important;background:var(--bg)!important}
+html[data-theme="darkwave"] .sm-day.done{background:#8090e0!important;box-shadow:0 0 8px #8090e080!important}
+
+/* ── CYBERPUNK 2077
+   Night City neon. #fcee09 corporate yellow, #f7066d hot pink, #00f0ff cyan.
+   Deep noir black #0a0a0f. Rain-slicked asphalt. 
+   Source: CP2077 UI color palette, official art */
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+html[data-theme="cyberpunk"]{
+  --bg:#080810;--bg2:#0c0c18;--bg3:#101020;--bg4:#141428;--bg5:#181830;
+  --border:#fcee0918;--border2:#fcee0932;--border3:#fcee0955;
+  --text:#f0f0ff;--muted:#8888aa;--hint:#303048;
+  --voccel:#fcee09;--voccelg:#fcee0914;--voccelb:#fcee0928;
+  --prussia:#f7066d;--prussiag:#f7066d14;--prussiab:#f7066d28;
+  --mh:#00f0ff;--mhg:#00f0ff14;--mhb:#00f0ff28;
+  --success:#00f0ff;--successg:#00f0ff14;--warn:#fcee09;--warng:#fcee0914;--danger:#f7066d;--dangerg:#f7066d14;
+  --r:0px;--r2:2px;--r3:3px;
+}
+html[data-theme="cyberpunk"] body,html[data-theme="cyberpunk"] .sidebar,html[data-theme="cyberpunk"] .main,html[data-theme="cyberpunk"] .card,html[data-theme="cyberpunk"] .nav-item,html[data-theme="cyberpunk"] button,html[data-theme="cyberpunk"] input,html[data-theme="cyberpunk"] select,html[data-theme="cyberpunk"] textarea{font-family:'Rajdhani',sans-serif!important}
+html[data-theme="cyberpunk"] .brand-name{font-size:17px!important;font-weight:700!important;color:#fcee09!important;text-shadow:0 0 16px #fcee0990,2px 0 0 #f7066d!important;letter-spacing:.18em!important;text-transform:uppercase!important}
+html[data-theme="cyberpunk"] .page-title{font-size:24px!important;font-weight:700!important;letter-spacing:.15em!important;text-transform:uppercase!important;color:#fcee09!important;text-shadow:0 0 14px #fcee0970,2px 0 0 #f7066d50!important}
+html[data-theme="cyberpunk"] .card{border-radius:0!important;border:1px solid #fcee0922!important;border-left:3px solid #fcee09!important;box-shadow:0 0 20px #fcee0906!important}
+html[data-theme="cyberpunk"] .card-title{font-family:'Share Tech Mono',monospace!important;font-size:11px!important;letter-spacing:.2em!important;text-transform:uppercase!important;color:#fcee09!important}
+html[data-theme="cyberpunk"] .metric-val{font-family:'Share Tech Mono',monospace!important;font-size:30px!important;text-shadow:0 0 12px currentColor!important}
+html[data-theme="cyberpunk"] .metric-lbl{font-family:'Share Tech Mono',monospace!important;font-size:10px!important;letter-spacing:.2em!important;text-transform:uppercase!important}
+html[data-theme="cyberpunk"] .nav-section{font-family:'Share Tech Mono',monospace!important;font-size:9px!important;letter-spacing:.28em!important;color:var(--hint)!important}
+html[data-theme="cyberpunk"] .nav-item{font-weight:600!important;font-size:14px!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+html[data-theme="cyberpunk"] .nav-item.active{background:var(--voccelg)!important;border-left-color:#fcee09!important;text-shadow:0 0 8px #fcee0960!important}
+html[data-theme="cyberpunk"] .xp-fill{background:linear-gradient(90deg,#f7066d,#fcee09)!important;box-shadow:0 0 12px #fcee0960!important}
+html[data-theme="cyberpunk"] .sidebar{border-right:1px solid #fcee0920!important}
+html[data-theme="cyberpunk"] .topbar{border-bottom:2px solid #fcee0930!important;background:var(--bg)!important}
+html[data-theme="cyberpunk"] .btn-main{background:transparent!important;border:1px solid #fcee09!important;color:#fcee09!important;text-shadow:0 0 8px #fcee09!important;box-shadow:0 0 14px #fcee0940!important;border-radius:0!important;text-transform:uppercase!important;letter-spacing:.12em!important}
+html[data-theme="cyberpunk"] .sm-day.done{background:#fcee09!important;color:#000!important;box-shadow:0 0 8px #fcee09!important;border-radius:0!important}
+html[data-theme="cyberpunk"] body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,#fcee0902 3px,#fcee0902 4px);pointer-events:none;z-index:9999}
+
+/* ── COSMIC HORROR (Lovecraftian)
+   The void stares back. Deep sea black. Eldritch green #1a4a2a.
+   Pallid flesh #c8b89a, abyssal darkness, tentacle teal.
+   Inspired by: Call of Cthulhu RPG art, HP Lovecraft text */
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=IM+Fell+DW+Pica:ital@0;1&display=swap');
+html[data-theme="horror"]{
+  --bg:#020508;--bg2:#04090e;--bg3:#060e14;--bg4:#08131a;--bg5:#0a1820;
+  --border:#1a4a2a20;--border2:#1a4a2a38;--border3:#1a4a2a60;
+  --text:#c8c0a8;--muted:#507060;--hint:#182820;
+  --voccel:#2a7a40;--voccelg:#2a7a4014;--voccelb:#2a7a4028;
+  --prussia:#1a5a70;--prussiag:#1a5a7014;--prussiab:#1a5a7028;
+  --mh:#c8b89a;--mhg:#c8b89a14;--mhb:#c8b89a28;
+  --success:#507060;--successg:#50706014;--warn:#907840;--warng:#90784014;--danger:#702020;--dangerg:#70202014;
+  --r:2px;--r2:4px;--r3:6px;
+}
+html[data-theme="horror"] body,html[data-theme="horror"] .sidebar,html[data-theme="horror"] .main,html[data-theme="horror"] .card,html[data-theme="horror"] .nav-item,html[data-theme="horror"] button,html[data-theme="horror"] input,html[data-theme="horror"] select,html[data-theme="horror"] textarea{font-family:'IM Fell DW Pica',serif!important}
+html[data-theme="horror"] .brand-name{font-family:'Uncial Antiqua',serif!important;font-size:17px!important;color:#2a7a40!important;text-shadow:0 0 20px #2a7a4060!important;letter-spacing:.04em!important}
+html[data-theme="horror"] .page-title{font-family:'Uncial Antiqua',serif!important;font-size:22px!important;color:#2a7a40!important;text-shadow:0 0 14px #2a7a4050!important}
+html[data-theme="horror"] .card{border:1px solid var(--border2)!important;border-radius:var(--r)!important;box-shadow:inset 0 0 40px #02050806!important}
+html[data-theme="horror"] .card-title{font-family:'Uncial Antiqua',serif!important;font-size:10px!important;letter-spacing:.08em!important;color:#507060!important}
+html[data-theme="horror"] .metric-val{font-family:'Uncial Antiqua',serif!important;font-size:26px!important}
+html[data-theme="horror"] .nav-section{font-family:'IM Fell DW Pica',serif!important;font-style:italic!important;font-size:10px!important;letter-spacing:.14em!important;color:var(--hint)!important}
+html[data-theme="horror"] .nav-item.active{background:var(--voccelg)!important;border-left-color:var(--voccel)!important;text-shadow:0 0 8px #2a7a4040!important}
+html[data-theme="horror"] .xp-fill{background:linear-gradient(90deg,#1a5a70,#2a7a40)!important;box-shadow:0 0 8px #2a7a4050!important}
+html[data-theme="horror"] .sidebar{border-right:1px solid var(--border2)!important}
+html[data-theme="horror"] .topbar{border-bottom:1px solid var(--border2)!important;background:var(--bg)!important}
+html[data-theme="horror"] .sm-day.done{background:#2a7a40!important;box-shadow:0 0 8px #2a7a4060!important}
+html[data-theme="horror"] .content::before{content:'Ph'nglui mglw'nafh';position:fixed;bottom:16px;right:20px;font-family:'Uncial Antiqua',serif;font-size:11px;color:#2a7a4008;pointer-events:none;z-index:0;letter-spacing:.1em}
+
+/* ── RETROFUTURISM / SPACE AGE
+   1960s NASA optimism. Atomic age. Googie architecture.
+   #ff6b35 rocket orange, #f7c59f cream, #fffbf0 ivory on #1a1a2e.
+   Inspired by: NASA worm logo, Space Age font, Raygun Gothic */
+@import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Exo+2:wght@300;400;500;600&display=swap');
+html[data-theme="retrofuture"]{
+  --bg:#0a0a18;--bg2:#121228;--bg3:#1a1a38;--bg4:#222248;--bg5:#2a2a58;
+  --border:#ff6b3518;--border2:#ff6b3530;--border3:#ff6b3552;
+  --text:#fff8e8;--muted:#a09060;--hint:#404028;
+  --voccel:#ff6b35;--voccelg:#ff6b3514;--voccelb:#ff6b3528;
+  --prussia:#f7c59f;--prussiag:#f7c59f14;--prussiab:#f7c59f28;
+  --mh:#4ecdc4;--mhg:#4ecdc414;--mhb:#4ecdc428;
+  --success:#4ecdc4;--successg:#4ecdc414;--warn:#ff6b35;--warng:#ff6b3514;--danger:#ff4444;--dangerg:#ff444414;
+  --r:6px;--r2:30px;--r3:40px;
+}
+html[data-theme="retrofuture"] body,html[data-theme="retrofuture"] .sidebar,html[data-theme="retrofuture"] .main,html[data-theme="retrofuture"] .card,html[data-theme="retrofuture"] .nav-item,html[data-theme="retrofuture"] button,html[data-theme="retrofuture"] input,html[data-theme="retrofuture"] select,html[data-theme="retrofuture"] textarea{font-family:'Exo 2',sans-serif!important}
+html[data-theme="retrofuture"] .brand-name{font-family:'Audiowide',sans-serif!important;font-size:14px!important;color:#ff6b35!important;text-shadow:0 0 16px #ff6b3580!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+html[data-theme="retrofuture"] .page-title{font-family:'Audiowide',sans-serif!important;font-size:20px!important;color:#ff6b35!important;text-shadow:0 0 14px #ff6b3560!important;letter-spacing:.06em!important;text-transform:uppercase!important}
+html[data-theme="retrofuture"] .card{border-radius:var(--r3)!important;border:1px solid var(--border2)!important;box-shadow:0 4px 24px #ff6b3510!important}
+html[data-theme="retrofuture"] .card-title{font-family:'Audiowide',sans-serif!important;font-size:9px!important;letter-spacing:.14em!important;text-transform:uppercase!important}
+html[data-theme="retrofuture"] .metric-val{font-family:'Audiowide',sans-serif!important;font-size:26px!important;text-shadow:0 0 10px currentColor!important}
+html[data-theme="retrofuture"] .nav-section{font-family:'Audiowide',sans-serif!important;font-size:8px!important;letter-spacing:.2em!important;color:var(--hint)!important;text-transform:uppercase!important}
+html[data-theme="retrofuture"] .nav-item{font-size:14px!important;letter-spacing:.05em!important}
+html[data-theme="retrofuture"] .nav-item.active{border-radius:0 var(--r3) var(--r3) 0!important;background:var(--voccelg)!important;border-left-color:#ff6b35!important}
+html[data-theme="retrofuture"] .xp-fill{background:linear-gradient(90deg,#ff6b35,#f7c59f)!important;box-shadow:0 0 10px #ff6b3560!important}
+html[data-theme="retrofuture"] .sidebar{border-right:1px solid var(--border2)!important}
+html[data-theme="retrofuture"] .topbar{border-bottom:1px solid var(--border2)!important;background:var(--bg)!important}
+html[data-theme="retrofuture"] .btn-main{border-radius:var(--r3)!important;box-shadow:0 0 14px #ff6b3540!important}
+html[data-theme="retrofuture"] .sm-day.done{background:#ff6b35!important;color:#fff!important;box-shadow:0 0 8px #ff6b35!important;border-radius:50%!important}
+
+/* ── ANIME / SHONEN
+   Vibrant action energy. #ff4400 fire red, #ffcc00 lightning gold.
+   Speed lines. Pure white highlights on dark navy.
+   Inspired by: Demon Slayer, My Hero Academia UI */
+@import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap');
+html[data-theme="anime"]{
+  --bg:#080818;--bg2:#0e0e28;--bg3:#141438;--bg4:#1a1a48;--bg5:#202058;
+  --border:#ff440018;--border2:#ff440032;--border3:#ff440055;
+  --text:#ffffff;--muted:#8888cc;--hint:#303060;
+  --voccel:#ff4400;--voccelg:#ff440014;--voccelb:#ff440028;
+  --prussia:#ffcc00;--prussiag:#ffcc0014;--prussiab:#ffcc0028;
+  --mh:#00ccff;--mhg:#00ccff14;--mhb:#00ccff28;
+  --success:#00ff88;--successg:#00ff8814;--warn:#ffcc00;--warng:#ffcc0014;--danger:#ff0044;--dangerg:#ff004414;
+  --r:6px;--r2:12px;--r3:20px;
+}
+html[data-theme="anime"] body,html[data-theme="anime"] .sidebar,html[data-theme="anime"] .main,html[data-theme="anime"] .card,html[data-theme="anime"] .nav-item,html[data-theme="anime"] button,html[data-theme="anime"] input,html[data-theme="anime"] select,html[data-theme="anime"] textarea{font-family:'Nunito',sans-serif!important;font-weight:600!important}
+html[data-theme="anime"] .brand-name{font-family:'Bangers',cursive!important;font-size:26px!important;color:#ff4400!important;text-shadow:3px 3px 0 #ffcc00,0 0 20px #ff440080!important;letter-spacing:.12em!important}
+html[data-theme="anime"] .page-title{font-family:'Bangers',cursive!important;font-size:34px!important;color:#ff4400!important;text-shadow:3px 3px 0 #ffcc00,0 0 20px #ff440060!important;letter-spacing:.1em!important}
+html[data-theme="anime"] .card{border-radius:var(--r2)!important;border:2px solid #ff440030!important;border-top:3px solid #ff4400!important;box-shadow:0 4px 20px #ff440012!important}
+html[data-theme="anime"] .card-title{font-family:'Bangers',cursive!important;font-size:14px!important;letter-spacing:.1em!important;color:#ffcc00!important}
+html[data-theme="anime"] .metric-val{font-family:'Bangers',cursive!important;font-size:34px!important;text-shadow:2px 2px 0 rgba(0,0,0,.5)!important}
+html[data-theme="anime"] .nav-section{font-size:10px!important;letter-spacing:.15em!important;color:var(--hint)!important;font-weight:800!important;text-transform:uppercase!important}
+html[data-theme="anime"] .nav-item{font-weight:700!important;font-size:15px!important}
+html[data-theme="anime"] .nav-item.active{background:var(--voccelg)!important;border-left-color:#ff4400!important;text-shadow:0 0 8px #ff440060!important}
+html[data-theme="anime"] .xp-fill{background:linear-gradient(90deg,#ff4400,#ffcc00,#00ccff)!important;box-shadow:0 0 14px #ff440060!important}
+html[data-theme="anime"] .sidebar{border-right:2px solid #ff440020!important}
+html[data-theme="anime"] .topbar{border-bottom:2px solid #ff440030!important;background:var(--bg)!important}
+html[data-theme="anime"] .btn-main{font-family:'Bangers',cursive!important;font-size:18px!important;letter-spacing:.1em!important;box-shadow:0 4px 20px #ff440050!important;border-radius:var(--r)!important}
+html[data-theme="anime"] .sm-day.done{background:linear-gradient(135deg,#ff4400,#ffcc00)!important;color:#fff!important;box-shadow:0 0 10px #ff4400!important}
+
+/* ── POST-PUNK / INDUSTRIAL
+   Factory grey. Brutalist concrete. Depeche Mode era.
+   #b0b0b0 steel, #404040 concrete, #c80000 warning red. No decoration.
+   Inspired by: Throbbing Gristle, Einstürzende Neubauten aesthetic */
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+html[data-theme="industrial"]{
+  --bg:#080808;--bg2:#101010;--bg3:#181818;--bg4:#202020;--bg5:#282828;
+  --border:#60606018;--border2:#60606030;--border3:#60606055;
+  --text:#c8c8c8;--muted:#707070;--hint:#303030;
+  --voccel:#c80000;--voccelg:#c8000014;--voccelb:#c8000028;
+  --prussia:#b0b0b0;--prussiag:#b0b0b014;--prussiab:#b0b0b028;
+  --mh:#808080;--mhg:#80808014;--mhb:#80808028;
+  --success:#608060;--successg:#60806014;--warn:#c8a000;--warng:#c8a00014;--danger:#c80000;--dangerg:#c8000014;
+  --r:0px;--r2:0px;--r3:0px;
+}
+html[data-theme="industrial"] body,html[data-theme="industrial"] .sidebar,html[data-theme="industrial"] .main,html[data-theme="industrial"] .card,html[data-theme="industrial"] .nav-item,html[data-theme="industrial"] button,html[data-theme="industrial"] input,html[data-theme="industrial"] select,html[data-theme="industrial"] textarea{font-family:'Barlow Condensed',sans-serif!important;font-weight:400!important}
+html[data-theme="industrial"] .brand-name{font-size:18px!important;font-weight:700!important;color:#c8c8c8!important;letter-spacing:.3em!important;text-transform:uppercase!important}
+html[data-theme="industrial"] .brand-sub{font-family:'IBM Plex Mono',monospace!important;font-size:8px!important;letter-spacing:.35em!important;color:var(--muted)!important;text-transform:uppercase!important}
+html[data-theme="industrial"] .page-title{font-size:28px!important;font-weight:700!important;letter-spacing:.25em!important;text-transform:uppercase!important;color:#c8c8c8!important}
+html[data-theme="industrial"] .card{border-radius:0!important;border:1px solid var(--border2)!important;border-left:3px solid #c80000!important}
+html[data-theme="industrial"] .card-title{font-family:'IBM Plex Mono',monospace!important;font-size:10px!important;letter-spacing:.25em!important;text-transform:uppercase!important;color:#c80000!important}
+html[data-theme="industrial"] .metric-val{font-family:'IBM Plex Mono',monospace!important;font-size:30px!important;font-weight:500!important}
+html[data-theme="industrial"] .nav-section{font-family:'IBM Plex Mono',monospace!important;font-size:8px!important;letter-spacing:.3em!important;color:var(--hint)!important;text-transform:uppercase!important}
+html[data-theme="industrial"] .nav-item{font-weight:500!important;font-size:15px!important;letter-spacing:.1em!important;text-transform:uppercase!important}
+html[data-theme="industrial"] .nav-item.active{background:var(--voccelg)!important;border-left-color:#c80000!important}
+html[data-theme="industrial"] .xp-fill{background:#c80000!important;box-shadow:0 0 6px #c8000060!important}
+html[data-theme="industrial"] .sidebar{border-right:1px solid var(--border2)!important}
+html[data-theme="industrial"] .topbar{border-bottom:2px solid #c80000!important;background:var(--bg)!important}
+html[data-theme="industrial"] .sm-day.done{background:#c80000!important;border-radius:0!important}
+html[data-theme="industrial"] body::after{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 4px,#ffffff03 4px,#ffffff03 5px);pointer-events:none;z-index:9998}
+
+/* ── BLADE RUNNER / NEO-NOIR
+   Rain. Neon reflections. Smog-filtered amber. Spinner headlights.
+   #ff8c00 amber, #006994 rain blue, #1a0a00 noir black.
+   Source: BR2049 color grade, Vangelis score cover art */
+html[data-theme="neonoir"]{
+  --bg:#05030a;--bg2:#0c0810;--bg3:#120d18;--bg4:#181220;--bg5:#1e1828;
+  --border:#ff8c0018;--border2:#ff8c0030;--border3:#ff8c0052;
+  --text:#e8d0a8;--muted:#907040;--hint:#402810;
+  --voccel:#ff8c00;--voccelg:#ff8c0014;--voccelb:#ff8c0028;
+  --prussia:#006994;--prussiag:#00699414;--prussiab:#00699428;
+  --mh:#ff6040;--mhg:#ff604014;--mhb:#ff604028;
+  --success:#608060;--successg:#60806014;--warn:#ff8c00;--warng:#ff8c0014;--danger:#cc2200;--dangerg:#cc220014;
+  --r:3px;--r2:6px;--r3:10px;
+}
+html[data-theme="neonoir"] body,html[data-theme="neonoir"] .sidebar,html[data-theme="neonoir"] .main,html[data-theme="neonoir"] .card,html[data-theme="neonoir"] .nav-item,html[data-theme="neonoir"] button,html[data-theme="neonoir"] input,html[data-theme="neonoir"] select,html[data-theme="neonoir"] textarea{font-family:'Oswald',sans-serif!important}
+html[data-theme="neonoir"] .brand-name{font-size:16px!important;font-weight:600!important;color:#ff8c00!important;text-shadow:0 0 20px #ff8c0080!important;letter-spacing:.2em!important;text-transform:uppercase!important}
+html[data-theme="neonoir"] .page-title{font-size:24px!important;font-weight:600!important;letter-spacing:.16em!important;text-transform:uppercase!important;color:#ff8c00!important;text-shadow:0 0 14px #ff8c0060!important}
+html[data-theme="neonoir"] .card{border-radius:var(--r)!important;border:1px solid #ff8c0020!important;box-shadow:0 0 20px #ff8c0008,inset 0 0 30px #00000010!important}
+html[data-theme="neonoir"] .card-title{font-family:'IBM Plex Mono',monospace!important;font-size:10px!important;letter-spacing:.2em!important;text-transform:uppercase!important;color:#ff8c00!important}
+html[data-theme="neonoir"] .metric-val{font-size:28px!important;font-weight:600!important;text-shadow:0 0 10px currentColor!important}
+html[data-theme="neonoir"] .nav-section{font-family:'IBM Plex Mono',monospace!important;font-size:8px!important;letter-spacing:.25em!important;color:var(--hint)!important;text-transform:uppercase!important}
+html[data-theme="neonoir"] .nav-item{font-weight:500!important;font-size:15px!important;letter-spacing:.08em!important;text-transform:uppercase!important}
+html[data-theme="neonoir"] .nav-item.active{background:var(--voccelg)!important;border-left-color:#ff8c00!important;text-shadow:0 0 8px #ff8c0050!important}
+html[data-theme="neonoir"] .xp-fill{background:linear-gradient(90deg,#006994,#ff8c00)!important;box-shadow:0 0 10px #ff8c0060!important}
+html[data-theme="neonoir"] .sidebar{border-right:1px solid #ff8c0020!important}
+html[data-theme="neonoir"] .topbar{border-bottom:1px solid #ff8c0030!important;background:var(--bg)!important}
+html[data-theme="neonoir"] .sm-day.done{background:#ff8c00!important;color:#000!important;box-shadow:0 0 8px #ff8c00!important}
+html[data-theme="neonoir"] body::before{content:'';position:fixed;inset:0;background:radial-gradient(ellipse at 80% 20%,#ff8c0006 0%,transparent 60%),radial-gradient(ellipse at 20% 80%,#00699406 0%,transparent 60%);pointer-events:none;z-index:0}
+
+/* ── WINDOWS 95 / VGUI
+   Teal taskbar. Beveled buttons. 3D inset boxes.
+   #008080 classic teal, #c0c0c0 silver, #000080 navy title.
+   Source: Win95 exact system palette */
+@import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
+html[data-theme="win95"]{
+  --bg:#008080;--bg2:#c0c0c0;--bg3:#d4d0c8;--bg4:#e0dcd4;--bg5:#ece8e0;
+  --border:#80808080;--border2:#808080aa;--border3:#808080ff;
+  --text:#000000;--muted:#444444;--hint:#888888;
+  --voccel:#000080;--voccelg:#00008014;--voccelb:#00008028;
+  --prussia:#008080;--prussiag:#00808014;--prussiab:#00808028;
+  --mh:#800000;--mhg:#80000014;--mhb:#80000028;
+  --success:#008000;--successg:#00800014;--warn:#808000;--warng:#80800014;--danger:#ff0000;--dangerg:#ff000014;
+  --r:0px;--r2:0px;--r3:0px;
+}
+html[data-theme="win95"] body,html[data-theme="win95"] .sidebar,html[data-theme="win95"] .main,html[data-theme="win95"] .topbar,html[data-theme="win95"] .card,html[data-theme="win95"] .nav-item,html[data-theme="win95"] button,html[data-theme="win95"] input,html[data-theme="win95"] select,html[data-theme="win95"] textarea{font-family:'VT323',monospace!important;font-size:16px!important;color:#000!important}
+html[data-theme="win95"] .sidebar{background:#c0c0c0!important;border-right:2px solid #808080!important}
+html[data-theme="win95"] .brand-name{font-size:18px!important;color:#000080!important;font-weight:400!important;letter-spacing:.02em!important}
+html[data-theme="win95"] .brand-sub{font-size:12px!important;color:#444!important}
+html[data-theme="win95"] .topbar{background:#000080!important;border-bottom:2px solid #808080!important}
+html[data-theme="win95"] .page-title{font-family:'VT323',monospace!important;font-size:22px!important;color:#fff!important;letter-spacing:.04em!important}
+html[data-theme="win95"] .today-badge{background:#c0c0c0!important;color:#000!important;border:2px outset #fff!important}
+html[data-theme="win95"] .main{background:#c0c0c0!important}
+html[data-theme="win95"] .content{background:#c0c0c0!important}
+html[data-theme="win95"] .card{background:#c0c0c0!important;border:2px inset #808080!important;box-shadow:inset -1px -1px 0 #fff,inset 1px 1px 0 #808080!important;color:#000!important}
+html[data-theme="win95"] .card-title{color:#000080!important;font-size:14px!important;letter-spacing:.02em!important}
+html[data-theme="win95"] .metric-val{color:#000080!important;font-size:30px!important;text-shadow:none!important}
+html[data-theme="win95"] .metric-lbl{color:#444!important;font-size:12px!important}
+html[data-theme="win95"] .nav-section{color:#808080!important;font-size:11px!important;letter-spacing:.04em!important}
+html[data-theme="win95"] .nav-item{color:#000!important;font-size:16px!important}
+html[data-theme="win95"] .nav-item:hover{background:#000080!important;color:#fff!important}
+html[data-theme="win95"] .nav-item.active{background:#000080!important;color:#fff!important;border-left-color:#000080!important}
+html[data-theme="win95"] .xp-fill{background:#000080!important}
+html[data-theme="win95"] .xp-level{color:#000080!important;text-shadow:none!important}
+html[data-theme="win95"] .btn-main{background:#c0c0c0!important;color:#000!important;border:2px outset #fff!important;box-shadow:none!important;font-family:'VT323',monospace!important;font-size:16px!important}
+html[data-theme="win95"] .sm-day.done{background:#000080!important;color:#fff!important;border-radius:0!important;box-shadow:none!important}
+html[data-theme="win95"] .metric,.card{color:#000!important}
+html[data-theme="win95"] .muted,.muted{color:#444!important}
