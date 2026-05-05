@@ -1,2268 +1,544 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="theme-yellow">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>HQ — Command Center</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
-<style>
-@import url('https://fonts.googleapis.com/css2?family=IM+Fell+English:ital@0;1&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=UnifrakturMaguntia&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=VT323&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Exo+2:wght@400;500&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Metamorphous&family=Lato:wght@300;400;700&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Space+Grotesk:wght@300;400;500&display=swap');
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5" />
+  <meta name="description" content="High-Tech Low-Life personal work dashboard" />
+  <meta name="theme-color" content="#fce300" />
+  <meta name="color-scheme" content="dark" />
 
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
-  --bg:#08080f;--bg2:#0f0f1a;--bg3:#161625;--bg4:#1e1e30;--bg5:#26263c;
-  --border:#ffffff0e;--border2:#ffffff18;--border3:#ffffff28;
-  --text:#eaeaf5;--muted:#7070a0;--hint:#363660;
-  --voccel:#7b7ef8;--voccelg:#7b7ef812;--voccelb:#7b7ef830;
-  --prussia:#f5c464;--prussiag:#f5c46412;--prussiab:#f5c46430;
-  --mh:#5ef5c0;--mhg:#5ef5c012;--mhb:#5ef5c030;
-  --success:#5ef57a;--successg:#5ef57a12;
-  --warn:#f5a05e;--warng:#f5a05e12;
-  --danger:#f55e5e;--dangerg:#f55e5e12;
-  --r:8px;--r2:14px;--r3:20px;
-}
-html,body{height:100%;overflow:hidden}
-body{font-family:'Outfit',sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column}
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="SYS_DASH" />
+  <link rel="apple-touch-icon" href="/favicon.svg" />
 
-/* ── SIDEBAR ── */
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;z-index:50;padding:20px 0}
-.brand{padding:0 20px 20px;border-bottom:1px solid var(--border)}
-.brand-name{font-size:18px;font-weight:700;letter-spacing:-.01em}
-.brand-sub{font-size:10px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.1em}
-.xp-section{padding:16px 20px;border-bottom:1px solid var(--border)}
-.xp-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px}
-.xp-level{font-family:'DM Mono',monospace;font-size:12px;color:var(--voccel);font-weight:500}
-.xp-val{font-family:'DM Mono',monospace;font-size:12px;color:var(--muted)}
-.xp-track{height:4px;background:var(--bg5);border-radius:2px;overflow:hidden}
-.xp-fill{height:100%;background:linear-gradient(90deg,var(--voccel),var(--mh));border-radius:2px;transition:width .5s cubic-bezier(.34,1.56,.64,1)}
-.nav{flex:1;padding:12px 0;overflow-y:auto}
-.nav-section{font-size:11px;color:var(--hint);text-transform:uppercase;letter-spacing:.08em;padding:14px 20px 6px;font-weight:600}
-.nav-item{display:flex;align-items:center;gap:10px;padding:10px 20px;cursor:pointer;transition:all .15s;border-left:2px solid transparent;color:var(--muted);font-size:15px;font-weight:500}
-.nav-item:hover{background:var(--bg3);color:var(--text)}
-.nav-item.active{background:var(--bg3);color:var(--text);border-left-color:var(--voccel)}
-.nav-item.active.av{border-left-color:var(--voccel);color:var(--voccel)}
-.nav-item.active.ap{border-left-color:var(--prussia);color:var(--prussia)}
-.nav-item.active.am{border-left-color:var(--mh);color:var(--mh)}
-.nav-icon{font-size:15px;width:18px;text-align:center;flex-shrink:0}
-.sidebar-bottom{padding:16px 20px;border-top:1px solid var(--border)}
-.streak-mini{display:flex;gap:3px;margin-bottom:8px}
-.sm-day{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:700;cursor:pointer;border:1px solid transparent;transition:all .15s}
-.sm-day.done{background:var(--success);color:#000}
-.sm-day.today{border-color:var(--muted);color:var(--muted)}
-.sm-day.miss{background:var(--bg5);color:var(--hint)}
-.streak-label{font-size:9px;color:var(--hint);text-transform:uppercase;letter-spacing:.06em}
+  <title>SYS_DASHBOARD_V4.2 // OPERATOR</title>
 
-/* ── MAIN ── */
-.main{margin-left:220px;height:100vh;overflow-y:auto;display:flex;flex-direction:column}
-.topbar{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--border);padding:14px 28px;display:flex;align-items:center;justify-content:space-between;z-index:40;backdrop-filter:blur(10px)}
-.page-title{font-size:22px;font-weight:700;letter-spacing:-.02em}
-.topbar-right{display:flex;align-items:center;gap:10px}
-.today-badge{font-family:'DM Mono',monospace;font-size:13px;color:var(--muted);background:var(--bg3);padding:5px 12px;border-radius:20px;border:1px solid var(--border2)}
-.content{padding:24px 28px;flex:1}
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="manifest" href="/manifest.webmanifest" />
 
-/* ── METRICS ── */
-.metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:22px}
-.metric{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px}
-.metric-val{font-family:'DM Mono',monospace;font-size:26px;font-weight:500;margin-bottom:3px}
-.metric-lbl{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=VT323&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
 
-/* ── GRID LAYOUTS ── */
-.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.span2{grid-column:1/-1}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:16px}
-.card-title{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;justify-content:space-between}
-.card-title span{font-size:10px;font-weight:400;color:var(--hint)}
-
-/* ── BADGES ── */
-.co-badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:700;display:inline-block;flex-shrink:0}
-.bv{background:var(--voccelg);color:var(--voccel)}
-.bp{background:var(--prussiag);color:var(--prussia)}
-.bm{background:var(--mhg);color:var(--mh)}
-.bg-{background:var(--bg5);color:var(--muted)}
-
-/* ── MISSIONS ── */
-.mission-item{display:flex;align-items:flex-start;gap:9px;padding:7px 8px;border-radius:var(--r);margin-bottom:3px;border:1px solid transparent;transition:all .12s}
-.mi-clickable{cursor:pointer}
-.mi-clickable:hover{background:var(--bg3);border-color:var(--border)}
-.mi-done{opacity:.3}
-.mi-locked{opacity:.45}
-.mchk{width:14px;height:14px;border-radius:4px;border:1.5px solid var(--border3);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:8px;transition:all .18s}
-.mi-done .mchk{background:var(--success);border-color:var(--success);color:#000}
-.mi-locked .mchk{background:var(--bg5);border-color:var(--hint)}
-.mi-text{flex:1;font-size:14px;line-height:1.4;color:var(--text)}
-.mi-done .mi-text{text-decoration:line-through}
-.mi-xp{font-family:'DM Mono',monospace;font-size:9px;color:var(--success);flex-shrink:0}
-.mi-locked .mi-xp{color:var(--hint)}
-.type-badge{font-size:8px;padding:1px 5px;border-radius:10px;display:inline-block;margin-top:2px}
-.td{background:var(--successg);color:var(--success)}
-.tw{background:var(--warng);color:var(--warn)}
-.tg{background:var(--bg5);color:var(--muted)}
-.mini-prog{height:3px;background:var(--bg5);border-radius:2px;overflow:hidden;margin-bottom:10px}
-.mini-prog-fill{height:100%;border-radius:2px;transition:width .4s}
-.add-row{display:flex;gap:6px;margin-top:8px}
-.add-inp{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:6px 9px;color:var(--text);font-family:'Outfit',sans-serif;font-size:11px;outline:none;min-width:0}
-.add-inp:focus{border-color:var(--border3)}
-.add-inp::placeholder{color:var(--hint)}
-.btn-xs{padding:6px 10px;border-radius:var(--r);border:1px solid var(--border2);background:transparent;color:var(--text);font-family:'Outfit',sans-serif;font-size:11px;font-weight:600;cursor:pointer;white-space:nowrap;flex-shrink:0}
-.btn-xs:hover{background:var(--bg3)}
-
-/* ── PLAN ── */
-.plan-item{display:flex;align-items:flex-start;gap:7px;font-size:11px;color:var(--muted);padding:5px 4px;border-radius:5px;cursor:pointer;line-height:1.4;transition:all .12s;border:1px solid transparent}
-.plan-item:hover{background:var(--bg3);color:var(--text)}
-.plan-item.pdone{text-decoration:line-through;opacity:.35;cursor:default}
-.plan-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;margin-top:4px}
-
-/* ── PIPELINE ── */
-.lead-row{display:flex;align-items:center;gap:8px;padding:7px 9px;background:var(--bg3);border-radius:var(--r);margin-bottom:3px;flex-wrap:wrap}
-.lr-name{font-size:14px;flex:1;min-width:80px;color:var(--text)}
-.lr-stage{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700}
-.sl{background:var(--bg4);color:var(--muted)}.sp{background:var(--warng);color:var(--warn)}.sn{background:var(--voccelg);color:var(--voccel)}.sg{background:var(--successg);color:var(--success)}
-.lr-val{font-family:'DM Mono',monospace;font-size:11px;color:var(--muted);flex-shrink:0}
-.pipe-stage-row{display:flex;gap:6px;margin-bottom:10px}
-.pipe-st{flex:1;background:var(--bg3);border-radius:var(--r);padding:9px;text-align:center}
-.pst-num{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;margin-bottom:2px}
-.pst-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-
-/* ── COBROS ── */
-.cobro-row{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;background:var(--bg3);border-radius:var(--r);margin-bottom:3px;gap:8px}
-.cr-name{font-size:12px;flex:1;color:var(--text)}
-.cr-sub{font-size:10px;color:var(--muted)}
-.cr-amt{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;flex-shrink:0}
-.cr-st{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:700;flex-shrink:0}
-.stp{background:var(--warng);color:var(--warn)}.stc{background:var(--successg);color:var(--success)}
-
-/* ── REDES ── */
-.red-row{display:flex;align-items:center;gap:9px;padding:8px 10px;background:var(--bg3);border-radius:var(--r);margin-bottom:4px;color:var(--text)}
-.red-inp{width:80px;background:var(--bg5);border:1px solid var(--border);border-radius:6px;padding:4px 8px;color:var(--text);font-family:'DM Mono',monospace;font-size:13px;text-align:right;outline:none;font-weight:500;margin-left:auto}
-.red-inp:focus{border-color:var(--border3)}
-
-/* ── KANBAN ── */
-.kb-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.kb-col{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r2);padding:12px;min-height:160px}
-.kb-col-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.kb-col-title{font-size:12px;font-weight:700;letter-spacing:.07em;text-transform:uppercase}
-.kb-col-count{font-family:'DM Mono',monospace;font-size:10px;color:var(--hint);background:var(--bg5);padding:1px 6px;border-radius:20px}
-.kb-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:10px 11px;cursor:grab;transition:all .15s;border-left:3px solid transparent;margin-bottom:5px}
-.kb-card:hover{border-color:var(--border2);background:var(--bg4)}
-.kb-card.dragging{opacity:.3}
-.kb-card-title{font-size:14px;font-weight:500;line-height:1.4;margin-bottom:6px}
-.kb-card-done .kb-card-title{text-decoration:line-through;opacity:.5}
-.kb-card-bottom{display:flex;align-items:center;gap:5px;flex-wrap:wrap}
-.prio-a{background:var(--dangerg);color:var(--danger)}
-.prio-m{background:var(--warng);color:var(--warn)}
-.prio-b{background:var(--bg5);color:var(--hint)}
-.kb-tag{font-size:9px;padding:1px 6px;border-radius:20px;background:var(--bg5);color:var(--muted)}
-.kb-actions{margin-left:auto;display:flex;gap:3px}
-.kb-btn{font-size:10px;padding:2px 5px;border-radius:4px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .1s}
-.kb-btn:hover{background:var(--bg3);color:var(--text)}
-.drop-zone{min-height:6px;border-radius:5px;transition:all .15s}
-.drop-zone.over{background:var(--voccelg);min-height:32px;border:1px dashed var(--voccel)}
-.add-card-btn{width:100%;padding:6px;border-radius:var(--r);border:1px dashed var(--border2);background:transparent;color:var(--muted);font-size:10px;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s;margin-top:4px}
-.add-card-btn:hover{border-color:var(--border3);color:var(--text)}
-
-/* ── FOCUS (POMODORO) ── */
-.focus-center{display:flex;flex-direction:column;align-items:center;padding:20px 0}
-.ring-wrap{position:relative;width:200px;height:200px;margin-bottom:18px}
-.ring-svg{transform:rotate(-90deg)}
-.ring-bg{fill:none;stroke:var(--bg5);stroke-width:8}
-.ring-fill{fill:none;stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .9s linear,stroke .3s}
-.ring-inner{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
-.ring-time{font-family:'DM Mono',monospace;font-size:38px;font-weight:500;letter-spacing:-.02em}
-.ring-mode{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em}
-.ring-sess{font-family:'DM Mono',monospace;font-size:9px;color:var(--hint)}
-.focus-task-inp{width:100%;max-width:380px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 14px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none;text-align:center;margin-bottom:14px}
-.focus-task-inp:focus{border-color:var(--voccel)}
-.focus-task-inp::placeholder{color:var(--hint)}
-.co-sel{display:flex;gap:5px;margin-bottom:14px}
-.co-btn{flex:1;padding:6px 8px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg2);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;color:var(--muted);font-family:'Outfit',sans-serif}
-.co-btn.sv{border-color:var(--voccel);background:var(--voccelg);color:var(--voccel)}
-.co-btn.sp{border-color:var(--prussia);background:var(--prussiag);color:var(--prussia)}
-.co-btn.sm{border-color:var(--mh);background:var(--mhg);color:var(--mh)}
-.co-btn.sg_{border-color:var(--border2);background:var(--bg3);color:var(--text)}
-.dur-row{display:flex;gap:5px;margin-bottom:14px}
-.dur-btn{flex:1;padding:7px 5px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg2);color:var(--muted);font-size:10px;font-weight:600;cursor:pointer;transition:all .15s;text-align:center;font-family:'Outfit',sans-serif}
-.dur-btn.active{border-color:var(--voccel);background:var(--voccelg);color:var(--voccel)}
-.focus-controls{display:flex;gap:8px;align-items:center}
-.btn-main{padding:11px 28px;border-radius:var(--r);border:none;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;min-width:110px;background:var(--voccel);color:#fff}
-.btn-main:active{transform:scale(.97)}
-.btn-sec{padding:9px 16px;border-radius:var(--r);border:1px solid var(--border2);background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-size:12px;cursor:pointer;transition:all .15s}
-.btn-sec:hover{background:var(--bg3);color:var(--text)}
-.sess-log{width:100%;max-width:500px;margin-top:20px}
-.sess-item{display:flex;align-items:center;gap:9px;padding:7px 9px;background:var(--bg3);border-radius:var(--r);margin-bottom:4px}
-.si-co{width:6px;height:6px;border-radius:50%;flex-shrink:0}
-.si-task{font-size:11px;flex:1}
-.si-dur{font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)}
-.si-xp{font-family:'DM Mono',monospace;font-size:9px;color:var(--success)}
-.si-time{font-size:10px;color:var(--hint)}
-.focus-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;width:100%;max-width:380px;margin-bottom:16px}
-.fs{background:var(--bg3);border-radius:var(--r);padding:10px;text-align:center}
-.fs-v{font-family:'DM Mono',monospace;font-size:16px;font-weight:500;margin-bottom:2px}
-.fs-l{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em}
-
-/* ── SIMULATOR ── */
-.sim-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.sim-sec{background:var(--bg3);border-radius:var(--r);padding:13px;margin-bottom:8px}
-.sim-sec-t{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--muted);text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:5px}
-.srow{display:flex;align-items:center;gap:8px;margin-bottom:8px}
-.slbl{font-size:13px;color:var(--muted);min-width:130px;flex-shrink:0}
-.sval{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;width:56px;text-align:right;flex-shrink:0}
-input[type=range]{flex:1;accent-color:var(--voccel);cursor:pointer}
-.res-total{font-family:'DM Mono',monospace;font-size:34px;font-weight:500;color:var(--success);margin:8px 0 4px;text-align:center}
-.rb{display:flex;align-items:center;justify-content:space-between;padding:7px 9px;background:var(--bg4);border-radius:var(--r);margin-bottom:3px}
-.rbl{display:flex;align-items:center;gap:7px}
-.rdot{width:6px;height:6px;border-radius:50%}
-.rname{font-size:11px}
-.rval{font-family:'DM Mono',monospace;font-size:11px;font-weight:500}
-.barwrap{height:100px;display:flex;align-items:flex-end;gap:5px;padding:2px;margin:12px 0 4px}
-.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px}
-.bar{width:100%;border-radius:3px 3px 0 0;min-height:2px;transition:height .35s cubic-bezier(.34,1.56,.64,1)}
-.blbl{font-size:8px;color:var(--muted);text-align:center}
-.ms{display:flex;align-items:center;gap:7px;padding:7px 9px;background:var(--bg4);border-radius:var(--r);margin-bottom:3px}
-.ms-i{font-size:13px;flex-shrink:0}
-.ms-t{font-size:11px;color:var(--muted);flex:1}
-.ms-v{font-family:'DM Mono',monospace;font-size:10px;font-weight:600;color:var(--warn)}
-.ms-v.ok{color:var(--success)}
-
-/* ── CALENDAR ── */
-.cal-wrap{overflow-x:auto}
-.cal{display:grid;grid-template-columns:68px repeat(7,minmax(0,1fr));border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;min-width:600px}
-.ch0{background:var(--bg3);padding:7px 6px;border-bottom:1px solid var(--border)}
-.ch{background:var(--bg3);padding:7px 6px;text-align:center;border-bottom:1px solid var(--border);border-left:1px solid var(--border)}
-.ch-d{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
-.ch-n{font-family:'DM Mono',monospace;font-size:13px;font-weight:500;margin-top:1px}
-.ch.tod{background:#0a0a1f}.ch.tod .ch-n{color:var(--voccel)}
-.rl{background:var(--bg3);padding:7px 6px;border-top:1px solid var(--border);display:flex;flex-direction:column;gap:1px;justify-content:center}
-.rldot{width:5px;height:5px;border-radius:50%}
-.rlname{font-size:8px;font-weight:700;color:var(--muted)}
-.rlnet{font-size:7px;color:var(--hint)}
-.cc{border-top:1px solid var(--border);border-left:1px solid var(--border);padding:3px;min-height:52px;cursor:pointer;transition:background .1s}
-.cc:hover{background:var(--bg3)}
-.cc.sug{background:#0b160b}
-.chip{border-radius:3px;padding:2px 4px;margin-bottom:2px;font-size:8px;line-height:1.3;cursor:pointer;word-break:break-word;border:1px solid transparent}
-.chip.draft{border-style:dashed}
-.chip.published{opacity:.35}
-.chip-top{display:flex;align-items:center;gap:2px;margin-bottom:1px}
-.cdot{width:3px;height:3px;border-radius:50%;flex-shrink:0}
-.ctype{font-size:6px;font-weight:700;opacity:.65;text-transform:uppercase}
-.hint-add{font-size:7px;color:var(--hint);text-align:center;padding-top:5px;pointer-events:none}
-.cal-filters{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:10px}
-.cfb{padding:3px 10px;border-radius:20px;border:1px solid var(--border);background:var(--bg2);font-size:10px;font-weight:600;cursor:pointer;transition:all .12s;color:var(--muted)}
-.cfb.active{border-color:var(--border3);background:var(--bg3);color:var(--text)}
-.cal-ideas{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin-top:14px}
-.idea-chip{background:var(--bg3);border-radius:var(--r);padding:9px 11px;border-left:3px solid transparent;cursor:pointer;transition:all .12s}
-.idea-chip:hover{background:var(--bg4)}
-.idea-co{font-size:8px;font-weight:700;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em}
-.idea-text{font-size:10px;color:var(--muted);line-height:1.4}
-
-/* ── WEEKLY REVIEW ── */
-.mood-row{display:flex;gap:6px;margin-bottom:6px}
-.mood-btn{flex:1;padding:8px 5px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg3);cursor:pointer;text-align:center;transition:all .15s;font-size:18px}
-.mood-btn:hover{border-color:var(--border2);transform:scale(1.04)}
-.mood-btn.sel{border-color:var(--voccel);background:var(--voccelg);transform:scale(1.06)}
-.mood-lbl{font-size:8px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.04em}
-.star{font-size:16px;cursor:pointer;transition:all .1s;filter:grayscale(1);opacity:.25}
-.star.on{filter:none;opacity:1}
-.score-card{background:var(--bg3);border-radius:var(--r);padding:11px 13px}
-.q-ta{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:9px 11px;color:var(--text);font-family:'Outfit',sans-serif;font-size:12px;outline:none;resize:vertical;min-height:70px;line-height:1.6}
-.q-ta:focus{border-color:var(--border3)}
-.q-ta::placeholder{color:var(--hint)}
-.win-inp{flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:7px 10px;color:var(--text);font-family:'Outfit',sans-serif;font-size:12px;outline:none}
-.win-inp:focus{border-color:var(--success)}
-.win-inp::placeholder{color:var(--hint)}
-.win-co-sel{background:var(--bg5);border:1px solid var(--border);border-radius:var(--r);padding:7px 9px;color:var(--muted);font-size:11px;cursor:pointer;outline:none;font-family:'Outfit',sans-serif}
-.fo-opts{display:grid;grid-template-columns:repeat(2,1fr);gap:5px;margin-bottom:8px}
-.fo{padding:8px 10px;border-radius:var(--r);border:1px solid var(--border);background:var(--bg3);cursor:pointer;font-size:11px;color:var(--muted);transition:all .15s;line-height:1.4}
-.fo:hover{border-color:var(--border2);color:var(--text)}
-.fo.sel{border-color:var(--prussia);background:var(--prussiag);color:var(--prussia)}
-.prog-bar{height:3px;background:var(--bg5);border-radius:2px;overflow:hidden;margin:8px 0 16px}
-.prog-fill{height:100%;background:linear-gradient(90deg,var(--voccel),var(--mh));border-radius:2px;transition:width .4s}
-.btn-save{width:100%;padding:12px;border-radius:var(--r);border:none;background:var(--voccel);color:#fff;font-family:'Outfit',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:16px;transition:opacity .15s}
-.btn-save:hover{opacity:.88}
-.hist-item{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:13px;margin-bottom:7px;cursor:pointer;transition:border-color .15s}
-.hist-item:hover{border-color:var(--border2)}
-.hi-week{font-family:'DM Mono',monospace;font-size:11px;font-weight:500}
-.win-chip{font-size:9px;padding:2px 7px;border-radius:20px;background:var(--successg);color:var(--success);display:inline-block;margin:2px}
-
-/* ── LOGROS ── */
-.badges-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
-.badge-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--r2);padding:14px;text-align:center;transition:border-color .2s}
-.badge-card.earned{border-color:var(--prussia)}
-.badge-card.locked-b{opacity:.35}
-.badge-icon{font-size:26px;margin-bottom:7px}
-.badge-name{font-size:11px;font-weight:600;margin-bottom:3px}
-.badge-desc{font-size:10px;color:var(--muted);line-height:1.3}
-
-/* ── MODAL ── */
-.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;align-items:center;justify-content:center}
-.modal-bg.open{display:flex}
-.modal{background:var(--bg2);border:1px solid var(--border2);border-radius:var(--r2);padding:22px;width:380px;max-width:94vw;max-height:90vh;overflow-y:auto}
-.modal h3{font-size:15px;font-weight:700;margin-bottom:14px}
-.modal input,.modal select,.modal textarea{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:9px 11px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none;margin-bottom:9px}
-.modal input:focus,.modal select:focus,.modal textarea:focus{border-color:var(--border3)}
-.modal textarea{resize:vertical;min-height:65px}
-.mrow2{display:flex;gap:7px}
-.mc2{flex:1;padding:9px;border-radius:var(--r);border:1px solid var(--border);background:transparent;color:var(--muted);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer}
-.ms2{flex:1;padding:9px;border-radius:var(--r);border:none;background:var(--voccel);color:#fff;font-family:'Outfit',sans-serif;font-size:13px;font-weight:700;cursor:pointer}
-.md2{padding:9px 13px;border-radius:var(--r);border:1px solid var(--danger);background:transparent;color:var(--danger);font-family:'Outfit',sans-serif;font-size:13px;cursor:pointer}
-.modal-section{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px;margin-top:4px;font-weight:700}
-
-/* ── MISC ── */
-.section-title{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase;margin:18px 0 10px;display:flex;align-items:center;gap:8px}
-.section-line{flex:1;height:1px;background:var(--border)}
-.add-btn{width:100%;padding:7px;border-radius:var(--r);border:1px dashed var(--border2);background:transparent;color:var(--muted);font-size:11px;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .15s;margin-top:5px}
-.add-btn:hover{border-color:var(--border3);color:var(--text)}
-.empty-hint{font-size:13px;color:var(--hint);padding:8px 0;text-align:center}
-.toast{position:fixed;bottom:24px;right:24px;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:10px 16px;font-size:12px;opacity:0;pointer-events:none;transition:opacity .3s;z-index:300;max-width:280px}
-.toast.show{opacity:1}
-.xp-pop-el{position:fixed;top:40%;left:50%;transform:translateX(-50%);font-family:'DM Mono',monospace;font-size:26px;font-weight:700;color:var(--success);opacity:0;pointer-events:none;transition:opacity .2s,top .5s;z-index:300;text-shadow:0 0 20px #5ef57a50}
-.xp-pop-el.show{opacity:1;top:35%}
-select{background:var(--bg3);color:var(--text);border:1px solid var(--border);border-radius:var(--r);padding:8px 11px;font-family:'Outfit',sans-serif;font-size:13px;outline:none;cursor:pointer;width:100%}
-select:focus{border-color:var(--border3)}
-
-/* ── SCROLLBAR ── */
-::-webkit-scrollbar{width:4px;height:4px}
-::-webkit-scrollbar-track{background:transparent}
-::-webkit-scrollbar-thumb{background:var(--bg5);border-radius:2px}
-</style>
-<link rel="stylesheet" href="themes/themes.css">
+  <!-- Styles + entry -->
+  <script type="module" src="/src/main.js"></script>
 </head>
+
 <body>
 
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="brand">
-    <div class="brand-name">HQ Dashboard</div>
-    <div class="brand-sub">Command Center</div>
-  </div>
-  <div class="xp-section">
-    <div class="xp-row">
-      <div class="xp-level" id="xp-level">Lv 1</div>
-      <div class="xp-val" id="xp-val">0 XP</div>
-    </div>
-    <div class="xp-track"><div class="xp-fill" id="xp-fill" style="width:0%"></div></div>
-  </div>
-  <nav class="nav">
-    <div class="nav-section">General</div>
-    <div class="nav-item active av" onclick="go('home')" id="n-home"><span class="nav-icon">⌂</span>Dashboard</div>
-    <div class="nav-item" onclick="go('focus')" id="n-focus"><span class="nav-icon">⏱</span>Modo Focus</div>
-    <div class="nav-item" onclick="go('review')" id="n-review"><span class="nav-icon">📋</span>Weekly Review</div>
-    <div class="nav-section">Empresas</div>
-    <div class="nav-item av" onclick="go('voccel')" id="n-voccel"><span class="nav-icon">◆</span>Voccel</div>
-    <div class="nav-item ap" onclick="go('prussia')" id="n-prussia"><span class="nav-icon">◆</span>Prussia</div>
-    <div class="nav-item am" onclick="go('mh')" id="n-mh"><span class="nav-icon">◆</span>MH Arquitectura</div>
-    <div class="nav-section">Proyectos</div>
-    <div class="nav-item" onclick="go('kanban')" id="n-kanban"><span class="nav-icon">▦</span>Kanban</div>
-    <div class="nav-item" onclick="go('calendar')" id="n-calendar"><span class="nav-icon">◻</span>Calendario</div>
-    <div class="nav-section">Finanzas</div>
-    <div class="nav-item" onclick="go('pipeline')" id="n-pipeline"><span class="nav-icon">→</span>Pipeline</div>
-    <div class="nav-item" onclick="go('cobros')" id="n-cobros"><span class="nav-icon">$</span>Cobros</div>
-    <div class="nav-item" onclick="go('simulator')" id="n-simulator"><span class="nav-icon">~</span>Simulador</div>
-    <div class="nav-section">Contactos</div>
-    <div class="nav-item" onclick="go('crm')" id="n-crm"><span class="nav-icon">👤</span>CRM</div>
-    <div class="nav-item" onclick="go('recordatorios')" id="n-recordatorios"><span class="nav-icon">🔔</span>Recordatorios</div>
-    <div class="nav-section">Contenido</div>
-    <div class="nav-item" onclick="go('publicaciones')" id="n-publicaciones"><span class="nav-icon">✍</span>Publicaciones</div>
-    <div class="nav-item" onclick="go('plantillas')" id="n-plantillas"><span class="nav-icon">📄</span>Plantillas</div>
-    <div class="nav-item" onclick="go('ideas')" id="n-ideas"><span class="nav-icon">💡</span>Ideas</div>
-    <div class="nav-section">Finanzas+</div>
-    <div class="nav-item" onclick="go('gastos')" id="n-gastos"><span class="nav-icon">↓</span>Gastos</div>
-    <div class="nav-section">Progreso</div>
-    <div class="nav-item" onclick="go('logros')" id="n-logros"><span class="nav-icon">★</span>Logros</div>
-    <div class="nav-item" onclick="go('historial')" id="n-historial"><span class="nav-icon">≡</span>Historial XP</div>
-    <div class="nav-section">Sistema</div>
-    <div class="nav-item" onclick="exportBackup()"><span class="nav-icon">↑</span>Exportar backup</div>
-    <div class="nav-item" onclick="document.getElementById('import-file').click()"><span class="nav-icon">↓</span>Importar backup</div>
-    <input type="file" id="import-file" accept=".json" style="display:none" onchange="importBackup(this)">
-  </nav>
-  <div class="sidebar-bottom">
-    <div class="streak-label">Racha semanal</div>
-    <div class="streak-mini" id="streak-mini"></div>
-  </div>
-</aside>
+<div class="app">
 
-<!-- MAIN -->
-<main class="main">
-  <div class="topbar">
-    <div class="page-title" id="page-title">Dashboard</div>
+  <!-- ============= TOPBAR ============= -->
+  <header class="topbar">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú" type="button">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+
+    <div class="brand">
+      SYS_DASHBOARD<span class="brand-ver">// V4.2</span>
+    </div>
+
+    <nav class="nav" id="topnav" aria-label="Navegación principal">
+      <a class="nav-item active" data-view="terminal" href="#terminal">TERMINAL</a>
+      <a class="nav-item" data-view="command" href="#command">COMMAND</a>
+      <a class="nav-item" data-view="chronos" href="#chronos">CHRONOS</a>
+      <a class="nav-item" data-view="tools" href="#tools">TOOLS</a>
+      <a class="nav-item" data-view="themes" href="#themes">THEMES</a>
+    </nav>
+
     <div class="topbar-right">
-      <div class="today-badge" id="today-badge"></div>
-    <select id="theme-sel" style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:4px 9px;color:var(--text);font-family:'Outfit',sans-serif;font-size:11px;outline:none;cursor:pointer" onchange="setTheme(this.value)">
-      <option value="">Default</option>
-      <option value="dark-academia">Dark Academia</option>
-      <option value="goth">Goth</option>
-      <option value="vampire">Vampire: The Masquerade</option>
-      <option value="matrix">Matrix</option>
-      <option value="solarpunk">Solarpunk</option>
-      <option value="marathon">Marathon</option>
-      <option value="mass-effect">Mass Effect</option>
-      <option value="cerberus">Mass Effect: Cerberus</option>
-      <option value="mage">Mage: The Ascension</option>
-      <option value="genx">Gen X Soft Club</option>
-      <optgroup label="── Nuevos ──">
-      <option value="vaporwave">Vaporwave</option>
-      <option value="lofi">Lo-Fi / Chill</option>
-      <option value="darkwave">Darkwave / Cold Wave</option>
-      <option value="cyberpunk">Cyberpunk 2077</option>
-      <option value="horror">Cosmic Horror</option>
-      <option value="retrofuture">Retrofuturismo / Space Age</option>
-      <option value="anime">Anime / Shonen</option>
-      <option value="industrial">Post-Punk / Industrial</option>
-      <option value="neonoir">Neo-Noir / Blade Runner</option>
-      <option value="win95">Windows 95</option>
-      </optgroup>
-    </select>
-    <select id="currency-sel" style="background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:4px 9px;color:var(--text);font-family:'Outfit',sans-serif;font-size:11px;outline:none;cursor:pointer" onchange="S.currency=this.value;saveState();updateSim&&updateSim()">
-      <option value="USD">$ USD</option>
-      <option value="EUR">€ EUR</option>
-      <option value="PYG">₲ PYG</option>
-    </select>
-    </div>
-  </div>
-  <div class="content" id="content"></div>
-</main>
-
-<!-- MODALS -->
-<div class="modal-bg" id="modal-lead">
-  <div class="modal">
-    <h3>Lead</h3>
-    <input id="lin" placeholder="Nombre / empresa">
-    <select id="lco"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
-    <select id="lst"><option value="lead">Lead</option><option value="propuesta">Propuesta enviada</option><option value="negociacion">Negociación</option><option value="ganado">Ganado</option></select>
-    <input id="lval" placeholder="Valor estimado USD" type="number">
-    <div class="mrow2"><button class="md2" id="ldel" style="display:none" onclick="delLead()">Eliminar</button><button class="mc2" onclick="closeM('modal-lead')">Cancelar</button><button class="ms2" onclick="saveLead()">Guardar</button></div>
-  </div>
-</div>
-<div class="modal-bg" id="modal-cobro">
-  <div class="modal">
-    <h3>Cobro</h3>
-    <input id="cin" placeholder="Descripción">
-    <select id="cco"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
-    <input id="camt" placeholder="Monto USD" type="number">
-    <input id="cdat" type="date">
-    <select id="cst"><option value="pendiente">Pendiente</option><option value="cobrado">Cobrado</option></select>
-    <div class="mrow2"><button class="mc2" onclick="closeM('modal-cobro')">Cancelar</button><button class="ms2" onclick="saveCobro()">Guardar</button></div>
-  </div>
-</div>
-<div class="modal-bg" id="modal-card">
-  <div class="modal">
-    <h3 id="card-modal-title">Tarea</h3>
-    <input id="card-name" placeholder="Nombre de la tarea">
-    <textarea id="card-desc" placeholder="Descripción opcional..."></textarea>
-    <select id="card-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
-    <select id="card-prio"><option value="alta">Prioridad alta</option><option value="media">Media</option><option value="baja">Baja</option></select>
-    <input id="card-tag" placeholder="Etiqueta (ej: diseño, dev, ventas)">
-    <div class="mrow2"><button class="md2" id="card-del" style="display:none" onclick="delCard()">Eliminar</button><button class="mc2" onclick="closeM('modal-card')">Cancelar</button><button class="ms2" onclick="saveCard()">Guardar</button></div>
-  </div>
-</div>
-<div class="modal-bg" id="modal-post">
-  <div class="modal">
-    <h3 id="post-modal-title">Post</h3>
-    <select id="pacc"><option value="prussia-ig">Prussia — Instagram</option><option value="prussia-tt">Prussia — TikTok</option><option value="voccel-ig">Voccel — Instagram</option><option value="voccel-tt">Voccel — TikTok</option><option value="voccel-li">Voccel — LinkedIn</option><option value="mh-ig">MH — Instagram</option></select>
-    <select id="ptype"><option value="producto">Producto / demo</option><option value="educativo">Educativo / tip</option><option value="proceso">Behind the scenes</option><option value="oferta">Oferta / promo</option><option value="testimonio">Testimonio</option><option value="otro">Otro</option></select>
-    <textarea id="pcap" placeholder="Idea o caption..."></textarea>
-    <select id="pst"><option value="draft">Borrador</option><option value="scheduled">Programado</option><option value="published">Publicado</option></select>
-    <div class="mrow2"><button class="md2" id="pdel" style="display:none" onclick="delPost()">Eliminar</button><button class="mc2" onclick="closeM('modal-post')">Cancelar</button><button class="ms2" onclick="savePost()">Guardar</button></div>
-  </div>
-</div>
-<div class="modal-bg" id="modal-mission">
-  <div class="modal">
-    <h3>Nueva misión</h3>
-    <input id="min-text" placeholder="Descripción de la misión">
-    <select id="min-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
-    <select id="min-type"><option value="daily">Daily</option><option value="weekly">Semanal</option><option value="general">General</option></select>
-    <div class="mrow2"><button class="mc2" onclick="closeM('modal-mission')">Cancelar</button><button class="ms2" onclick="saveMission()">Guardar</button></div>
-  </div>
-</div>
-
-<div class="modal-bg" id="modal-milestone">
-  <div class="modal">
-    <h3 id="ms-modal-title">Hito</h3>
-    <div style="display:flex;gap:8px;margin-bottom:9px;align-items:center">
-      <div style="position:relative">
-        <input id="ms-emoji" placeholder="🎯" style="width:56px;text-align:center;font-size:20px;padding:8px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);color:var(--text);outline:none;cursor:pointer" readonly onclick="openEmojiPicker('ms-emoji')">
-        <div style="font-size:8px;color:var(--hint);text-align:center;margin-top:2px">click</div>
+      <div class="user-chip">
+        <span class="dot"></span>USER: <span id="opName">OPERATOR</span> // SECURE
       </div>
-      <input id="ms-name" placeholder="Nombre del hito" style="flex:1">
+      <button class="icon-btn" id="settingsBtn" aria-label="Configuración" type="button" title="Settings">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+      <button class="icon-btn" id="powerBtn" aria-label="Power" type="button" title="Power">
+        <span class="material-symbols-outlined">power_settings_new</span>
+      </button>
     </div>
-    <input id="ms-value" placeholder="Valor en USD (ej: 2000)" type="number">
-    <div style="font-size:10px;color:var(--muted);margin-bottom:12px">El simulador proyectará cuántos meses tardás en alcanzarlo con tu ingreso actual.</div>
-    <div class="mrow2">
-      <button class="md2" id="ms-del" style="display:none" onclick="deleteMilestone(S.editingMilestone);closeM('modal-milestone')">Eliminar</button>
-      <button class="mc2" onclick="closeM('modal-milestone')">Cancelar</button>
-      <button class="ms2" onclick="saveMilestone()">Guardar</button>
+  </header>
+
+  <!-- ============= SIDEBAR (drawer en mobile) ============= -->
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="operator-card">
+      <div class="name" id="sideOpName">OPERATOR</div>
+      <div class="status">STATUS: <span class="val">ENCRYPTED</span></div>
     </div>
-  </div>
-</div>
-<!-- MODAL EMOJI -->
-<div class="modal-bg" id="modal-emoji">
-  <div class="modal" style="width:340px">
-    <h3>Elegir emoji</h3>
-    <input id="emoji-search" placeholder="Buscar emoji..." style="width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:8px 11px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none;margin-bottom:10px" oninput="renderEmojiGrid(this.value)">
-    <div id="emoji-grid" style="display:grid;grid-template-columns:repeat(8,1fr);gap:2px;max-height:240px;overflow-y:auto"></div>
-    <div style="margin-top:12px"><button class="mc2" onclick="closeM('modal-emoji')" style="width:100%">Cancelar</button></div>
-  </div>
-</div>
-<!-- MODAL CONTACT -->
-<div class="modal-bg" id="modal-contact">
-  <div class="modal">
-    <h3>Contacto</h3>
-    <input id="ct-nombre" placeholder="Nombre completo">
-    <input id="ct-empresa" placeholder="Empresa">
-    <select id="ct-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
-    <input id="ct-whatsapp" placeholder="WhatsApp (ej: +595981234567)" type="tel">
-    <input id="ct-email" placeholder="Email" type="email">
-    <textarea id="ct-notas" placeholder="Notas..." style="min-height:55px"></textarea>
-    <div class="mrow2"><button class="md2" id="ct-del" style="display:none" onclick="delContact()">Eliminar</button><button class="mc2" onclick="closeM('modal-contact')">Cancelar</button><button class="ms2" onclick="saveContact()">Guardar</button></div>
-  </div>
-</div>
-<!-- MODAL RECORDATORIO -->
-<div class="modal-bg" id="modal-recordatorio">
-  <div class="modal">
-    <h3>Recordatorio</h3>
-    <textarea id="rec-texto" placeholder="¿Qué tenés que hacer?" style="min-height:65px"></textarea>
-    <select id="rec-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option><option value="general">General</option></select>
-    <input id="rec-fecha" type="date">
-    <div class="mrow2"><button class="mc2" onclick="closeM('modal-recordatorio')">Cancelar</button><button class="ms2" onclick="saveRecordatorio()">Guardar</button></div>
-  </div>
-</div>
-<!-- MODAL GASTO -->
-<div class="modal-bg" id="modal-gasto">
-  <div class="modal">
-    <h3>Registrar gasto</h3>
-    <input id="gasto-desc" placeholder="Descripción (ej: dominio voccel.com)">
-    <select id="gasto-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option><option value="general">General</option></select>
-    <select id="gasto-cat"><option value="infraestructura">Infraestructura / hosting</option><option value="materiales">Materiales</option><option value="marketing">Marketing</option><option value="herramientas">Herramientas / software</option><option value="otros">Otros</option></select>
-    <input id="gasto-monto" placeholder="Monto en USD" type="number">
-    <input id="gasto-fecha" type="date">
-    <div class="mrow2"><button class="mc2" onclick="closeM('modal-gasto')">Cancelar</button><button class="ms2" onclick="saveGasto()">Guardar</button></div>
-  </div>
-</div>
-<!-- MODAL PLANTILLA -->
-<div class="modal-bg" id="modal-plantilla">
-  <div class="modal">
-    <h3>Plantilla de mensaje</h3>
-    <input id="pl-nombre" placeholder="Nombre de la plantilla">
-    <select id="pl-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
-    <select id="pl-tipo"><option value="outreach">Outreach</option><option value="propuesta">Propuesta</option><option value="consulta">Consulta</option><option value="seguimiento">Seguimiento</option><option value="otro">Otro</option></select>
-    <textarea id="pl-texto" placeholder="Texto de la plantilla. Usá [nombre], [empresa], [fecha] como variables." style="min-height:120px"></textarea>
-    <div class="mrow2"><button class="md2" id="pl-del" style="display:none" onclick="delPlantilla(S.editing.plantilla);closeM('modal-plantilla')">Eliminar</button><button class="mc2" onclick="closeM('modal-plantilla')">Cancelar</button><button class="ms2" onclick="savePlantilla()">Guardar</button></div>
-  </div>
-</div>
-<!-- MODAL IDEA -->
-<div class="modal-bg" id="modal-idea">
-  <div class="modal">
-    <h3>Idea detallada</h3>
-    <input id="idea-texto" placeholder="La idea en una línea">
-    <select id="idea-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option><option value="general">General</option></select>
-    <input id="idea-tag" placeholder="Tag (ej: producto, contenido, mejora)">
-    <textarea id="idea-detalle" placeholder="Detalle opcional..." style="min-height:80px"></textarea>
-    <div class="mrow2"><button class="mc2" onclick="closeM('modal-idea')">Cancelar</button><button class="ms2" onclick="saveIdea()">Guardar</button></div>
-  </div>
-</div>
-<!-- MODAL PUBLICACION -->
-<div class="modal-bg" id="modal-pub">
-  <div class="modal">
-    <h3>Publicación</h3>
-    <input id="pub-titulo" placeholder="Título de la publicación">
-    <select id="pub-co"><option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option></select>
-    <select id="pub-red"><option value="instagram">Instagram</option><option value="tiktok">TikTok</option><option value="linkedin">LinkedIn</option><option value="general">General</option></select>
-    <textarea id="pub-texto" placeholder="Texto completo de la publicación con hashtags..." style="min-height:160px"></textarea>
-    <div class="mrow2"><button class="md2" id="pub-del" style="display:none" onclick="delPub(S.editing.pub);closeM('modal-pub')">Eliminar</button><button class="mc2" onclick="closeM('modal-pub')">Cancelar</button><button class="ms2" onclick="savePub()">Guardar</button></div>
-  </div>
-</div>
-<div class="toast" id="toast"></div>
-<div class="xp-pop-el" id="xp-pop"></div>
 
-<script>
-// ═══════════════════════════════════════
-// DATA
-// ═══════════════════════════════════════
-const CO_NAMES={voccel:'Voccel',prussia:'Prussia',mh:'MH'};
-const CO_COLORS={voccel:'var(--voccel)',prussia:'var(--prussia)',mh:'var(--mh)'};
-const CO_CC={voccel:'bv',prussia:'bp',mh:'bm'};
-const CO_HEX={voccel:'#7b7ef8',prussia:'#f5c464',mh:'#5ef5c0'};
-const DAYS=['L','M','X','J','V','S','D'];
-const DAYS_LONG=['Lun','Mar','Mié','Jue','Vie','Sáb','Dom'];
-const MNS=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-const STAGE_L={lead:'Lead',propuesta:'Propuesta',negociacion:'Negociación',ganado:'Ganado'};
-const STAGE_C={lead:'sl',propuesta:'sp',negociacion:'sn',ganado:'sg'};
-const TYPE_L={producto:'Producto',educativo:'Tip',proceso:'BTS',oferta:'Oferta',testimonio:'Testimonio',otro:'Post'};
-const MOODS=['','😩','😐','🙂','😄','🔥'];
-const MOOD_LABELS=['','Difícil','Regular','Bien','Muy bien','Épica'];
-const POST_STATUS_COLORS={draft:'#363660',scheduled:'#7b7ef8',published:'#1a3a1a'};
-const CIRC=2*Math.PI*88;
+    <nav class="side-nav" id="sidenav" aria-label="Navegación lateral">
+      <a class="side-item active" data-view="terminal" href="#terminal">
+        <span class="material-symbols-outlined">terminal</span>
+        <span class="label">ROOT/DASHBOARD</span>
+      </a>
+      <a class="side-item" data-view="command" href="#command">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="label">ROOT/COMMANDS</span>
+      </a>
+      <a class="side-item" data-view="chronos" href="#chronos">
+        <span class="material-symbols-outlined">public</span>
+        <span class="label">ROOT/WORLD_TIME</span>
+      </a>
+      <a class="side-item" data-view="tools" href="#tools">
+        <span class="material-symbols-outlined">settings_input_component</span>
+        <span class="label">ROOT/SYSTEM_SYS</span>
+      </a>
+      <a class="side-item" data-view="themes" href="#themes">
+        <span class="material-symbols-outlined">palette</span>
+        <span class="label">ROOT/THEMES</span>
+      </a>
+    </nav>
 
-const ACCS=[
-  {id:'prussia-ig',co:'prussia',net:'IG',color:'#f5c464',freq:[0,2,4]},
-  {id:'prussia-tt',co:'prussia',net:'TT',color:'#e8a84a',freq:[1,3]},
-  {id:'voccel-ig', co:'voccel', net:'IG',color:'#7b7ef8',freq:[0,3]},
-  {id:'voccel-tt', co:'voccel', net:'TT',color:'#9a9cf9',freq:[1,3,5]},
-  {id:'voccel-li', co:'voccel', net:'LI',color:'#5a5cd4',freq:[1,4]},
-  {id:'mh-ig',    co:'mh',    net:'IG',color:'#5ef5c0',freq:[2,5]},
-];
-
-const PLAN_ITEMS={
-  voccel:[{t:'Publicar demos de ambas SaaS'},{t:'Definir pricing B2B'},{t:'Outreach a 15 empresas objetivo'},{t:'Primer cliente pago SaaS 1'},{t:'Lanzar SaaS 2 con tracción de SaaS 1'}],
-  prussia:[{t:'Fotos profesionales del catálogo'},{t:'Link de pago activo en Instagram'},{t:'Primera venta desde redes'},{t:'5 testimonios de clientes'},{t:'Escalar a 3 ventas/semana'}],
-  mh:[{t:'Confirmar financiamiento del cliente'},{t:'Firmar contrato de obra'},{t:'Publicar proceso en Instagram'},{t:'Cerrar segundo proyecto'}]
-};
-
-const DEFAULT_MISSIONS={
-  voccel:[
-    {id:'v1',t:'Revisar DMs de Instagram Voccel',tp:'daily',xp:5,done:false},
-    {id:'v2',t:'Revisar comentarios y menciones',tp:'daily',xp:5,done:false},
-    {id:'v3',t:'Seguimiento a leads activos',tp:'daily',xp:10,done:false},
-    {id:'v4',t:'Publicar en TikTok (demo o tip)',tp:'weekly',xp:20,done:false},
-    {id:'v5',t:'Publicar en Instagram Voccel',tp:'weekly',xp:15,done:false},
-    {id:'v6',t:'Outreach a 5 empresas objetivo',tp:'weekly',xp:25,done:false},
-    {id:'v7',t:'Revisar métricas de la web',tp:'weekly',xp:10,done:false},
-    {id:'v8',t:'Publicar demo SaaS 1',tp:'general',xp:50,done:false,unlocks:'v9'},
-    {id:'v9',t:'Publicar demo SaaS 2',tp:'general',xp:50,done:false,locked:true,unlockedBy:'v8'},
-    {id:'v10',t:'Definir pricing de ambas SaaS',tp:'general',xp:40,done:false},
-    {id:'v11',t:'Primer cliente pago SaaS 1',tp:'general',xp:100,done:false,unlocks:'v12'},
-    {id:'v12',t:'Primer cliente pago SaaS 2',tp:'general',xp:100,done:false,locked:true,unlockedBy:'v11'},
-  ],
-  prussia:[
-    {id:'p1',t:'Revisar DMs de Instagram Prussia',tp:'daily',xp:5,done:false},
-    {id:'p2',t:'Responder consultas de la web',tp:'daily',xp:5,done:false},
-    {id:'p3',t:'Publicar producto en Instagram',tp:'weekly',xp:15,done:false},
-    {id:'p4',t:'Publicar en TikTok (lámpara en ambiente)',tp:'weekly',xp:20,done:false},
-    {id:'p5',t:'Actualizar catálogo en la web',tp:'weekly',xp:10,done:false},
-    {id:'p6',t:'Sacar fotos nuevas de producto',tp:'weekly',xp:15,done:false},
-    {id:'p7',t:'Activar link de pago en Instagram',tp:'general',xp:30,done:false,unlocks:'p8'},
-    {id:'p8',t:'Primera venta online',tp:'general',xp:80,done:false,locked:true,unlockedBy:'p7',unlocks:'p9'},
-    {id:'p9',t:'5 reseñas o testimonios',tp:'general',xp:50,done:false,locked:true,unlockedBy:'p8'},
-    {id:'p10',t:'Definir política de envíos y precios',tp:'general',xp:30,done:false},
-  ],
-  mh:[
-    {id:'m1',t:'Revisar DMs de Instagram MH',tp:'daily',xp:5,done:false},
-    {id:'m2',t:'Publicar render o proceso en Instagram',tp:'weekly',xp:15,done:false},
-    {id:'m3',t:'Verificar avance del financiamiento',tp:'weekly',xp:10,done:false},
-    {id:'m4',t:'Actualizar portafolio de proyectos',tp:'general',xp:30,done:false},
-    {id:'m5',t:'Firmar contrato de la obra',tp:'general',xp:100,done:false,unlocks:'m6'},
-    {id:'m6',t:'Conseguir segundo proyecto',tp:'general',xp:80,done:false,locked:true,unlockedBy:'m5'},
-  ]
-};
-
-const DEFAULT_CARDS=[
-  {id:'d1',title:'Publicar demo SaaS 1',desc:'Video 2 min mostrando la app de precios',co:'voccel',col:'todo',prio:'alta',tag:'demo'},
-  {id:'d2',title:'Definir pricing SaaS 1 y 2',desc:'Un plan, un precio, sin free tier al principio',co:'voccel',col:'todo',prio:'alta',tag:'ventas'},
-  {id:'d3',title:'Fotos de producto Prussia',desc:'Luz natural, fondo neutro, 5-10 productos',co:'prussia',col:'todo',prio:'alta',tag:'contenido'},
-  {id:'d4',title:'Activar link de pago en Instagram',desc:'Linktree o link directo para consultas',co:'prussia',col:'todo',prio:'media',tag:'ventas'},
-  {id:'d5',title:'Post semanal Instagram MH',desc:'Render o proceso de proyecto',co:'mh',col:'todo',prio:'baja',tag:'contenido'},
-  {id:'d6',title:'Outreach 10 empresas Voccel',desc:'Mensaje personalizado, no masivo',co:'voccel',col:'todo',prio:'alta',tag:'ventas'},
-];
-
-const CAL_IDEAS=[
-  {acc:'prussia-ig',type:'producto',text:'Lámpara en ambiente — sala con luz cálida'},
-  {acc:'prussia-ig',type:'proceso',text:'Proceso de armado paso a paso'},
-  {acc:'prussia-tt',type:'proceso',text:'Timelapse de instalación de lámpara'},
-  {acc:'prussia-tt',type:'producto',text:'Before/after espacio con y sin la lámpara'},
-  {acc:'voccel-tt', type:'producto',text:'Demo SaaS 1: gestión de precios en 60 seg'},
-  {acc:'voccel-tt', type:'educativo',text:'Tip: cómo calcular m² en presupuesto de obra'},
-  {acc:'voccel-ig', type:'educativo',text:'Infografía: errores en presupuestos de construcción'},
-  {acc:'voccel-li', type:'educativo',text:'Por qué el 70% de las obras tienen desvíos de costo'},
-  {acc:'mh-ig',    type:'proceso',text:'Render 3D de proyecto actual'},
-  {acc:'mh-ig',    type:'proceso',text:'Proceso: del sketch al plano definitivo'},
-  {acc:'prussia-ig',type:'testimonio',text:'Foto de cliente con lámpara instalada'},
-  {acc:'voccel-li', type:'producto',text:'Case study: cómo una constructora ahorró tiempo'},
-];
-
-const BADGES=[
-  {id:'b1',icon:'⚡',name:'Primera misión',desc:'Completá tu primera misión',check:s=>s.xpLog.length>0},
-  {id:'b2',icon:'🔥',name:'Racha semanal',desc:'Marcá los 5 días hábiles',check:s=>s.streak.slice(0,5).every(Boolean)},
-  {id:'b3',icon:'💸',name:'Primer cobro',desc:'Registrá un cobro como cobrado',check:s=>s.cobros.some(c=>c.status==='cobrado')},
-  {id:'b4',icon:'🎯',name:'100 XP',desc:'Llegá a 100 XP',check:s=>s.xp>=100},
-  {id:'b5',icon:'🚀',name:'Pipeline activo',desc:'Agregá 3 leads o más',check:s=>s.leads.length>=3},
-  {id:'b6',icon:'👑',name:'Nivel 5',desc:'Alcanzá el nivel 5',check:s=>Math.floor(s.xp/100)>=4},
-  {id:'b7',icon:'🏗️',name:'Constructor MH',desc:'Completá el plan de MH',check:s=>PLAN_ITEMS.mh.every((_,i)=>s.planDone.mh&&s.planDone.mh[i])},
-  {id:'b8',icon:'💡',name:'Primer encendido',desc:'Primera venta de Prussia',check:s=>s.missions.prussia&&s.missions.prussia.find(m=>m.id==='p8')&&s.missions.prussia.find(m=>m.id==='p8').done},
-];
-
-// ═══════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════
-const DEFAULT_PUBS=[
-    {id:'pub1',co:'prussia',red:'instagram',titulo:'Lámpara en ambiente',texto:'Transformá cualquier espacio con la luz correcta. 🔆\n\nNuestra colección de lámparas artesanales combina diseño y funcionalidad para crear ambientes únicos en tu hogar.\n\n✅ Envío a todo el país\n✅ Garantía incluida\n✅ Consultá por tu modelo\n\n👉 Link en bio\n\n#diseño #iluminacion #hogar #decoracion #lamparas',copiado:false},
-    {id:'pub2',co:'voccel',red:'tiktok',titulo:'Demo SaaS precios construcción',texto:'¿Cuánto tiempo perdés calculando presupuestos de obra a mano? 🏗️\n\nCon nuestra app lo hacés en minutos:\n✅ Cargás materiales y m²\n✅ La app calcula todo automáticamente\n✅ Exportás el presupuesto listo para el cliente\n\nProbala gratis → link en bio\n\n#construccion #arquitectura #presupuesto #app #tech',copiado:false},
-    {id:'pub3',co:'mh',red:'instagram',titulo:'Proceso de diseño',texto:'De la idea al espacio terminado. 📐\n\nCada proyecto empieza con una conversación. Entender cómo vivís, qué necesitás, qué soñás.\n\nDespués viene el trabajo: sketches, planos, renders, y finalmente... la obra.\n\n¿Tenés un proyecto en mente? Hablemos.\n\n#arquitectura #diseño #arquitecto #interiorismo #proyecto',copiado:false},
-    {id:'pub4',co:'voccel',red:'linkedin',titulo:'ERP para PyMEs',texto:'El 70% de las PyMEs todavía gestionan sus operaciones en hojas de cálculo.\n\nEl resultado: errores, tiempo perdido y decisiones sin datos reales.\n\nDesarrollamos un ERP pensado para empresas medianas que quieren escalar sin complejidad innecesaria.\n\n→ Onboarding en 48hs\n→ Sin costo de implementación\n→ Soporte incluido\n\n¿Tu empresa está lista para el siguiente paso? Escribime.',copiado:false},
-
-    {id:'pub5',co:'prussia',red:'instagram',titulo:'La luz cambia todo',texto:'La gente cambia los muebles. Pinta las paredes. Renueva el piso.\n\nY después enciende la misma lámpara de siempre. 💡\n\nCambiar la iluminación es lo más barato y lo que más impacto tiene en un espacio.\n\nConsultá por DM y te asesoramos.\n\n#iluminacion #decoracion #hogar #diseñodeinteriores #lamparas #prussia'},
-    {id:'pub6',co:'prussia',red:'instagram',titulo:'Antes y después',texto:'La misma habitación. La misma hora del día. Distinta lámpara. 🔆\n\nEso es todo lo que cambió.\n\n¿Querés ver el tuyo? Mandanos una foto del espacio y te asesoramos sin compromiso.\n\n#transformacion #decoracion #iluminacion #hogar #interiorismo #prussia'},
-    {id:'pub7',co:'prussia',red:'instagram',titulo:'Hecha a mano',texto:'Cada pieza es única. 🤲\n\nNo hay dos iguales. El proceso es artesanal, el resultado es diseño.\n\nMateriales premium, acabados a mano, entrega en todo el país.\n\n👉 Ver catálogo — link en bio\n\n#artesanal #handmade #lamparas #diseño #decoracion #prussia'},
-    {id:'pub8',co:'prussia',red:'tiktok',titulo:'TikTok: cuánto tarda hacer una lámpara',texto:'POV: fabricás lámparas artesanales y alguien te pregunta cuánto tardás ⏱️\n\nRespuesta: entre el diseño, el corte, el armado y el acabado... entre 3 y 5 días por pieza.\n\nPor eso no somos los más baratos. Pero somos los mejores.\n\n#artesanal #lamparas #proceso #prussia #handmade'},
-    {id:'pub9',co:'prussia',red:'tiktok',titulo:'TikTok: el mejor regalo',texto:'Si no sabés qué regalar, regalá luz 💡\n\nNuestros modelos van desde $[precio] con envíos a todo el país.\n\nEscribinos por DM y te ayudamos a elegir.\n\n#regalo #hogar #decoracion #prussia #lamparas'},
-    {id:'pub10',co:'prussia',red:'instagram',titulo:'Testimonio de cliente',texto:'"Cuando llegó la lámpara no podía creer la calidad. Cambió todo el ambiente de la casa." ⭐⭐⭐⭐⭐\n\n— [nombre], [ciudad]\n\n¿Querés ser el próximo? Link en bio 👆\n\n#testimonio #review #prussia #lamparas #clientes'},
-    {id:'pub11',co:'prussia',red:'instagram',titulo:'Colección nueva',texto:'Colección nueva. 🆕\n\nNuevos modelos, nuevos materiales, misma calidad artesanal.\n\n¿Cuál es tu favorita? Comentá abajo 👇\n\n#nuevacoleccion #lamparas #prussia #diseño #decoracion #hogar'},
-    {id:'pub12',co:'prussia',red:'instagram',titulo:'Decorá con intención',texto:'Una lámpara no es solo iluminación. Es el punto focal de un cuarto. La pieza que define el estilo. Lo primero que ven tus visitas. ✨\n\nElegí con intención.\n\nVer colección → link en bio\n\n#decoracion #interiorismo #lamparas #prussia #hogar #diseño'},
-
-    {id:'pub13',co:'voccel',red:'tiktok',titulo:'TikTok: el error más caro en obras',texto:'El error más caro en construcción no es técnico. Es de números. 🏗️\n\nLa mayoría presupuesta al inicio y no actualiza durante la obra.\n\nResultado: el cliente se enoja, el proyecto se frena.\n\nNuestra app actualiza costos en tiempo real.\n\nLink en bio 👆\n\n#construccion #arquitectura #presupuesto #app #voccel'},
-    {id:'pub14',co:'voccel',red:'tiktok',titulo:'TikTok: 6 horas ahorradas por semana',texto:'¿Cuánto tiempo perdés en Excel para presupuestos? 📊\n\nNuestros usuarios ahorran en promedio 6 horas por semana.\n\n6h × 4 semanas = 24 horas al mes. Recuperadas.\n\nProbala gratis → link en bio\n\n#productividad #construccion #arquitectura #app #voccel'},
-    {id:'pub15',co:'voccel',red:'instagram',titulo:'Para constructoras medianas',texto:'Diseñamos nuestra app para constructoras de 5 a 50 empleados. 🏢\n\nNo para grandes corporaciones. No para freelancers solos.\n\nPara las que están creciendo y necesitan procesos reales.\n\n¿Es tu caso? Hablemos.\n\n#constructoras #gestion #erp #voccel #construccion'},
-    {id:'pub16',co:'voccel',red:'linkedin',titulo:'Por qué las obras se pasan del presupuesto',texto:'Después de hablar con 50+ profesionales de la construcción encontramos el patrón:\n\n1. Presupuesto inicial con precios desactualizados\n2. Sin seguimiento de variaciones durante la obra\n3. El cliente se entera del desvío cuando ya es tarde\n\nNo es un problema de gestión. Es un problema de herramientas.\n\nPor eso construimos algo diferente.\n\n→ Demo gratuita. Escribime.\n\n#construccion #gestion #presupuesto #arquitectura #voccel'},
-    {id:'pub17',co:'voccel',red:'linkedin',titulo:'Buscamos primeros clientes SaaS',texto:'Lanzamos la primera versión de nuestra app de gestión de precios para construcción.\n\n¿Qué hace?\n✅ Calcula costo por m² automáticamente\n✅ Actualiza precios de materiales\n✅ Genera presupuestos en PDF\n✅ Registra variaciones durante la obra\n\nBuscamos 10 clientes piloto con precio especial.\n\n¿Conocés un arquitecto, ingeniero o constructora? Etiquetalo 👇\n\n#startup #saas #construccion #arquitectura #voccel'},
-    {id:'pub18',co:'voccel',red:'tiktok',titulo:'TikTok: antes vs después',texto:'Antes de nuestra app 👎\n❌ Excel con fórmulas rotas\n❌ Precios desactualizados\n❌ Clientes enojados\n\nDespués 👍\n✅ Todo centralizado\n✅ Precios siempre actualizados\n✅ Presupuestos en 5 minutos\n\n#voccel #construccion #app #productividad'},
-    {id:'pub19',co:'voccel',red:'instagram',titulo:'Diseño web que convierte',texto:'Tu sitio web es tu vendedor 24/7. 💻\n\nSi no convierte visitas en consultas, algo falla.\n\nEn Voccel diseñamos sitios que:\n→ Cargan rápido\n→ Se ven bien en celular\n→ Generan contactos reales\n\nCotización sin costo. Escribinos.\n\n#diseñoweb #webdesign #voccel #programacion'},
-
-    {id:'pub20',co:'mh',red:'instagram',titulo:'El espacio que soñás existe',texto:'No importa el tamaño del terreno. No importa el presupuesto inicial.\n\nHay una versión de ese espacio que soñás que es posible. 📐\n\nEmpezamos con una conversación. Sin compromiso.\n\nEscribinos.\n\n#arquitectura #diseño #obra #hogar #arquitecto #mh'},
-    {id:'pub21',co:'mh',red:'instagram',titulo:'Por qué contratar un arquitecto',texto:'La gente piensa que contratar un arquitecto es un gasto. 💭\n\nEn realidad evita:\n❌ Errores de construcción costosos\n❌ Espacios mal aprovechados\n❌ Obras que se extienden meses\n\nLo que pagás en honorarios lo recuperás en eficiencia.\n\n¿Tenés un proyecto? Hablemos.\n\n#arquitectura #construccion #diseño #inversion #mh'},
-    {id:'pub22',co:'mh',red:'instagram',titulo:'Detalles que hacen la diferencia',texto:'El diseño está en los detalles. 🔍\n\nLa altura exacta de una ventana. La dirección de la luz natural. El ancho de un pasillo.\n\nSon cosas que no se notan cuando están bien hechas.\n\nPero se sienten.\n\n#arquitectura #diseño #detalles #espacio #mh'},
-    {id:'pub23',co:'mh',red:'instagram',titulo:'Luz natural en arquitectura',texto:'El mejor recurso de diseño es gratuito. ☀️\n\nLa luz natural bien aprovechada:\n→ Reduce costos de electricidad\n→ Mejora el bienestar\n→ Hace los espacios más grandes\n→ Crea experiencias distintas según la hora\n\nEn cada proyecto estudiamos orientación, aberturas y recorrido del sol.\n\n#arquitectura #luz #diseño #sustentabilidad #mh'},
-    {id:'pub24',co:'mh',red:'instagram',titulo:'Collab Prussia x MH',texto:'Cuando el diseño del espacio y la iluminación se piensan juntos, el resultado es otro. 🤝\n\nEn este proyecto trabajamos con @prussiailuminacion para diseñar arquitectura y propuesta lumínica desde cero.\n\n¿Querés algo así? Escribinos.\n\n#arquitectura #iluminacion #collab #diseño #mh #prussia'},
-    {id:'pub25',co:'mh',red:'instagram',titulo:'Render del proyecto',texto:'Así va tomando forma. ✏️\n\nCada línea tiene un por qué. Cada espacio, una función. Cada decisión, una intención.\n\nEsto es lo que está en proceso en el estudio.\n\n¿Querés saber más? Contamos todo en Stories.\n\n#arquitectura #render #diseño #proceso #obra #mh'},
-
-    // ── PRUSSIA extra ──
-    {id:'pub26',co:'prussia',red:'instagram',titulo:'El regalo que no defrauda',texto:'Para quien ya tiene todo. 🎁\n\nUna lámpara artesanal no es un objeto. Es un ambiente. Una decisión de diseño que dura años.\n\nConsultá disponibilidad por DM.\n\n#regalo #diseño #lamparas #prussia #iluminacion #hogar'},
-    {id:'pub27',co:'prussia',red:'instagram',titulo:'Cómo elegir la lámpara correcta',texto:'3 preguntas antes de elegir una lámpara 💡\n\n1. ¿Querés luz cálida o fría?\n2. ¿Es luz principal o decorativa?\n3. ¿El espacio es moderno, clásico o industrial?\n\nEn Prussia te asesoramos sin costo. Escribinos y te ayudamos a elegir.\n\n#iluminacion #decoracion #tips #prussia #lamparas #hogar'},
-    {id:'pub28',co:'prussia',red:'tiktok',titulo:'TikTok: 3 errores al comprar lámparas',texto:'3 errores que la gente comete al comprar lámparas 🚫\n\n❌ Comprar por precio sin ver la calidad\n❌ No medir el espacio antes\n❌ Ignorar el tipo de luz (cálida vs fría)\n\nEn Prussia hacemos lo opuesto:\n✅ Calidad artesanal\n✅ Te asesoramos con el espacio\n✅ Luz pensada para cada ambiente\n\n#lamparas #tips #decoracion #prussia #iluminacion'},
-    {id:'pub29',co:'prussia',red:'instagram',titulo:'Luz y arquitectura',texto:'La mejor arquitectura se diseña pensando en la luz. ☀️\n\nY la mejor iluminación se elige pensando en el espacio.\n\nPor eso trabajamos con arquitectos y diseñadores de interiores que buscan algo diferente para sus proyectos.\n\n¿Sos profesional del diseño? Tenemos precios especiales. DM.\n\n#arquitectura #diseño #iluminacion #prussia #interiorismo #b2b'},
-    {id:'pub30',co:'prussia',red:'tiktok',titulo:'TikTok: de qué están hechas',texto:'¿De qué están hechas nuestras lámparas? 🔍\n\nMateriales que usamos:\n→ [Material 1]\n→ [Material 2]\n→ [Material 3]\n\nCada pieza pasa por control de calidad antes de salir del taller.\n\nEso es lo que hace la diferencia.\n\n#artesanal #materiales #lamparas #prussia #handmade #proceso'},
-    {id:'pub31',co:'prussia',red:'instagram',titulo:'Enviamos a todo el país',texto:'¿Estás en [ciudad]? Enviamos igual. 📦\n\nTodo el país. Embalaje especial para que llegue perfecta. Seguro incluido.\n\nConsultá tiempo de entrega y costos por DM.\n\n#envios #paraguay #lamparas #prussia #entrega #hogar'},
-
-    // ── VOCCEL extra ──
-    {id:'pub32',co:'voccel',red:'instagram',titulo:'Cuánto cuesta hacer una web profesional',texto:'La pregunta que todo el mundo tiene miedo de hacer. 💻\n\nDepende de muchas cosas. Pero lo que sí podemos decirte:\n\n→ Una página básica no es lo mismo que un sistema completo\n→ El precio incluye diseño, desarrollo y soporte\n→ El ROI de un buen sitio se mide en consultas generadas\n\nCotización gratuita → link en bio\n\n#diseñoweb #desarrollo #voccel #web #programacion'},
-    {id:'pub33',co:'voccel',red:'tiktok',titulo:'TikTok: qué hace un ERP',texto:'¿Qué es un ERP y por qué tu empresa lo necesita? 🏢\n\nERP = Enterprise Resource Planning\n\nEn simple: un sistema que conecta todas las áreas de tu empresa en un solo lugar.\n\n→ Ventas\n→ Inventario\n→ Finanzas\n→ RRHH\n\nSin Excel. Sin datos duplicados. Sin caos.\n\nNuestra versión es para PyMEs. Sin complejidad innecesaria.\n\n#erp #gestion #empresas #voccel #software #pymes'},
-    {id:'pub34',co:'voccel',red:'linkedin',titulo:'Testimonio cliente SaaS',texto:'"Antes usábamos 4 planillas de Excel distintas para presupuestar una obra. Ahora lo hacemos en una sola pantalla en 10 minutos."\n\n— [Nombre], [Empresa constructora]\n\nEso es lo que construimos en Voccel.\n\nSi trabajás en construcción y querés una demo, escribime.\n\n#testimonio #saas #construccion #voccel #productividad'},
-    {id:'pub35',co:'voccel',red:'tiktok',titulo:'TikTok: el stack de una PyME moderna',texto:'El stack tecnológico de una PyME moderna en 2024 📱\n\n→ CRM para clientes\n→ ERP para operaciones\n→ Web que convierte\n→ Pagos digitales\n→ Analytics para decidir\n\nNo necesitás ser una corporación para tener esto.\n\nEn Voccel lo armamos para vos.\n\n#tecnologia #pymes #digital #voccel #software #gestion'},
-    {id:'pub36',co:'voccel',red:'instagram',titulo:'Por qué un sitio lento te hace perder ventas',texto:'Un sitio que tarda 3 segundos en cargar pierde el 40% de sus visitas. 📉\n\nEso es plata que se va antes de que el cliente vea lo que ofrecés.\n\nEn Voccel optimizamos cada sitio para que cargue rápido, se vea bien en celular y convierta.\n\nCotización gratuita → link en bio\n\n#web #velocidad #ux #voccel #diseñoweb #conversiones'},
-    {id:'pub37',co:'voccel',red:'linkedin',titulo:'El problema real de la construcción en Paraguay',texto:'El sector de la construcción en Paraguay mueve millones. Y todavía gestiona sus proyectos con hojas de cálculo del 2005.\n\nNo es falta de dinero. Es falta de herramientas diseñadas para este contexto.\n\nDesarrollamos una app específicamente para el mercado paraguayo y latinoamericano.\n\nSi sos del sector y querés hablar, mi DM está abierto.\n\n#paraguay #construccion #latam #voccel #saas #arquitectura'},
-
-    // ── MH extra ──
-    {id:'pub38',co:'mh',red:'instagram',titulo:'Cuánto cuesta contratar un arquitecto',texto:'La pregunta que todos tienen pero pocos hacen. 💭\n\nLos honorarios de un arquitecto en Paraguay varían según:\n→ Alcance del proyecto\n→ Superficie\n→ Complejidad\n\nLo que sí es constante: lo que ahorrás en errores evitados supera siempre los honorarios.\n\nConsultá sin compromiso → DM\n\n#arquitectura #honorarios #construccion #paraguay #mh'},
-    {id:'pub39',co:'mh',red:'instagram',titulo:'Un espacio bien diseñado se siente',texto:'No siempre sabés por qué un espacio se siente bien. 🏠\n\nPero hay razones concretas:\n\n→ Proporciones correctas\n→ Luz natural bien aprovechada\n→ Circulación fluida\n→ Materiales que combinan\n\nEso es lo que hace el diseño arquitectónico.\n\n#arquitectura #diseño #espacio #bienestar #mh #interiorismo'},
-    {id:'pub40',co:'mh',red:'instagram',titulo:'Antes de construir, diseñá',texto:'El error más caro en construcción no es el material. Es construir sin un buen diseño previo. 📐\n\nCambiar un muro ya construido cuesta 10 veces más que ajustar un plano.\n\nEl diseño no es un gasto. Es la inversión más barata de toda la obra.\n\n¿Tenés un proyecto? Hablemos antes de empezar.\n\n#arquitectura #construccion #diseño #inversion #mh #paraguay'},
-    {id:'pub41',co:'mh',red:'instagram',titulo:'Pequeños espacios, grandes soluciones',texto:'Los espacios chicos son los más difíciles y los más fascinantes. ✨\n\nCada m² cuenta. Cada decisión tiene un impacto mayor.\n\nEspecialidad: proyectos de hasta 120m² donde el diseño hace toda la diferencia.\n\nDM para consultar disponibilidad.\n\n#arquitectura #pequeñosespacios #diseño #mh #interiores #paraguay'},
-    {id:'pub42',co:'mh',red:'instagram',titulo:'El proceso completo',texto:'Así es trabajar con nosotros 📋\n\n1. Reunión inicial (sin costo) — entendemos tu visión\n2. Propuesta de honorarios — sin sorpresas\n3. Anteproyecto — primeras ideas\n4. Proyecto ejecutivo — planos definitivos\n5. Dirección de obra — acompañamiento completo\n\n¿En qué etapa estás vos?\n\n#arquitectura #proceso #construccion #mh #diseño #obra'},
-  ];
-
-let S={
-  page:'home',xp:0,xpLog:[],earnedBadges:[],
-  missions:{voccel:[],prussia:[],mh:[]},
-  leads:[],cobros:[],
-  cards:[],
-  posts:{},calWo:0,calFilt:'all',
-  redes:[{name:'Instagram',co:'voccel',val:0},{name:'TikTok',co:'voccel',val:0},{name:'Instagram',co:'prussia',val:0},{name:'Instagram',co:'mh',val:0}],
-  streak:[false,false,false,false,false,false,false],
-  planDone:{voccel:{},prussia:{},mh:{}},
-  notes:{voccel:'',prussia:'',mh:''},
-  lastDaily:'',lastWeekly:'',
-  weeklyReviews:[],
-  sim:{lamps:3,lprice:150,s1:0,s1p:49,s2:0,s2p:99,web:0,wp:800,cons:0,cp:80},
-  milestones:[
-    {id:'ms1',i:'🥗',t:'Gastos básicos',v:800},
-    {id:'ms2',i:'🏠',t:'Alquiler propio',v:1500},
-    {id:'ms3',i:'✈️',t:'Reinversión',v:3000},
-    {id:'ms4',i:'🚀',t:'Escala real',v:5000},
-    {id:'ms5',i:'💎',t:'Full freedom',v:10000},
-  ],
-  editingMilestone:null,
-  currency:'USD',
-  contacts:[],
-  recordatorios:[],
-  gastos:[],
-  plantillas:[
-    {id:'pl1',co:'voccel',tipo:'outreach',nombre:'Outreach SaaS frío',texto:'Hola [nombre], vi que trabajás en [empresa]. Desarrollé una herramienta que ayuda a gestionar presupuestos de construcción de forma automática. ¿Te interesaría ver una demo de 15 minutos? Sin compromiso.'},
-    {id:'pl2',co:'prussia',tipo:'consulta',nombre:'Respuesta consulta lámpara',texto:'Hola! Gracias por tu consulta. La lámpara [modelo] está disponible en [colores]. El precio es $[precio] con envío incluido a todo el país. ¿Te mando más fotos o querés coordinar para verla en persona?'},
-    {id:'pl3',co:'mh',tipo:'propuesta',nombre:'Intro propuesta arquitectura',texto:'Hola [nombre], un placer. Estuve revisando el brief que me mandaste y me parece un proyecto muy interesante. Te preparo una propuesta formal con alcance, cronograma y honorarios para enviarte antes del [fecha]. Cualquier consulta, estoy disponible.'},
-  ],
-  ideas:[],
-  publicaciones:null,
-  focus:{running:false,dur:25,remaining:1500,session:1,mode:'focus',co:'voccel',log:[],todayKey:''},
-  editing:{lead:null,cobro:null,card:null,post:null,postCell:null,cardCol:'todo',contact:null,pub:null,plantilla:null},
-  reviewForm:{mood:0,stars:{voccel:0,prussia:0,mh:0},wins:[],blocker:'',learnt:'',focus:'',notes:''},
-  kbDragging:null,
-  pubOpenCo:{voccel:true,prussia:true,mh:true},
-};
-let focusInterval=null;
-
-function dk(d){return d.toISOString?d.toISOString().slice(0,10):new Date(d).toISOString().slice(0,10)}
-function todayStr(){return dk(new Date())}
-function weekStr(){const d=new Date();const j=new Date(d.getFullYear(),0,1);return d.getFullYear()+'-W'+Math.ceil(((d-j)/86400000+j.getDay()+1)/7)}
-
-// ═══════════════════════════════════════
-// STORAGE
-// ═══════════════════════════════════════
-function loadState(){
-  try{
-    const raw=localStorage.getItem('hq-v1');
-    if(raw){const saved=JSON.parse(raw);S={...S,...saved};}
-  }catch(e){}
-  // Merge default missions
-  ['voccel','prussia','mh'].forEach(co=>{
-    if(!S.missions[co])S.missions[co]=[];
-    const ex=S.missions[co].map(m=>m.id);
-    DEFAULT_MISSIONS[co].forEach(m=>{if(!ex.includes(m.id))S.missions[co].push({...m});});
-  });
-  if(!S.cards||!S.cards.length) S.cards=[...DEFAULT_CARDS];
-  // Merge default publications - add any new ones not yet in saved state
-  if(!S.publicaciones||!S.publicaciones.length){
-    S.publicaciones=[...DEFAULT_PUBS];
-  } else {
-    const existingIds=new Set(S.publicaciones.map(p=>p.id));
-    const newPubs=DEFAULT_PUBS.filter(p=>!existingIds.has(p.id));
-    if(newPubs.length>0) S.publicaciones=[...S.publicaciones,...newPubs];
-  }
-  if(!S.milestones||!S.milestones.length) S.milestones=[
-    {id:'ms1',i:'🥗',t:'Gastos básicos',v:800},
-    {id:'ms2',i:'🏠',t:'Alquiler propio',v:1500},
-    {id:'ms3',i:'✈️',t:'Reinversión',v:3000},
-    {id:'ms4',i:'🚀',t:'Escala real',v:5000},
-    {id:'ms5',i:'💎',t:'Full freedom',v:10000},
-  ];
-  checkResets();
-  checkBadges();
-  updateXPUI();
-  renderStreak();
-  setTodayBadge();
-}
-
-function saveState(){
-  try{localStorage.setItem('hq-v1',JSON.stringify(S));}catch(e){}
-}
-
-function checkResets(){
-  const today=todayStr();const week=weekStr();
-  if(S.lastDaily!==today){
-    ['voccel','prussia','mh'].forEach(co=>{if(S.missions[co])S.missions[co].forEach(m=>{if(m.tp==='daily')m.done=false;});});
-    S.lastDaily=today;
-  }
-  if(S.lastWeekly!==week){
-    ['voccel','prussia','mh'].forEach(co=>{if(S.missions[co])S.missions[co].forEach(m=>{if(m.tp==='weekly')m.done=false;});});
-    S.lastWeekly=week;
-  }
-  // Check focus day reset
-  if(S.focus.todayKey!==today){S.focus.log=[];S.focus.session=1;S.focus.todayKey=today;S.focus.running=false;}
-  // Ensure required state fields always exist
-  if(!S.pubOpenCo)S.pubOpenCo={voccel:true,prussia:true,mh:true};
-  if(!S.contacts)S.contacts=[];
-  if(!S.recordatorios)S.recordatorios=[];
-  if(!S.gastos)S.gastos=[];
-  if(!S.plantillas)S.plantillas=[
-    {id:'pl1',co:'voccel',tipo:'outreach',nombre:'Outreach SaaS frío',texto:'Hola [nombre], vi que trabajás en [empresa]. Desarrollé una herramienta que ayuda a gestionar presupuestos de construcción de forma automática. ¿Te interesaría ver una demo de 15 minutos? Sin compromiso.'},
-    {id:'pl2',co:'prussia',tipo:'consulta',nombre:'Respuesta consulta lámpara',texto:'Hola! Gracias por tu consulta. La lámpara [modelo] está disponible. El precio es $[precio] con envío incluido. ¿Te mando más fotos o querés coordinar para verla?'},
-    {id:'pl3',co:'mh',tipo:'propuesta',nombre:'Intro propuesta arquitectura',texto:'Hola [nombre], un placer. Estuve revisando el brief y me parece un proyecto muy interesante. Te preparo una propuesta con alcance, cronograma y honorarios para enviarte antes del [fecha].'},
-  ];
-  if(!S.ideas)S.ideas=[];
-  if(!S.currency)S.currency='USD';
-  if(!S.milestones||!S.milestones.length)S.milestones=[
-    {id:'ms1',i:'🥗',t:'Gastos básicos',v:800},
-    {id:'ms2',i:'🏠',t:'Alquiler propio',v:1500},
-    {id:'ms3',i:'✈️',t:'Reinversión',v:3000},
-    {id:'ms4',i:'🚀',t:'Escala real',v:5000},
-    {id:'ms5',i:'💎',t:'Full freedom',v:10000},
-  ];
-}
-
-function checkBadges(){
-  BADGES.forEach(b=>{
-    if(!S.earnedBadges.includes(b.id)){
-      try{if(b.check(S)){S.earnedBadges.push(b.id);setTimeout(()=>toast('🏅 Logro: '+b.name),400);}}catch(e){}
-    }
-  });
-}
-
-// ═══════════════════════════════════════
-// XP
-// ═══════════════════════════════════════
-function addXP(n,desc){
-  S.xp+=n;
-  S.xpLog.unshift({xp:n,desc,date:todayStr(),ts:Date.now()});
-  if(S.xpLog.length>100)S.xpLog=S.xpLog.slice(0,100);
-  updateXPUI();checkBadges();saveState();
-  showXPPop('+'+n+' XP');
-}
-
-function updateXPUI(){
-  const lvl=Math.floor(S.xp/100)+1;const pct=S.xp%100;
-  document.getElementById('xp-level').textContent='Lv '+lvl;
-  document.getElementById('xp-val').textContent=S.xp+' XP';
-  document.getElementById('xp-fill').style.width=pct+'%';
-}
-
-function showXPPop(msg){
-  const el=document.getElementById('xp-pop');
-  el.textContent=msg;el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),1600);
-}
-
-// ═══════════════════════════════════════
-// TOAST
-// ═══════════════════════════════════════
-function toast(m){
-  const t=document.getElementById('toast');
-  t.textContent=m;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2200);
-}
-
-// ═══════════════════════════════════════
-// NAV
-// ═══════════════════════════════════════
-const PAGE_TITLES={home:'Dashboard',focus:'Modo Focus',review:'Weekly Review',voccel:'Voccel',prussia:'Prussia',mh:'MH Arquitectura',kanban:'Kanban — Proyectos',calendar:'Calendario de contenido',pipeline:'Pipeline de ventas',cobros:'Cobros',simulator:'Simulador de ingresos',logros:'Logros',historial:'Historial XP',crm:'CRM — Contactos',recordatorios:'Recordatorios',publicaciones:'Publicaciones generadas',plantillas:'Plantillas de mensajes',ideas:'Log de ideas',gastos:'Registro de gastos'};
-
-function go(page){
-  S.page=page;
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
-  const el=document.getElementById('n-'+page);if(el)el.classList.add('active');
-  document.getElementById('page-title').textContent=PAGE_TITLES[page]||page;
-  render();saveState();
-}
-
-function setTodayBadge(){
-  const d=new Date();
-  document.getElementById('today-badge').textContent=`${DAYS[d.getDay()===0?6:d.getDay()-1]} ${d.getDate()} ${MNS[d.getMonth()]}`;
-}
-
-// ═══════════════════════════════════════
-// STREAK
-// ═══════════════════════════════════════
-function renderStreak(){
-  const today=new Date().getDay()===0?6:new Date().getDay()-1;
-  document.getElementById('streak-mini').innerHTML=DAYS.map((d,i)=>`<div class="sm-day ${S.streak[i]?'done':i===today?'today':'miss'}" onclick="toggleStreak(${i})" title="${d}">${d}</div>`).join('');
-}
-
-function toggleStreak(i){
-  S.streak[i]=!S.streak[i];
-  if(S.streak[i]){addXP(10,'Día de racha marcado');}
-  renderStreak();saveState();checkBadges();
-}
-
-// ═══════════════════════════════════════
-// RENDER ROUTER
-// ═══════════════════════════════════════
-function render(){
-  const p=S.page;
-  const c=document.getElementById('content');
-  if(p==='home')c.innerHTML=renderHome();
-  else if(p==='voccel'||p==='prussia'||p==='mh')c.innerHTML=renderCompany(p);
-  else if(p==='focus')c.innerHTML=renderFocus();
-  else if(p==='review')c.innerHTML=renderReview();
-  else if(p==='kanban')c.innerHTML=renderKanban();
-  else if(p==='calendar')c.innerHTML=renderCalendar();
-  else if(p==='pipeline')c.innerHTML=renderPipeline();
-  else if(p==='cobros')c.innerHTML=renderCobros();
-  else if(p==='simulator')c.innerHTML=renderSimulator();
-  else if(p==='logros')c.innerHTML=renderLogros();
-  else if(p==='historial')c.innerHTML=renderHistorial();
-  else if(p==='crm')c.innerHTML=renderCRM();
-  else if(p==='recordatorios')c.innerHTML=renderRecordatorios();
-  else if(p==='gastos')c.innerHTML=renderGastos();
-  else if(p==='plantillas')c.innerHTML=renderPlantillas();
-  else if(p==='ideas')c.innerHTML=renderIdeas();
-  else if(p==='publicaciones')c.innerHTML=renderPublicaciones();
-}
-
-// ═══════════════════════════════════════
-// HOME
-// ═══════════════════════════════════════
-function renderHome(){
-  const cobrado=S.cobros.filter(c=>c.status==='cobrado').reduce((a,c)=>a+(+c.amount||0),0);
-  const pendiente=S.cobros.filter(c=>c.status==='pendiente').reduce((a,c)=>a+(+c.amount||0),0);
-  const pipe=S.leads.reduce((a,l)=>a+(+l.val||0),0);
-  const allM=[...S.missions.voccel,...S.missions.prussia,...S.missions.mh];
-  const done=allM.filter(m=>m.done).length;
-  const todayM=allM.filter(m=>m.tp==='daily');
-  const todayDone=todayM.filter(m=>m.done).length;
-
-  // Upcoming posts today
-  const today=todayStr();
-  const todayPosts=Object.values(S.posts).filter(p=>p.date===today&&p.status!=='published');
-
-  let h=`<div class="metrics">
-    <div class="metric"><div class="metric-val" style="color:var(--success)">$${cobrado.toFixed(0)}</div><div class="metric-lbl">Cobrado</div></div>
-    <div class="metric"><div class="metric-val" style="color:var(--warn)">$${pendiente.toFixed(0)}</div><div class="metric-lbl">Pendiente</div></div>
-    <div class="metric"><div class="metric-val" style="color:var(--voccel)">$${pipe.toFixed(0)}</div><div class="metric-lbl">Pipeline</div></div>
-    <div class="metric"><div class="metric-val">${done}/${allM.length}</div><div class="metric-lbl">Misiones</div></div>
-  </div>
-  <div class="grid2">
-    <div>`;
-
-  // Dailies today
-  h+=`<div class="card">
-    <div class="card-title">Dailies de hoy <span>${todayDone}/${todayM.length}</span></div>
-    <div class="mini-prog"><div class="mini-prog-fill" style="width:${todayM.length?Math.round(todayDone/todayM.length*100):0}%;background:var(--warn)"></div></div>
-    ${todayM.slice(0,6).map(m=>renderMissionItem(m,'voccel')).join('')}
-    ${todayM.length===0?'<div class="empty-hint">Sin dailies</div>':''}
-  </div>`;
-
-  // Plan progress
-  h+=`<div class="card" style="margin-top:12px">
-    <div class="card-title">Plan de lanzamiento</div>
-    ${['voccel','prussia','mh'].map(co=>{
-      const items=PLAN_ITEMS[co];
-      const d=items.filter((_,i)=>S.planDone[co]&&S.planDone[co][i]).length;
-      const pct=Math.round(d/items.length*100);
-      return`<div style="margin-bottom:10px">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
-          <span class="co-badge ${CO_CC[co]}">${CO_NAMES[co]}</span>
-          <span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted)">${pct}%</span>
-        </div>
-        <div class="mini-prog"><div class="mini-prog-fill" style="width:${pct}%;background:${CO_HEX[co]}"></div></div>
-      </div>`;
-    }).join('')}
-  </div>`;
-
-  h+=`</div><div>`;
-
-  // Posts hoy
-  if(todayPosts.length){
-    h+=`<div class="card">
-      <div class="card-title">Posts pendientes hoy</div>
-      ${todayPosts.map(p=>{
-        const acc=ACCS.find(a=>a.id===p.acc)||{color:'#fff',co:'voccel',net:'?'};
-        return`<div class="lead-row"><div style="width:8px;height:8px;border-radius:50%;background:${acc.color};flex-shrink:0"></div><div class="lr-name">${CO_NAMES[acc.co]} ${acc.net} — ${TYPE_L[p.type]||'Post'}</div><span style="font-size:9px;padding:2px 6px;border-radius:20px;background:${POST_STATUS_COLORS[p.status]}22;color:${p.status==='scheduled'?'var(--voccel)':'var(--muted)'}">${p.status}</span></div>`;
-      }).join('')}
-    </div>`;
-  }
-
-  // Kanban top 3
-  const inProg=S.cards.filter(c=>c.col==='prog').slice(0,3);
-  h+=`<div class="card" style="margin-top:${todayPosts.length?'12':'0'}px">
-    <div class="card-title">En progreso <span onclick="go('kanban')" style="cursor:pointer;color:var(--voccel)">ver todo →</span></div>
-    ${inProg.map(c=>`<div class="lead-row"><span class="co-badge ${CO_CC[c.co]}">${CO_NAMES[c.co]}</span><div class="lr-name">${c.title}</div><span class="co-badge prio-${c.prio==='alta'?'a':c.prio==='media'?'m':'b'}" style="font-size:8px">${c.prio}</span></div>`).join('')}
-    ${!inProg.length?'<div class="empty-hint">Sin tareas en progreso</div>':''}
-  </div>`;
-
-  // Leads recientes
-  const recentLeads=S.leads.slice(0,4);
-  h+=`<div class="card" style="margin-top:12px">
-    <div class="card-title">Leads recientes <span onclick="go('pipeline')" style="cursor:pointer;color:var(--voccel)">ver todo →</span></div>
-    ${recentLeads.map(l=>`<div class="lead-row"><span class="co-badge ${CO_CC[l.co]}">${CO_NAMES[l.co]}</span><div class="lr-name">${l.name}</div><span class="lr-stage ${STAGE_C[l.stage]}">${STAGE_L[l.stage]}</span><div class="lr-val">$${(+l.val||0).toFixed(0)}</div></div>`).join('')}
-    ${!recentLeads.length?'<div class="empty-hint">Sin leads — <span style="color:var(--voccel);cursor:pointer" onclick="go(\'pipeline\')">agregá uno</span></div>':''}
-  </div>`;
-
-  h+=`</div></div>`;
-  return h;
-}
-
-// ═══════════════════════════════════════
-// COMPANY PAGE
-// ═══════════════════════════════════════
-function renderCompany(co){
-  const missions=S.missions[co]||[];
-  const types=[
-    {key:'daily',label:'Dailies',icon:'⚡',color:CO_HEX[co]},
-    {key:'weekly',label:'Semanales',icon:'📅',color:CO_HEX[co]},
-    {key:'general',label:'Misiones generales',icon:'🎯',color:CO_HEX[co]},
-  ];
-  const plan=PLAN_ITEMS[co];
-  const planDone=plan.filter((_,i)=>S.planDone[co]&&S.planDone[co][i]).length;
-  const planPct=Math.round(planDone/plan.length*100);
-
-  let h=`<div class="grid2">
-  <div>
-    <div class="card">
-      <div class="card-title">Plan de lanzamiento <span>${planPct}%</span></div>
-      <div class="mini-prog"><div class="mini-prog-fill" style="width:${planPct}%;background:${CO_HEX[co]}"></div></div>
-      ${plan.map((it,i)=>`<div class="plan-item${S.planDone[co]&&S.planDone[co][i]?' pdone':''}" onclick="${S.planDone[co]&&S.planDone[co][i]?'':''};togglePlan('${co}',${i})">
-        <div class="plan-dot" style="background:${S.planDone[co]&&S.planDone[co][i]?'var(--success)':CO_HEX[co]}"></div>${it.t}
-      </div>`).join('')}
+    <div class="sidebar-footer">
+      <button class="btn-process" id="newProcessBtn" type="button">
+        <span class="label">NEW_PROCESS</span>
+      </button>
     </div>
-    <div class="card" style="margin-top:12px">
-      <div class="card-title">Notas</div>
-      <textarea class="q-ta" style="width:100%;min-height:100px" placeholder="Notas rápidas de ${CO_NAMES[co]}..." onchange="S.notes['${co}']=this.value;saveState()">${S.notes[co]||''}</textarea>
-    </div>
-    <div class="card" style="margin-top:12px">
-      <div class="card-title">Redes sociales</div>
-      ${S.redes.filter(r=>r.co===co).map((r,i)=>{
-        const gi=S.redes.indexOf(r);
-        return`<div class="red-row"><div style="width:6px;height:6px;border-radius:50%;background:${CO_HEX[co]}"></div><div style="font-size:12px;flex:1">${r.name}</div><input class="red-inp" value="${r.val}" type="number" onchange="S.redes[${gi}].val=+this.value;saveState()"><div style="font-size:9px;color:var(--muted);margin-left:4px">seg.</div></div>`;
-      }).join('')}
-    </div>
-  </div>
-  <div>`;
+  </aside>
 
-  types.forEach(tp=>{
-    const ms=missions.filter(m=>m.tp===tp.key);
-    if(!ms.length)return;
-    const done=ms.filter(m=>m.done&&!m.locked).length;
-    const total=ms.filter(m=>!m.locked||m.done).length;
-    const pct=total?Math.round(done/total*100):0;
-    h+=`<div class="card" style="margin-bottom:12px">
-      <div class="card-title">${tp.icon} ${tp.label} <span>${done}/${total}</span></div>
-      <div class="mini-prog"><div class="mini-prog-fill" style="width:${pct}%;background:${tp.color}"></div></div>
-      ${ms.map(m=>renderMissionItem(m,co)).join('')}
-      <button class="btn-xs" style="margin-top:8px;width:100%" onclick="openMissionModal('${co}','${tp.key}')">+ agregar misión</button>
-    </div>`;
-  });
+  <!-- ============= MAIN ============= -->
+  <main class="main" id="main">
 
-  h+=`</div></div>`;
-  return h;
-}
-
-function renderMissionItem(m,co){
-  const locked=m.locked&&!m.done;
-  const typeClass={daily:'td',weekly:'tw',general:'tg'}[m.tp]||'tg';
-  const typeLabel={daily:'Daily',weekly:'Semanal',general:'General'}[m.tp]||'';
-  return`<div class="mission-item${m.done?' mi-done':locked?' mi-locked':' mi-clickable'}" ${locked||m.done?'':'onclick="toggleMission(\''+co+'\',\''+m.id+'\')"'}>
-    <div class="mchk">${m.done?'✓':locked?'🔒':''}</div>
-    <div style="flex:1;min-width:0">
-      <div class="mi-text">${m.t}</div>
-      <span class="type-badge ${typeClass}">${typeLabel}</span>
-      ${locked&&m.unlockedBy?'<span style="font-size:8px;color:var(--hint);margin-left:4px">Completá la anterior</span>':''}
-    </div>
-    <div class="mi-xp">${locked?'🔒':'+'+m.xp+' XP'}</div>
-  </div>`;
-}
-
-function toggleMission(co,id){
-  const m=S.missions[co]&&S.missions[co].find(x=>x.id===id);
-  if(!m||m.locked||m.done)return;
-  m.done=true;
-  addXP(m.xp,'Misión: '+m.t);
-  toast(`+${m.xp} XP — misión completada! 🎯`);
-  if(m.unlocks){
-    const next=S.missions[co].find(x=>x.id===m.unlocks);
-    if(next){next.locked=false;setTimeout(()=>toast('🔓 Nueva misión desbloqueada!'),900);}
-  }
-  checkBadges();render();renderStreak();saveState();
-}
-
-function togglePlan(co,i){
-  if(S.planDone[co]&&S.planDone[co][i])return;
-  if(!S.planDone[co])S.planDone[co]={};
-  S.planDone[co][i]=true;
-  addXP(15,'Hito: '+PLAN_ITEMS[co][i].t);
-  toast('+15 XP — hito completado!');
-  render();saveState();
-}
-
-// ═══════════════════════════════════════
-// FOCUS
-// ═══════════════════════════════════════
-function renderFocus(){
-  const f=S.focus;
-  const pct=(f.dur*60-f.remaining)/(f.dur*60);
-  const offset=CIRC*(1-pct);
-  const coColors={voccel:'#7b7ef8',prussia:'#f5c464',mh:'#5ef5c0',general:'#7070a0'};
-  const ringColor=f.mode==='break'?'#5ef57a':coColors[f.co]||coColors.voccel;
-  const mins=Math.floor(f.remaining/60);const secs=f.remaining%60;
-  const totalMins=f.log.reduce((a,l)=>a+l.mins,0);
-  const totalXP=f.log.reduce((a,l)=>a+l.xp,0);
-
-  return`<div class="focus-center">
-    <div class="ring-wrap">
-      <svg class="ring-svg" width="200" height="200" viewBox="0 0 200 200">
-        <circle class="ring-bg" cx="100" cy="100" r="88"/>
-        <circle class="ring-fill" cx="100" cy="100" r="88" stroke="${ringColor}" stroke-dasharray="${CIRC.toFixed(2)}" stroke-dashoffset="${offset.toFixed(2)}" id="ring-path"/>
-      </svg>
-      <div class="ring-inner">
-        <div class="ring-time" id="ring-time">${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}</div>
-        <div class="ring-mode">${f.mode==='focus'?'Focus':'Descanso'}</div>
-        <div class="ring-sess">Sesión ${f.session}</div>
-      </div>
-    </div>
-    <input class="focus-task-inp" id="focus-task" placeholder="¿En qué vas a focalizarte?" value="${f.currentTask||''}">
-    <div class="co-sel">
-      ${['voccel','prussia','mh','general'].map(co=>`<div class="co-btn${f.co===co?' s'+co.replace('general','g_'):''}" onclick="setFocusCo('${co}')">${co==='general'?'General':CO_NAMES[co]}</div>`).join('')}
-    </div>
-    <div class="dur-row">
-      ${[[25,'Pomodoro'],[50,'Deep work'],[15,'Sprint'],[5,'Descanso']].map(([d,l])=>`<div class="dur-btn${f.dur===d?' active':''}" onclick="setFocusDur(${d})">${d}min<br><span style="font-size:8px;opacity:.6">${l}</span></div>`).join('')}
-    </div>
-    <div class="focus-controls">
-      <button class="btn-sec" onclick="resetFocus()">Reset</button>
-      <button class="btn-main" id="btn-focus-play" onclick="toggleFocus()" style="background:${f.running?'#c94a4a':f.mode==='break'?'var(--success)':'var(--voccel)'}">${f.running?'Pausar':'Iniciar'}</button>
-      <button class="btn-sec" onclick="skipFocus()">Saltar →</button>
-    </div>
-    <div class="focus-stats">
-      <div class="fs"><div class="fs-v">${f.log.length}</div><div class="fs-l">Sesiones</div></div>
-      <div class="fs"><div class="fs-v" style="color:var(--voccel)">${totalMins}</div><div class="fs-l">Minutos</div></div>
-      <div class="fs"><div class="fs-v" style="color:var(--success)">${totalXP}</div><div class="fs-l">XP ganado</div></div>
-    </div>
-    <div class="sess-log">
-      ${f.log.slice(0,8).map(l=>`<div class="sess-item">
-        <div class="si-co" style="background:${coColors[l.co]||'#fff'}"></div>
-        <div class="si-task">${l.task}</div>
-        <div class="si-dur">${l.mins}min</div>
-        <div class="si-xp">+${l.xp}XP</div>
-        <div class="si-time">${l.time}</div>
-      </div>`).join('')}
-      ${!f.log.length?'<div class="empty-hint">Completá tu primera sesión</div>':''}
-    </div>
-  </div>`;
-}
-
-function setFocusCo(co){S.focus.co=co;render();saveState();}
-function setFocusDur(d){if(S.focus.running)return;S.focus.dur=d;S.focus.remaining=d*60;render();saveState();}
-
-function toggleFocus(){
-  if(S.focus.running){
-    clearInterval(focusInterval);focusInterval=null;S.focus.running=false;
-    render();saveState();
-  } else {
-    S.focus.running=true;
-    const task=document.getElementById('focus-task');
-    if(task)S.focus.currentTask=task.value;
-    render();saveState();
-    focusInterval=setInterval(focusTick,1000);
-  }
-}
-
-function focusTick(){
-  if(S.focus.remaining<=0){completeFocusSession();return;}
-  S.focus.remaining--;
-  // Update DOM directly without full re-render
-  const mins=Math.floor(S.focus.remaining/60);const secs=S.focus.remaining%60;
-  const t=document.getElementById('ring-time');
-  if(t)t.textContent=`${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
-  const pct=(S.focus.dur*60-S.focus.remaining)/(S.focus.dur*60);
-  const offset=CIRC*(1-pct);
-  const rp=document.getElementById('ring-path');
-  if(rp)rp.setAttribute('stroke-dashoffset',offset.toFixed(2));
-  if(S.focus.remaining%60===0)saveState();
-}
-
-function completeFocusSession(){
-  clearInterval(focusInterval);focusInterval=null;S.focus.running=false;
-  const task=S.focus.currentTask||'Sesión focus';
-  const mins=S.focus.dur;
-  const xp=S.focus.mode==='focus'?Math.round(mins*1.5):5;
-  if(S.focus.mode==='focus'){
-    S.focus.log.unshift({task,co:S.focus.co,mins,xp,time:new Date().toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'}),session:S.focus.session});
-    S.focus.session++;
-    addXP(xp,'Focus: '+task);
-    toast(`+${xp} XP — sesión completada! 🎯`);
-  }
-  S.focus.mode=S.focus.mode==='focus'?'break':'focus';
-  S.focus.dur=S.focus.mode==='focus'?25:5;
-  S.focus.remaining=S.focus.dur*60;
-  render();saveState();
-}
-
-function resetFocus(){
-  clearInterval(focusInterval);focusInterval=null;
-  S.focus.running=false;S.focus.remaining=S.focus.dur*60;S.focus.mode='focus';
-  render();
-}
-function skipFocus(){if(S.focus.running)completeFocusSession();}
-
-// ═══════════════════════════════════════
-// PIPELINE
-// ═══════════════════════════════════════
-function renderPipeline(){
-  const stages=['lead','propuesta','negociacion','ganado'];
-  const counts={};stages.forEach(s=>counts[s]=S.leads.filter(l=>l.stage===s).length);
-  const total=S.leads.reduce((a,l)=>a+(+l.val||0),0);
-  return`<div class="pipe-stage-row">${stages.map(s=>`<div class="pipe-st"><div class="pst-num" style="color:${s==='ganado'?'var(--success)':s==='negociacion'?'var(--voccel)':'var(--text)'}">${counts[s]}</div><div class="pst-lbl">${STAGE_L[s]}</div></div>`).join('')}</div>
-  <div class="card">
-    <div class="card-title">Leads <span>$${total.toFixed(0)} total</span></div>
-    ${S.leads.map(l=>`<div class="lead-row"><span class="co-badge ${CO_CC[l.co]}">${CO_NAMES[l.co]}</span><div class="lr-name">${l.name}</div><span class="lr-stage ${STAGE_C[l.stage]}">${STAGE_L[l.stage]}</span><div class="lr-val">$${(+l.val||0).toFixed(0)}</div></div>`).join('')}
-    ${!S.leads.length?'<div class="empty-hint">Sin leads todavía</div>':''}
-    <button class="add-btn" onclick="openLeadModal()">+ Agregar lead</button>
-  </div>`;
-}
-
-function openLeadModal(id){
-  S.editing.lead=id||null;
-  document.getElementById('ldel').style.display=id?'flex':'none';
-  if(id){const l=S.leads.find(x=>x.id===id);if(l){document.getElementById('lin').value=l.name;document.getElementById('lco').value=l.co;document.getElementById('lst').value=l.stage;document.getElementById('lval').value=l.val;}}
-  else{document.getElementById('lin').value='';document.getElementById('lval').value='';}
-  document.getElementById('modal-lead').classList.add('open');
-}
-function saveLead(){
-  const name=document.getElementById('lin').value.trim();if(!name)return;
-  const obj={id:S.editing.lead||'l'+Date.now(),name,co:document.getElementById('lco').value,stage:document.getElementById('lst').value,val:document.getElementById('lval').value||0};
-  if(S.editing.lead){const i=S.leads.findIndex(x=>x.id===S.editing.lead);if(i>=0)S.leads[i]=obj;}else{S.leads.unshift(obj);addXP(15,'Lead: '+name);}
-  closeM('modal-lead');toast('Lead guardado');checkBadges();render();saveState();
-}
-function delLead(){S.leads=S.leads.filter(x=>x.id!==S.editing.lead);closeM('modal-lead');render();saveState();}
-
-// ═══════════════════════════════════════
-// COBROS
-// ═══════════════════════════════════════
-function renderCobros(){
-  const cobrado=S.cobros.filter(c=>c.status==='cobrado').reduce((a,c)=>a+(+c.amount||0),0);
-  const pend=S.cobros.filter(c=>c.status==='pendiente').reduce((a,c)=>a+(+c.amount||0),0);
-  return`<div class="metrics">
-    <div class="metric"><div class="metric-val" style="color:var(--success)">$${cobrado.toFixed(0)}</div><div class="metric-lbl">Cobrado</div></div>
-    <div class="metric"><div class="metric-val" style="color:var(--warn)">$${pend.toFixed(0)}</div><div class="metric-lbl">Pendiente</div></div>
-    <div class="metric"><div class="metric-val">$${(cobrado+pend).toFixed(0)}</div><div class="metric-lbl">Total</div></div>
-    <div class="metric"><div class="metric-val">${S.cobros.length}</div><div class="metric-lbl">Registros</div></div>
-  </div>
-  <div class="card">
-    <div class="card-title">Cobros</div>
-    ${S.cobros.map(c=>`<div class="cobro-row">
-      <div><div class="cr-name">${c.name}</div><div class="cr-sub">${CO_NAMES[c.co]||c.co}${c.date?' · '+c.date:''}</div></div>
-      <div style="display:flex;align-items:center;gap:8px">
-        <div class="cr-amt" style="color:${c.status==='cobrado'?'var(--success)':'var(--warn)'}">$${(+c.amount||0).toFixed(0)}</div>
-        <span class="cr-st ${c.status==='cobrado'?'stc':'stp'}">${c.status==='cobrado'?'Cobrado':'Pendiente'}</span>
-      </div>
-    </div>`).join('')}
-    ${!S.cobros.length?'<div class="empty-hint">Sin cobros registrados</div>':''}
-    <button class="add-btn" onclick="openCobroModal()">+ Agregar cobro</button>
-  </div>`;
-}
-
-function openCobroModal(){
-  document.getElementById('cin').value='';document.getElementById('camt').value='';
-  document.getElementById('modal-cobro').classList.add('open');
-}
-function saveCobro(){
-  const name=document.getElementById('cin').value.trim();if(!name)return;
-  const st=document.getElementById('cst').value;
-  S.cobros.unshift({id:'c'+Date.now(),name,co:document.getElementById('cco').value,amount:document.getElementById('camt').value||0,date:document.getElementById('cdat').value,status:st});
-  addXP(st==='cobrado'?50:10,st==='cobrado'?'Cobro: '+name:'Cobro pendiente: '+name);
-  toast(st==='cobrado'?'+50 XP — cobro registrado! 💸':'+10 XP');
-  closeM('modal-cobro');checkBadges();render();saveState();
-}
-
-// ═══════════════════════════════════════
-// KANBAN
-// ═══════════════════════════════════════
-const KB_COLS=[
-  {id:'todo',label:'Por hacer',color:'var(--muted)'},
-  {id:'prog',label:'En progreso',color:'var(--warn)'},
-  {id:'review',label:'En revisión',color:'var(--voccel)'},
-  {id:'done',label:'Listo',color:'var(--success)'},
-];
-
-function renderKanban(){
-  return`<div class="kb-board">${KB_COLS.map(col=>{
-    const cards=S.cards.filter(c=>c.col===col.id);
-    return`<div class="kb-col" id="kbc-${col.id}" ondragover="kbOver(event,'${col.id}')" ondrop="kbDrop(event,'${col.id}')" ondragleave="kbLeave(event)">
-      <div class="kb-col-head"><div class="kb-col-title" style="color:${col.color}">${col.label}</div><div class="kb-col-count">${cards.length}</div></div>
-      <div id="kbb-${col.id}">
-        ${cards.map(c=>renderKbCard(c)).join('')}
-        <div class="drop-zone" id="kdz-${col.id}"></div>
-      </div>
-      <button class="add-card-btn" onclick="openCardModal(null,'${col.id}')">+ Agregar</button>
-    </div>`;
-  }).join('')}</div>`;
-}
-
-function renderKbCard(c){
-  const isDone=c.col==='done';
-  const prioClass={alta:'prio-a',media:'prio-m',baja:'prio-b'}[c.prio]||'prio-b';
-  const prioLabel={alta:'Alta',media:'Media',baja:'Baja'}[c.prio]||'';
-  return`<div class="kb-card${isDone?' kb-card-done':''}" id="kbc-card-${c.id}" draggable="true" style="border-left-color:${CO_HEX[c.co]||'transparent'}"
-    ondragstart="kbStart(event,'${c.id}')" ondragend="kbEnd(event)">
-    <div class="kb-card-title">${isDone?`<s>${c.title}</s>`:c.title}</div>
-    ${c.desc?`<div style="font-size:10px;color:var(--muted);margin-bottom:6px;line-height:1.4">${c.desc}</div>`:''}
-    <div class="kb-card-bottom">
-      <span class="co-badge ${CO_CC[c.co]}">${CO_NAMES[c.co]}</span>
-      <span class="co-badge ${prioClass}">${prioLabel}</span>
-      ${c.tag?`<span class="kb-tag">${c.tag}</span>`:''}
-      <div class="kb-actions">
-        ${c.col!=='todo'?`<button class="kb-btn" onclick="kbMove('${c.id}',-1)">←</button>`:''}
-        ${c.col!=='done'?`<button class="kb-btn" onclick="kbMove('${c.id}',1)">→</button>`:''}
-        <button class="kb-btn" onclick="openCardModal('${c.id}')">✏</button>
-      </div>
-    </div>
-  </div>`;
-}
-
-function kbMove(id,dir){
-  const card=S.cards.find(c=>c.id===id);if(!card)return;
-  const idx=KB_COLS.findIndex(c=>c.id===card.col);
-  const next=idx+dir;if(next<0||next>=KB_COLS.length)return;
-  card.col=KB_COLS[next].id;
-  if(card.col==='done'){addXP(20,'Tarea completada: '+card.title);toast('✅ +20 XP — tarea lista!');}
-  render();saveState();
-}
-function kbStart(e,id){S.kbDragging=id;setTimeout(()=>{const el=document.getElementById('kbc-card-'+id);if(el)el.classList.add('dragging');},0);}
-function kbEnd(){S.kbDragging=null;document.querySelectorAll('.kb-card').forEach(c=>c.classList.remove('dragging'));document.querySelectorAll('.drop-zone').forEach(z=>z.classList.remove('over'));}
-function kbOver(e,colId){e.preventDefault();document.querySelectorAll('.drop-zone').forEach(z=>z.classList.remove('over'));const dz=document.getElementById('kdz-'+colId);if(dz)dz.classList.add('over');}
-function kbLeave(e){if(!e.currentTarget.contains(e.relatedTarget))document.querySelectorAll('.drop-zone').forEach(z=>z.classList.remove('over'));}
-function kbDrop(e,colId){
-  e.preventDefault();document.querySelectorAll('.drop-zone').forEach(z=>z.classList.remove('over'));
-  if(!S.kbDragging)return;
-  const card=S.cards.find(c=>c.id===S.kbDragging);if(!card)return;
-  const was=card.col;card.col=colId;S.kbDragging=null;
-  if(colId==='done'&&was!=='done'){addXP(20,'Tarea: '+card.title);toast('✅ +20 XP — tarea lista!');}
-  render();saveState();
-}
-
-function openCardModal(id,col){
-  S.editing.card=id;S.editing.cardCol=col||'todo';
-  document.getElementById('card-modal-title').textContent=id?'Editar tarea':'Nueva tarea';
-  document.getElementById('card-del').style.display=id?'flex':'none';
-  if(id){const c=S.cards.find(x=>x.id===id);if(c){document.getElementById('card-name').value=c.title;document.getElementById('card-desc').value=c.desc||'';document.getElementById('card-co').value=c.co;document.getElementById('card-prio').value=c.prio;document.getElementById('card-tag').value=c.tag||'';}}
-  else{document.getElementById('card-name').value='';document.getElementById('card-desc').value='';document.getElementById('card-tag').value='';}
-  document.getElementById('modal-card').classList.add('open');
-}
-function saveCard(){
-  const title=document.getElementById('card-name').value.trim();if(!title)return;
-  const obj={id:S.editing.card||'k'+Date.now(),title,desc:document.getElementById('card-desc').value,co:document.getElementById('card-co').value,col:S.editing.card?S.cards.find(x=>x.id===S.editing.card)?.col||S.editing.cardCol:S.editing.cardCol,prio:document.getElementById('card-prio').value,tag:document.getElementById('card-tag').value};
-  if(S.editing.card){const i=S.cards.findIndex(x=>x.id===S.editing.card);if(i>=0)S.cards[i]=obj;}else{S.cards.push(obj);toast('Tarea agregada');}
-  closeM('modal-card');render();saveState();
-}
-function delCard(){S.cards=S.cards.filter(x=>x.id!==S.editing.card);closeM('modal-card');render();saveState();}
-
-// ═══════════════════════════════════════
-// CALENDAR
-// ═══════════════════════════════════════
-function getWeek(){
-  const now=new Date(),day=now.getDay(),mon=new Date(now);
-  mon.setDate(now.getDate()-(day===0?6:day-1)+S.calWo*7);mon.setHours(0,0,0,0);
-  return Array.from({length:7},(_,i)=>{const d=new Date(mon);d.setDate(mon.getDate()+i);return d;});
-}
-function wLabel(ds){return`${ds[0].getDate()} ${MNS[ds[0].getMonth()]} — ${ds[6].getDate()} ${MNS[ds[6].getMonth()]} ${ds[6].getFullYear()}`}
-
-function renderCalendar(){
-  const dates=getWeek();const today=todayStr();
-  const byKey={};
-  Object.entries(S.posts).forEach(([id,p])=>{const k=p.acc+'__'+p.date;if(!byKey[k])byKey[k]=[];byKey[k].push({...p,id});});
-  const visAccs=S.calFilt==='all'?ACCS:ACCS.filter(a=>a.id===S.calFilt);
-  const pub=Object.values(S.posts).filter(p=>p.status==='published').length;
-  const sch=Object.values(S.posts).filter(p=>p.status==='scheduled').length;
-  const dr=Object.values(S.posts).filter(p=>p.status==='draft').length;
-  const todPosts=Object.values(S.posts).filter(p=>p.date===today).length;
-
-  let h=`<div class="metrics">
-    <div class="metric"><div class="metric-val" style="color:var(--success)">${pub}</div><div class="metric-lbl">Publicados</div></div>
-    <div class="metric"><div class="metric-val" style="color:var(--voccel)">${sch}</div><div class="metric-lbl">Programados</div></div>
-    <div class="metric"><div class="metric-val" style="color:var(--muted)">${dr}</div><div class="metric-lbl">Borradores</div></div>
-    <div class="metric"><div class="metric-val" style="color:var(--warn)">${todPosts}</div><div class="metric-lbl">Hoy</div></div>
-  </div>
-  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;flex-wrap:wrap;gap:8px">
-    <div class="cal-filters">
-      <div class="cfb${S.calFilt==='all'?' active':''}" onclick="S.calFilt='all';render();saveState()">Todas</div>
-      ${ACCS.map(a=>`<div class="cfb${S.calFilt===a.id?' active':''}" onclick="S.calFilt='${a.id}';render();saveState()" style="${S.calFilt===a.id?'border-color:'+a.color+';color:'+a.color:''}">${CO_NAMES[a.co]} ${a.net}</div>`).join('')}
-    </div>
-    <div style="display:flex;align-items:center;gap:8px">
-      <button class="btn-xs" onclick="S.calWo--;render();saveState()">←</button>
-      <span style="font-family:'DM Mono',monospace;font-size:11px">${wLabel(dates)}</span>
-      <button class="btn-xs" onclick="S.calWo=0;render();saveState()">Hoy</button>
-      <button class="btn-xs" onclick="S.calWo++;render();saveState()">→</button>
-    </div>
-  </div>
-  <div class="cal-wrap"><div class="cal">
-    <div class="ch0"></div>
-    ${dates.map((d,i)=>`<div class="ch${dk(d)===today?' tod':''}"><div class="ch-d">${DAYS_LONG[i]}</div><div class="ch-n">${d.getDate()}</div></div>`).join('')}`;
-
-  visAccs.forEach(acc=>{
-    h+=`<div class="rl"><div style="display:flex;align-items:center;gap:3px;margin-bottom:1px"><div class="rldot" style="background:${acc.color}"></div><div class="rlname">${CO_NAMES[acc.co]}</div></div><div class="rlnet">${acc.net}</div></div>`;
-    dates.forEach((d,di)=>{
-      const ds=dk(d),key=acc.id+'__'+ds,ps=byKey[key]||[];
-      const sug=acc.freq.includes(di);
-      h+=`<div class="cc${ps.length?' ':sug?' sug':''}" onclick="openPostModal('${acc.id}','${ds}',null)">`;
-      ps.forEach(p=>{const bg=POST_STATUS_COLORS[p.status]||POST_STATUS_COLORS.draft;h+=`<div class="chip ${p.status}" style="background:${bg}28;border-color:${bg};color:${acc.color}" onclick="event.stopPropagation();openPostModal('${acc.id}','${ds}','${p.id}')"><div class="chip-top"><div class="cdot" style="background:${acc.color}"></div><div class="ctype">${TYPE_L[p.type]||'Post'}</div></div>${p.caption?'<div style="opacity:.55">'+p.caption.slice(0,28)+'…</div>':''}</div>`;});
-      if(!ps.length&&sug)h+=`<div class="hint-add">+ post</div>`;
-      h+=`</div>`;
-    });
-  });
-
-  h+=`</div></div>
-  <div style="margin-top:6px;font-size:9px;color:var(--hint)">Verde oscuro = día óptimo según estrategia · Click en celda para agregar post</div>
-  <div class="section-title" style="margin-top:20px">Ideas de contenido <div class="section-line"></div></div>
-  <div class="cal-ideas">
-    ${CAL_IDEAS.map((idea,i)=>`<div class="idea-chip" style="border-left-color:${CO_HEX[idea.acc.split('-')[0]]}" onclick="useCalIdea(${i})">
-      <div class="idea-co" style="color:${CO_HEX[idea.acc.split('-')[0]]}">${CO_NAMES[idea.acc.split('-')[0]]} · ${idea.acc.split('-')[1].toUpperCase()} · ${TYPE_L[idea.type]}</div>
-      <div class="idea-text">${idea.text}</div>
-    </div>`).join('')}
-  </div>`;
-
-  return h;
-}
-
-function openPostModal(accId,dateStr,pid){
-  S.editing.post=pid||null;S.editing.postCell={accId,dateStr};
-  document.getElementById('post-modal-title').textContent=pid?'Editar post':'Nuevo post';
-  document.getElementById('pdel').style.display=pid?'flex':'none';
-  if(pid&&S.posts[pid]){const p=S.posts[pid];document.getElementById('pacc').value=p.acc;document.getElementById('ptype').value=p.type;document.getElementById('pcap').value=p.caption||'';document.getElementById('pst').value=p.status;}
-  else{document.getElementById('pacc').value=accId;document.getElementById('ptype').value='producto';document.getElementById('pcap').value='';document.getElementById('pst').value='draft';}
-  document.getElementById('modal-post').classList.add('open');
-}
-function useCalIdea(i){
-  const idea=CAL_IDEAS[i];
-  S.editing.post=null;S.editing.postCell={accId:idea.acc,dateStr:todayStr()};
-  document.getElementById('post-modal-title').textContent='Agregar idea';
-  document.getElementById('pdel').style.display='none';
-  document.getElementById('pacc').value=idea.acc;document.getElementById('ptype').value=idea.type;document.getElementById('pcap').value=idea.text;document.getElementById('pst').value='draft';
-  document.getElementById('modal-post').classList.add('open');
-}
-function savePost(){
-  const acc=document.getElementById('pacc').value,type=document.getElementById('ptype').value,caption=document.getElementById('pcap').value,status=document.getElementById('pst').value;
-  const id=S.editing.post||('p'+Date.now()),dateStr=S.editing.postCell?.dateStr||todayStr();
-  S.posts[id]={acc,type,caption,status,date:dateStr};
-  if(status==='published')addXP(10,'Post publicado');
-  closeM('modal-post');toast(S.editing.post?'Post actualizado':'Post agregado');render();saveState();
-}
-function delPost(){if(S.editing.post&&S.posts[S.editing.post]){delete S.posts[S.editing.post];closeM('modal-post');toast('Post eliminado');render();saveState();}}
-
-// ═══════════════════════════════════════
-// SIMULATOR
-// ═══════════════════════════════════════
-function renderSimulator(){
-  const sim=S.sim;
-  const CUR=CURRENCIES[S.currency]||CURRENCIES.USD;
-  const sym=CUR.sym;
-  const r=CUR.toUSD; // 1 USD = 1/r local units, so local = usd/r
-  // Convert stored USD values to display currency
-  function dispVal(usdVal){
-    const v=usdVal/r;
-    if(S.currency==='PYG') return sym+(Math.round(v)).toLocaleString('es');
-    return sym+v.toFixed(0);
-  }
-  function sl(key,lbl,isCount,color){
-    const val=sim[key];
-    const display=isCount?val+'u':dispVal(val);
-    return`<div class="srow"><div class="slbl">${lbl}</div><input type="range" min="${isCount?0:Math.round(sim[key+'_min']||0)}" max="${isCount?100:Math.round(sim[key+'_max']||10000)}" step="${isCount?1:Math.round(sim[key+'_step']||1)}" value="${val}" oninput="S.sim['${key}']=+this.value;updateSim()"><div class="sval" style="color:${color}">${display}</div></div>`;
-  }
-  // Fixed sliders with USD internal values, display in chosen currency
-  function slF(key,lbl,minUSD,maxUSD,stepUSD,isCount,color){
-    const val=sim[key];
-    const display=isCount?val+'u':dispVal(val);
-    return`<div class="srow"><div class="slbl">${lbl}</div><input type="range" min="${minUSD}" max="${maxUSD}" step="${stepUSD}" value="${val}" oninput="S.sim['${key}']=+this.value;updateSim()"><div class="sval" style="color:${color}">${display}</div></div>`;
-  }
-  return`<div class="sim-grid">
-    <div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--prussia)">●</span> Prussia — Lámparas</div>
-        ${slF('lamps','Ventas/mes',0,30,1,true,'var(--prussia)')}
-        ${slF('lprice','Precio promedio',50,600,10,false,'var(--prussia)')}
-      </div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--voccel)">●</span> SaaS 1 — Precios construcción</div>
-        ${slF('s1','Clientes activos',0,100,1,true,'var(--voccel)')}
-        ${slF('s1p','Precio mensual',19,199,10,false,'var(--voccel)')}
-      </div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:#9a9cf9">●</span> SaaS 2 — ERP</div>
-        ${slF('s2','Clientes activos',0,100,1,true,'#9a9cf9')}
-        ${slF('s2p','Precio mensual',49,499,10,false,'#9a9cf9')}
-      </div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--muted)">●</span> Voccel — Servicios web</div>
-        ${slF('web','Proyectos/mes',0,8,1,true,'var(--muted)')}
-        ${slF('wp','Precio por proyecto',300,3000,100,false,'var(--muted)')}
-      </div>
-      <div class="sim-sec"><div class="sim-sec-t"><span style="color:var(--mh)">●</span> Consultoría / MH</div>
-        ${slF('cons','Horas/mes',0,80,5,true,'var(--mh)')}
-        ${slF('cp','Tarifa/hora',30,150,10,false,'var(--mh)')}
-      </div>
-    </div>
-    <div id="sim-right">${simRight()}</div>
-  </div>`;
-}
-
-function simCalc(){
-  const s=S.sim;
-  const prussiaM=s.lamps*s.lprice,s1M=s.s1*s.s1p,s2M=s.s2*s.s2p,webM=s.web*s.wp,consM=s.cons*s.cp;
-  return{prussiaM,s1M,s2M,webM,consM,total:prussiaM+s1M+s2M+webM+consM};
-}
-
-function simRight(){
-  const {prussiaM,s1M,s2M,webM,consM,total}=simCalc();
-  const CUR=CURRENCIES[S.currency]||CURRENCIES.USD;
-  const r=CUR.toUSD;
-  function fmt(usd){
-    const v=usd/r;
-    if(S.currency==='PYG') return CUR.sym+(Math.round(v)).toLocaleString('es');
-    return CUR.sym+Math.round(v).toLocaleString('es');
-  }
-  const bars=[{n:'Prussia',v:prussiaM,c:'var(--prussia)'},{n:'SaaS 1',v:s1M,c:'var(--voccel)'},{n:'SaaS 2',v:s2M,c:'#9a9cf9'},{n:'Web',v:webM,c:'var(--muted)'},{n:'Consultoría',v:consM,c:'var(--mh)'}];
-  const maxB=Math.max(...bars.map(b=>b.v),1);
-  const active=bars.filter(b=>b.v>0);
-  const MS=S.milestones.slice().sort((a,b)=>a.v-b.v);
-  const next=MS.find(m=>total<m.v);
-  const gap=next?next.v-total:0;
-  const monthsToNext=next&&total>0?Math.ceil(gap/total):null;
-
-  // Next goal card
-  let nextGoalHtml='';
-  if(next){
-    const pct=Math.min(Math.round(total/next.v*100),100);
-    nextGoalHtml=`<div style="background:var(--bg3);border:1px solid var(--voccel)28;border-radius:var(--r2);padding:14px;margin-bottom:10px">
-      <div style="font-size:9px;color:var(--voccel);text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin-bottom:8px">Próximo objetivo</div>
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">
-        <div style="font-size:26px">${next.i}</div>
-        <div style="flex:1">
-          <div style="font-size:14px;font-weight:600;margin-bottom:2px">${next.t}</div>
-          <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--muted)">Meta: ${fmt(next.v)}</div>
-        </div>
-        <div style="text-align:right">
-          <div style="font-family:'DM Mono',monospace;font-size:13px;color:var(--warn);font-weight:600">-${fmt(gap)}</div>
-          <div style="font-size:10px;color:var(--muted)">${monthsToNext?monthsToNext+' mes'+(monthsToNext===1?'':'es'):'sin ingresos aún'}</div>
+    <!-- =========== TERMINAL VIEW =========== -->
+    <section class="view active" data-view="terminal" aria-labelledby="terminalTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="terminalTitle">SYSTEM_INITIALIZED</h1>
+        <div class="view-subtitle">
+          SYS.VER.4.2<span class="sep">//</span>MAIN_TERMINAL<span class="sep">//</span><span style="color:var(--success)">NODE_ACTIVE</span>
         </div>
       </div>
-      <div style="height:6px;background:var(--bg5);border-radius:3px;overflow:hidden">
-        <div style="height:100%;width:${pct}%;background:linear-gradient(90deg,var(--voccel),var(--mh));border-radius:3px;transition:width .4s"></div>
-      </div>
-      <div style="font-size:9px;color:var(--muted);margin-top:4px;text-align:right">${pct}% del camino</div>
-    </div>`;
-  } else if(MS.length>0){
-    nextGoalHtml=`<div style="background:var(--successg);border:1px solid var(--success)28;border-radius:var(--r2);padding:14px;margin-bottom:10px;text-align:center">
-      <div style="font-size:22px;margin-bottom:4px">🎉</div>
-      <div style="font-size:13px;font-weight:600;color:var(--success)">¡Todos los objetivos alcanzados!</div>
-      <div style="font-size:11px;color:var(--muted);margin-top:4px">Agregá nuevas metas</div>
-    </div>`;
-  }
 
-  return`
-  ${nextGoalHtml}
-  <div class="card" style="text-align:center;margin-bottom:10px">
-    <div style="font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;margin-bottom:6px">Ingreso mensual proyectado</div>
-    <div class="res-total">${fmt(total)}</div>
-    <div style="font-size:10px;color:var(--muted);margin-bottom:14px">${fmt(total*12)} / año</div>
-    ${active.length?active.map(b=>`<div class="rb"><div class="rbl"><div class="rdot" style="background:${b.c}"></div><div class="rname">${b.n}</div></div><div class="rval" style="color:${b.c}">${fmt(b.v)}</div></div>`).join(''):'<div class="empty-hint">Mové los sliders para proyectar</div>'}
-  </div>
-  <div class="card" style="margin-bottom:10px">
-    <div class="barwrap">${bars.map(b=>`<div class="bc"><div class="bar" style="height:${Math.round(b.v/maxB*100)}px;background:${b.c}"></div><div class="blbl">${b.n}</div></div>`).join('')}</div>
-  </div>
-  <div class="card">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
-      <div style="font-size:10px;font-weight:700;letter-spacing:.08em;color:var(--muted);text-transform:uppercase">Hitos</div>
-      <button style="font-size:10px;padding:3px 10px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;font-family:'Outfit',sans-serif" onclick="openMilestoneModal(null)">+ Agregar</button>
-    </div>
-    ${MS.map(m=>{
-      const reached=total>=m.v;
-      const isNext=next&&m.id===next.id;
-      const months=!reached&&total>0?Math.ceil((m.v-total)/total):null;
-      return`<div class="ms" style="${isNext?'border:1px solid var(--voccel)30;background:var(--voccelg);border-radius:var(--r);padding:8px 10px;margin-bottom:4px':''}">
-        <div class="ms-i">${m.i}</div>
-        <div style="flex:1">
-          <div class="ms-t">${m.t}</div>
-          ${!reached&&months?`<div style="font-size:9px;color:var(--hint);margin-top:1px">${months} mes${months===1?'':'es'} proyectados</div>`:''}
-        </div>
-        <div class="ms-v${reached?' ok':''}">${reached?'✓':fmt(m.v)}</div>
-        <div style="display:flex;gap:3px;margin-left:6px">
-          <button style="font-size:9px;padding:2px 6px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer" onclick="openMilestoneModal('${m.id}')">✏</button>
-          <button style="font-size:9px;padding:2px 6px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--danger);cursor:pointer" onclick="deleteMilestone('${m.id}')">✕</button>
-        </div>
-      </div>`;
-    }).join('')}
-    ${!MS.length?'<div class="empty-hint">Sin hitos — agregá uno</div>':''}
-  </div>`;
-}
+      <div class="dash-grid">
 
-function updateSim(){const sr=document.getElementById('sim-right');if(sr)sr.innerHTML=simRight();saveState();}
-
-function openMilestoneModal(id){
-  S.editingMilestone=id||null;
-  const m=id?S.milestones.find(x=>x.id===id):null;
-  document.getElementById('ms-emoji').value=m?m.i:'🎯';
-  document.getElementById('ms-name').value=m?m.t:'';
-  document.getElementById('ms-value').value=m?m.v:'';
-  document.getElementById('ms-del').style.display=id?'flex':'none';
-  document.getElementById('modal-milestone').classList.add('open');
-}
-function saveMilestone(){
-  const emoji=document.getElementById('ms-emoji').value.trim()||'🎯';
-  const name=document.getElementById('ms-name').value.trim();
-  const val=+document.getElementById('ms-value').value;
-  if(!name||!val)return;
-  if(S.editingMilestone){
-    const m=S.milestones.find(x=>x.id===S.editingMilestone);
-    if(m){m.i=emoji;m.t=name;m.v=val;}
-  } else {
-    S.milestones.push({id:'ms'+Date.now(),i:emoji,t:name,v:val});
-  }
-  closeM('modal-milestone');updateSim();saveState();toast('Hito guardado');
-}
-function deleteMilestone(id){
-  S.milestones=S.milestones.filter(x=>x.id!==id);
-  updateSim();saveState();toast('Hito eliminado');
-}
-
-// ═══════════════════════════════════════
-// WEEKLY REVIEW
-// ═══════════════════════════════════════
-function renderReview(){
-  const f=S.reviewForm;
-  const checks=[f.mood>0,f.stars.voccel>0||f.stars.prussia>0||f.stars.mh>0,f.wins.some(w=>w.text&&w.text.trim()),f.blocker&&f.blocker.trim().length>10,f.learnt&&f.learnt.trim().length>10,f.focus&&f.focus.trim().length>5];
-  const pct=Math.round(checks.filter(Boolean).length/checks.length*100);
-  const d=new Date();const M=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const mon=new Date(d);mon.setDate(d.getDate()-(d.getDay()===0?6:d.getDay()-1));
-  const sun=new Date(mon);sun.setDate(mon.getDate()+6);
-  const weekLabel=`${mon.getDate()} ${M[mon.getMonth()]} — ${sun.getDate()} ${M[sun.getMonth()]} ${sun.getFullYear()}`;
-
-  return`<div class="grid2">
-  <div>
-    <div class="card">
-      <div class="card-title">Semana — ${weekLabel}</div>
-      <div class="prog-bar"><div class="prog-fill" style="width:${pct}%"></div></div>
-
-      <div style="font-size:10px;color:var(--muted);margin-bottom:6px">¿Cómo fue la semana?</div>
-      <div class="mood-row">
-        ${[1,2,3,4,5].map(n=>`<div class="mood-btn${f.mood===n?' sel':''}" onclick="setRevMood(${n})"><div>${MOODS[n]}</div><div class="mood-lbl">${MOOD_LABELS[n]}</div></div>`).join('')}
-      </div>
-
-      <div style="font-size:10px;color:var(--muted);margin:12px 0 6px">Avance por empresa</div>
-      <div class="grid3">
-        ${['voccel','prussia','mh'].map(co=>`<div class="score-card">
-          <span class="co-badge ${CO_CC[co]}" style="margin-bottom:7px;display:inline-block">${CO_NAMES[co]}</span>
-          <div style="display:flex;gap:3px">${[1,2,3,4,5].map(i=>`<span class="star${f.stars[co]>=i?' on':''}" onclick="setRevStar('${co}',${i})">⭐</span>`).join('')}</div>
-        </div>`).join('')}
-      </div>
-
-      <div style="font-size:10px;color:var(--muted);margin:12px 0 6px">Victorias de la semana</div>
-      <div id="wins-list-rev">${renderWins()}</div>
-      <button class="add-btn" onclick="addWin()">+ Agregar victoria</button>
-
-      <div style="font-size:10px;color:var(--muted);margin:12px 0 6px">¿Qué trabó o no salió?</div>
-      <textarea class="q-ta" id="rev-blocker" placeholder="Sin juicio — es info para mejorar..." oninput="S.reviewForm.blocker=this.value;updateRevProg()">${f.blocker||''}</textarea>
-
-      <div style="font-size:10px;color:var(--muted);margin:8px 0 6px">¿Qué aprendiste?</div>
-      <textarea class="q-ta" id="rev-learnt" placeholder="Sobre tus clientes, productos, vos mismo..." oninput="S.reviewForm.learnt=this.value;updateRevProg()">${f.learnt||''}</textarea>
-
-      <div style="font-size:10px;color:var(--muted);margin:8px 0 6px">Foco de la próxima semana</div>
-      <div class="fo-opts">
-        ${['Conseguir primer cliente de Prussia','Publicar demo de SaaS 1','Outreach a 10 empresas para Voccel','Confirmar financiamiento de la obra MH'].map(opt=>`<div class="fo${f.focus===opt?' sel':''}" onclick="setRevFocus('${opt}')">${opt}</div>`).join('')}
-      </div>
-      <textarea class="q-ta" id="rev-focus" placeholder="O escribí tu propio foco..." oninput="S.reviewForm.focus=this.value;updateRevProg()" style="min-height:50px;margin-top:6px">${f.focus||''}</textarea>
-
-      <div style="font-size:10px;color:var(--muted);margin:8px 0 6px">Notas libres</div>
-      <textarea class="q-ta" id="rev-notes" placeholder="Ideas, preguntas, lo que sea..." oninput="S.reviewForm.notes=this.value" style="min-height:55px">${f.notes||''}</textarea>
-
-      <button class="btn-save" onclick="saveReview()">Guardar weekly review</button>
-    </div>
-  </div>
-  <div>
-    <div class="card">
-      <div class="card-title">Historial <span>${S.weeklyReviews.length} semanas</span></div>
-      ${S.weeklyReviews.map(r=>`<div class="hist-item">
-        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
-          <div class="hi-week">${r.week}</div>
-          <div style="display:flex;align-items:center;gap:6px"><span style="font-size:16px">${MOODS[r.mood]||''}</span><span style="font-family:'DM Mono',monospace;font-size:10px;color:var(--success)">+${r.xp}XP</span></div>
-        </div>
-        ${r.wins&&r.wins.length?`<div style="margin-bottom:5px">${r.wins.map(w=>`<span class="win-chip">${w.text}</span>`).join('')}</div>`:''}
-        ${r.focus?`<div style="font-size:11px;color:var(--voccel)">→ ${r.focus}</div>`:''}
-      </div>`).join('')}
-      ${!S.weeklyReviews.length?'<div class="empty-hint">Guardá tu primer review para verlo acá</div>':''}
-    </div>
-  </div>
-  </div>`;
-}
-
-function renderWins(){
-  if(!S.reviewForm.wins.length)return'<div class="empty-hint" style="margin-bottom:6px">Siempre hay al menos una victoria.</div>';
-  return S.reviewForm.wins.map((w,i)=>`<div style="display:flex;gap:6px;margin-bottom:5px">
-    <select class="win-co-sel" onchange="S.reviewForm.wins[${i}].co=this.value">
-      ${['voccel','prussia','mh','general'].map(c=>`<option value="${c}"${w.co===c?' selected':''}>${CO_NAMES[c]||'General'}</option>`).join('')}
-    </select>
-    <input class="win-inp" placeholder="Victoria..." value="${w.text||''}" oninput="S.reviewForm.wins[${i}].text=this.value;updateRevProg()">
-    <div style="cursor:pointer;color:var(--hint);padding:7px;font-size:12px" onclick="removeWin(${i})">✕</div>
-  </div>`).join('');
-}
-
-function setRevMood(n){S.reviewForm.mood=n;updateRevProg();render();}
-function setRevStar(co,n){S.reviewForm.stars[co]=n;updateRevProg();render();}
-function setRevFocus(t){S.reviewForm.focus=t;updateRevProg();render();}
-function addWin(){S.reviewForm.wins.push({text:'',co:'voccel'});render();}
-function removeWin(i){S.reviewForm.wins.splice(i,1);render();}
-function updateRevProg(){render();}
-
-function saveReview(){
-  const f=S.reviewForm;
-  if(!f.mood){toast('Elegí tu mood antes de guardar');return;}
-  if(!f.focus||!f.focus.trim()){toast('Definí el foco de la próxima semana');return;}
-  const d=new Date();const M=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
-  const mon=new Date(d);mon.setDate(d.getDate()-(d.getDay()===0?6:d.getDay()-1));
-  const sun=new Date(mon);sun.setDate(mon.getDate()+6);
-  const week=`${mon.getDate()} ${M[mon.getMonth()]} — ${sun.getDate()} ${M[sun.getMonth()]}`;
-  let xp=30;if(f.blocker&&f.blocker.length>50)xp+=10;if(f.learnt&&f.learnt.length>50)xp+=10;if(f.wins.filter(w=>w.text&&w.text.trim()).length>=3)xp+=15;
-  S.weeklyReviews.unshift({week,mood:f.mood,stars:{...f.stars},wins:[...f.wins.filter(w=>w.text&&w.text.trim())],blocker:f.blocker,learnt:f.learnt,focus:f.focus,notes:f.notes,xp,date:todayStr()});
-  addXP(xp,'Weekly review');
-  S.reviewForm={mood:0,stars:{voccel:0,prussia:0,mh:0},wins:[],blocker:'',learnt:'',focus:'',notes:''};
-  toast('+'+xp+' XP — review guardado! 🎯');render();saveState();
-}
-
-// ═══════════════════════════════════════
-// LOGROS
-// ═══════════════════════════════════════
-function renderLogros(){
-  return`<div class="badges-grid">${BADGES.map(b=>{
-    const earned=S.earnedBadges.includes(b.id);
-    return`<div class="badge-card${earned?' earned':' locked-b'}">
-      <div class="badge-icon">${b.icon}</div>
-      <div class="badge-name">${b.name}</div>
-      <div class="badge-desc">${b.desc}</div>
-      ${earned?'<div style="font-size:9px;color:var(--prussia);margin-top:6px;font-weight:700">OBTENIDO ✓</div>':''}
-    </div>`;
-  }).join('')}</div>`;
-}
-
-// ═══════════════════════════════════════
-// HISTORIAL XP
-// ═══════════════════════════════════════
-function renderHistorial(){
-  if(!S.xpLog.length)return'<div class="empty-hint" style="margin-top:40px">Completá misiones para ver tu historial acá.</div>';
-  const byDay={};
-  S.xpLog.forEach(e=>{if(!byDay[e.date])byDay[e.date]=[];byDay[e.date].push(e);});
-  return Object.entries(byDay).map(([date,entries])=>{
-    const total=entries.reduce((a,e)=>a+e.xp,0);
-    return`<div class="card" style="margin-bottom:10px">
-      <div class="card-title">${date} <span style="color:var(--success)">+${total} XP</span></div>
-      ${entries.map(e=>`<div style="display:flex;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--border)">
-        <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--muted);min-width:44px">${new Date(e.ts).toLocaleTimeString('es',{hour:'2-digit',minute:'2-digit'})}</div>
-        <div style="font-size:11px;flex:1">${e.desc}</div>
-        <div style="font-family:'DM Mono',monospace;font-size:11px;color:var(--success);font-weight:500">+${e.xp}</div>
-      </div>`).join('')}
-    </div>`;
-  }).join('');
-}
-
-// ═══════════════════════════════════════
-// MISSIONS MODAL
-// ═══════════════════════════════════════
-function openMissionModal(co,type){
-  document.getElementById('min-co').value=co;
-  document.getElementById('min-type').value=type;
-  document.getElementById('min-text').value='';
-  document.getElementById('modal-mission').classList.add('open');
-}
-function saveMission(){
-  const text=document.getElementById('min-text').value.trim();if(!text)return;
-  const co=document.getElementById('min-co').value;
-  const tp=document.getElementById('min-type').value;
-  const xp={daily:5,weekly:15,general:30}[tp]||10;
-  S.missions[co].push({id:'u'+Date.now(),t:text,tp,xp,done:false,locked:false});
-  addXP(3,'Misión creada');
-  closeM('modal-mission');render();saveState();
-}
-
-
-// ═══════════════════════════════════════
-// CURRENCY
-// ═══════════════════════════════════════
-const CURRENCIES={USD:{sym:'$',label:'Dólares',toUSD:1},EUR:{sym:'€',label:'Euros',toUSD:1.08},PYG:{sym:'₲',label:'Guaraníes',toUSD:0.000133}};
-function fmtMoney(usdVal){
-  const c=CURRENCIES[S.currency]||CURRENCIES.USD;
-  const val=usdVal/c.toUSD;
-  if(S.currency==='PYG') return'₲'+Math.round(val).toLocaleString('es');
-  return c.sym+val.toFixed(2).replace(/\.00$/,'');
-}
-function toUSD(val){const c=CURRENCIES[S.currency]||CURRENCIES.USD;return val*c.toUSD;}
-
-// ═══════════════════════════════════════
-// EXPORT / IMPORT
-// ═══════════════════════════════════════
-function exportBackup(){
-  const data=JSON.stringify(S,null,2);
-  const blob=new Blob([data],{type:'application/json'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download='hq-backup-'+new Date().toISOString().slice(0,10)+'.json';
-  a.click();URL.revokeObjectURL(url);
-  toast('Backup exportado correctamente');
-}
-function importBackup(input){
-  const file=input.files[0];if(!file)return;
-  const reader=new FileReader();
-  reader.onload=e=>{
-    try{
-      const data=JSON.parse(e.target.result);
-      S={...S,...data};
-      saveState();render();renderStreak();updateXPUI();
-      toast('Backup importado correctamente');
-    }catch(err){toast('Error: archivo inválido');}
-  };
-  reader.readAsText(file);
-  input.value='';
-}
-
-// ═══════════════════════════════════════
-// EMOJI PICKER
-// ═══════════════════════════════════════
-const EMOJIS=['🎯','💰','🏠','🚀','✈️','💎','🥗','🔥','⚡','📦','🛒','📱','💻','🎨','🏗️','📐','💡','🌟','🏆','🎉','📈','💵','💶','🪙','🛍️','🎁','🤝','📣','📸','🎬','✍️','📝','🔔','⏰','📅','🗓️','🧾','📊','🔑','🏅','👑','❤️','🌱','⭐','🌙','☀️','🌈','🦋','🐝','🎸','🎭'];
-let emojiTarget=null;
-function openEmojiPicker(targetId){
-  emojiTarget=targetId;
-  const q=document.getElementById('emoji-search');if(q)q.value='';
-  renderEmojiGrid('');
-  document.getElementById('modal-emoji').classList.add('open');
-}
-function renderEmojiGrid(filter){
-  const list=filter?EMOJIS.filter(e=>e.includes(filter)):EMOJIS;
-  document.getElementById('emoji-grid').innerHTML=list.map(e=>`<div onclick="selectEmoji('${e}')" style="font-size:22px;cursor:pointer;padding:6px;border-radius:6px;text-align:center;transition:background .1s" onmouseover="this.style.background='var(--bg4)'" onmouseout="this.style.background=''">${e}</div>`).join('');
-}
-function selectEmoji(e){
-  if(emojiTarget){const el=document.getElementById(emojiTarget);if(el)el.value=e;}
-  document.getElementById('modal-emoji').classList.remove('open');
-}
-
-// ═══════════════════════════════════════
-// CRM
-// ═══════════════════════════════════════
-function renderCRM(){
-  const contacts=S.contacts||[];
-  return`<div style="display:flex;justify-content:flex-end;margin-bottom:14px">
-    <button class="btn-xs" onclick="openContactModal(null)">+ Nuevo contacto</button>
-  </div>
-  ${!contacts.length?'<div class="empty-hint" style="margin-top:40px">Sin contactos — agregá el primero</div>':''}
-  <div class="grid3">
-    ${contacts.map(c=>`<div class="card" style="border-left:3px solid ${CO_HEX[c.co]||'var(--border)'}">
-      <div style="display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px">
-        <div>
-          <div style="font-size:14px;font-weight:600">${c.nombre}</div>
-          <div style="font-size:11px;color:var(--muted);margin-top:2px">${c.empresa||'—'}</div>
-        </div>
-        <span class="co-badge ${CO_CC[c.co]||''}">${CO_NAMES[c.co]||c.co}</span>
-      </div>
-      ${c.whatsapp?`<div style="font-size:11px;color:var(--muted);margin-bottom:3px">📱 ${c.whatsapp}</div>`:''}
-      ${c.email?`<div style="font-size:11px;color:var(--muted);margin-bottom:3px">✉️ ${c.email}</div>`:''}
-      ${c.notas?`<div style="font-size:11px;color:var(--hint);margin-top:6px;border-top:1px solid var(--border);padding-top:6px">${c.notas}</div>`:''}
-      <div style="display:flex;gap:5px;margin-top:10px">
-        ${c.whatsapp?`<a href="https://wa.me/${c.whatsapp.replace(/[^0-9]/g,'')}" target="_blank" style="font-size:10px;padding:3px 9px;border-radius:20px;background:var(--successg);color:var(--success);text-decoration:none;border:1px solid var(--success)30">WhatsApp</a>`:''}
-        <button style="font-size:10px;padding:3px 9px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer" onclick="openContactModal('${c.id}')">Editar</button>
-      </div>
-    </div>`).join('')}
-  </div>`;
-}
-
-function openContactModal(id){
-  S.editing.contact=id||null;
-  const c=id?S.contacts.find(x=>x.id===id):null;
-  document.getElementById('ct-nombre').value=c?c.nombre:'';
-  document.getElementById('ct-empresa').value=c?c.empresa||'':'';
-  document.getElementById('ct-co').value=c?c.co:'voccel';
-  document.getElementById('ct-whatsapp').value=c?c.whatsapp||'':'';
-  document.getElementById('ct-email').value=c?c.email||'':'';
-  document.getElementById('ct-notas').value=c?c.notas||'':'';
-  document.getElementById('ct-del').style.display=id?'flex':'none';
-  document.getElementById('modal-contact').classList.add('open');
-}
-function saveContact(){
-  const nombre=document.getElementById('ct-nombre').value.trim();if(!nombre)return;
-  const obj={id:S.editing.contact||'ct'+Date.now(),nombre,empresa:document.getElementById('ct-empresa').value,co:document.getElementById('ct-co').value,whatsapp:document.getElementById('ct-whatsapp').value,email:document.getElementById('ct-email').value,notas:document.getElementById('ct-notas').value};
-  if(S.editing.contact){const i=S.contacts.findIndex(x=>x.id===S.editing.contact);if(i>=0)S.contacts[i]=obj;}
-  else{if(!S.contacts)S.contacts=[];S.contacts.unshift(obj);}
-  closeM('modal-contact');render();saveState();toast('Contacto guardado');
-}
-function delContact(){S.contacts=S.contacts.filter(x=>x.id!==S.editing.contact);closeM('modal-contact');render();saveState();}
-
-// ═══════════════════════════════════════
-// RECORDATORIOS
-// ═══════════════════════════════════════
-function renderRecordatorios(){
-  if(!S.recordatorios)S.recordatorios=[];
-  const today=todayStr();
-  const vencidos=S.recordatorios.filter(r=>!r.done&&r.fecha<today);
-  const hoy=S.recordatorios.filter(r=>!r.done&&r.fecha===today);
-  const proximos=S.recordatorios.filter(r=>!r.done&&r.fecha>today);
-  const hechos=S.recordatorios.filter(r=>r.done);
-
-  function recRow(r){
-    const vence=r.fecha<today&&!r.done;
-    return`<div class="lead-row" style="${vence?'border-left:3px solid var(--danger);':''}${r.done?'opacity:.4':''}">
-      <div style="flex:1">
-        <div style="font-size:12px;font-weight:${r.done?'400':'500'};${r.done?'text-decoration:line-through':''}"> ${r.texto}</div>
-        <div style="font-size:10px;color:${vence?'var(--danger)':'var(--muted)'};margin-top:2px">${r.fecha} · <span class="co-badge ${CO_CC[r.co]||''}" style="font-size:8px">${CO_NAMES[r.co]||r.co}</span></div>
-      </div>
-      ${!r.done?`<button style="font-size:10px;padding:3px 9px;border-radius:20px;border:1px solid var(--success)30;background:var(--successg);color:var(--success);cursor:pointer" onclick="doneRecordatorio('${r.id}')">✓ Listo</button>`:''}
-      <button style="font-size:10px;padding:3px 7px;border-radius:20px;border:1px solid var(--border2);background:transparent;color:var(--muted);cursor:pointer;margin-left:4px" onclick="delRecordatorio('${r.id}')">✕</button>
-    </div>`;
-  }
-
-  return`<div style="display:flex;justify-content:flex-end;margin-bottom:14px">
-    <button class="btn-xs" onclick="openRecordatorioModal()">+ Nuevo recordatorio</button>
-  </div>
-  ${vencidos.length?`<div style="font-size:10px;font-weight:700;color:var(--danger);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">⚠ Vencidos (${vencidos.length})</div>${vencidos.map(recRow).join('')}<div style="height:14px"></div>`:''}
-  ${hoy.length?`<div style="font-size:10px;font-weight:700;color:var(--warn);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Hoy</div>${hoy.map(recRow).join('')}<div style="height:14px"></div>`:''}
-  ${proximos.length?`<div style="font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Próximos</div>${proximos.map(recRow).join('')}<div style="height:14px"></div>`:''}
-  ${hechos.length?`<div style="font-size:10px;font-weight:700;color:var(--hint);text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px">Completados</div>${hechos.slice(0,5).map(recRow).join('')}`:''}
-  ${!S.recordatorios.length?'<div class="empty-hint" style="margin-top:40px">Sin recordatorios — agregá uno</div>':''}`;
-}
-
-function openRecordatorioModal(){
-  document.getElementById('rec-texto').value='';
-  document.getElementById('rec-fecha').value=todayStr();
-  document.getElementById('rec-co').value='voccel';
-  document.getElementById('modal-recordatorio').classList.add('open');
-}
-function saveRecordatorio(){
-  const texto=document.getElementById('rec-texto').value.trim();if(!texto)return;
-  if(!S.recordatorios)S.recordatorios=[];
-  S.recordatorios.push({id:'rec'+Date.now(),texto,fecha:document.getElementById('rec-fecha').value,co:document.getElementById('rec-co').value,done:false});
-  S.recordatorios.sort((a,b)=>a.fecha.localeCompare(b.fecha));
-  closeM('modal-recordatorio');render();saveState();toast('Recordatorio guardado');
-}
-function doneRecordatorio(id){const r=S.recordatorios.find(x=>x.id===id);if(r){r.done=true;addXP(5,'Recordatorio completado');render();saveState();}}
-function delRecordatorio(id){S.recordatorios=S.recordatorios.filter(x=>x.id!==id);render();saveState();}
-
-// ═══════════════════════════════════════
-// GASTOS
-// ═══════════════════════════════════════
-function renderGastos(){
-  if(!S.gastos)S.gastos=[];
-  const totalGastos=S.gastos.reduce((a,g)=>a+(+g.monto||0),0);
-  const totalCobrado=S.cobros.filter(c=>c.status==='cobrado').reduce((a,c)=>a+(+c.amount||0),0);
-  const ganancia=totalCobrado-totalGastos;
-  const byCo={voccel:0,prussia:0,mh:0,general:0};
-  S.gastos.forEach(g=>byCo[g.co]=(byCo[g.co]||0)+(+g.monto||0));
-
-  return`<div class="metrics">
-    <div class="metric"><div class="metric-val" style="color:var(--danger)">$${totalGastos.toFixed(0)}</div><div class="metric-lbl">Total gastos</div></div>
-    <div class="metric"><div class="metric-val" style="color:var(--success)">$${totalCobrado.toFixed(0)}</div><div class="metric-lbl">Total cobrado</div></div>
-    <div class="metric"><div class="metric-val" style="color:${ganancia>=0?'var(--success)':'var(--danger)'}">$${ganancia.toFixed(0)}</div><div class="metric-lbl">Ganancia real</div></div>
-    <div class="metric"><div class="metric-val">${totalCobrado>0?Math.round((ganancia/totalCobrado)*100):0}%</div><div class="metric-lbl">Margen</div></div>
-  </div>
-  <div class="grid2">
-    <div class="card">
-      <div class="card-title">Gastos por empresa</div>
-      ${['voccel','prussia','mh'].map(co=>`<div class="rb" style="margin-bottom:4px"><div class="rbl"><div class="rdot" style="background:${CO_HEX[co]}"></div><div class="rname">${CO_NAMES[co]}</div></div><div class="rval" style="color:var(--danger)">$${(byCo[co]||0).toFixed(0)}</div></div>`).join('')}
-      <button class="add-btn" onclick="openGastoModal()">+ Registrar gasto</button>
-    </div>
-    <div class="card">
-      <div class="card-title">Últimos gastos</div>
-      ${S.gastos.slice(0,10).map(g=>`<div class="cobro-row">
-        <div><div class="cr-name">${g.desc}</div><div class="cr-sub">${CO_NAMES[g.co]||g.co} · ${g.fecha||''} · ${g.categoria||''}</div></div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <div class="cr-amt" style="color:var(--danger)">-$${(+g.monto||0).toFixed(0)}</div>
-          <button style="font-size:9px;padding:1px 6px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--hint);cursor:pointer" onclick="delGasto('${g.id}')">✕</button>
-        </div>
-      </div>`).join('')}
-      ${!S.gastos.length?'<div class="empty-hint">Sin gastos registrados</div>':''}
-    </div>
-  </div>`;
-}
-
-function openGastoModal(){
-  document.getElementById('gasto-desc').value='';
-  document.getElementById('gasto-monto').value='';
-  document.getElementById('gasto-fecha').value=todayStr();
-  document.getElementById('modal-gasto').classList.add('open');
-}
-function saveGasto(){
-  const desc=document.getElementById('gasto-desc').value.trim();if(!desc)return;
-  if(!S.gastos)S.gastos=[];
-  S.gastos.unshift({id:'g'+Date.now(),desc,monto:document.getElementById('gasto-monto').value||0,co:document.getElementById('gasto-co').value,categoria:document.getElementById('gasto-cat').value,fecha:document.getElementById('gasto-fecha').value});
-  closeM('modal-gasto');render();saveState();toast('Gasto registrado');
-}
-function delGasto(id){S.gastos=S.gastos.filter(x=>x.id!==id);render();saveState();}
-
-// ═══════════════════════════════════════
-// PLANTILLAS
-// ═══════════════════════════════════════
-function renderPlantillas(){
-  if(!S.plantillas)S.plantillas=[];
-  const tipos=['outreach','propuesta','consulta','seguimiento','otro'];
-  return`<div style="display:flex;justify-content:flex-end;margin-bottom:14px">
-    <button class="btn-xs" onclick="openPlantillaModal(null)">+ Nueva plantilla</button>
-  </div>
-  ${tipos.map(tipo=>{
-    const pl=S.plantillas.filter(p=>p.tipo===tipo);
-    if(!pl.length)return'';
-    return`<div style="margin-bottom:20px">
-      <div class="section-title">${tipo.charAt(0).toUpperCase()+tipo.slice(1)}<div class="section-line"></div></div>
-      <div class="grid2">
-        ${pl.map(p=>`<div class="card" style="border-left:3px solid ${CO_HEX[p.co]||'var(--border)'}">
-          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-            <div style="font-size:13px;font-weight:600">${p.nombre}</div>
-            <span class="co-badge ${CO_CC[p.co]||''}">${CO_NAMES[p.co]||p.co}</span>
+        <!-- Local hero (tu ubicación + clima) -->
+        <div class="panel accent full">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">my_location</span>root/local/node.sys</div>
+            <div class="right" id="localHeroStatus">SYNCING...</div>
           </div>
-          <div style="font-size:11px;color:var(--muted);line-height:1.6;margin-bottom:10px;white-space:pre-wrap">${p.texto.slice(0,180)}${p.texto.length>180?'…':''}</div>
-          <div style="display:flex;gap:6px">
-            <button style="flex:1;padding:6px;border-radius:var(--r);border:none;background:var(--voccel);color:#fff;font-size:11px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif" onclick="copyPlantilla('${p.id}')">Copiar texto</button>
-            <button style="padding:6px 10px;border-radius:var(--r);border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:11px;cursor:pointer" onclick="openPlantillaModal('${p.id}')">✏</button>
-            <button style="padding:6px 10px;border-radius:var(--r);border:1px solid var(--border2);background:transparent;color:var(--danger);font-size:11px;cursor:pointer" onclick="delPlantilla('${p.id}')">✕</button>
-          </div>
-        </div>`).join('')}
-      </div>
-    </div>`;
-  }).join('')}
-  ${!S.plantillas.length?'<div class="empty-hint" style="margin-top:40px">Sin plantillas — las 3 predefinidas se cargan la primera vez</div>':''}`;
-}
-
-function copyPlantilla(id){
-  const p=S.plantillas.find(x=>x.id===id);if(!p)return;
-  navigator.clipboard.writeText(p.texto).then(()=>toast('Copiado al portapapeles ✓')).catch(()=>{
-    const ta=document.createElement('textarea');ta.value=p.texto;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copiado ✓');
-  });
-}
-function openPlantillaModal(id){
-  S.editing.plantilla=id||null;
-  const p=id?S.plantillas.find(x=>x.id===id):null;
-  document.getElementById('pl-nombre').value=p?p.nombre:'';
-  document.getElementById('pl-co').value=p?p.co:'voccel';
-  document.getElementById('pl-tipo').value=p?p.tipo:'outreach';
-  document.getElementById('pl-texto').value=p?p.texto:'';
-  document.getElementById('pl-del').style.display=id?'flex':'none';
-  document.getElementById('modal-plantilla').classList.add('open');
-}
-function savePlantilla(){
-  const nombre=document.getElementById('pl-nombre').value.trim();if(!nombre)return;
-  const obj={id:S.editing.plantilla||'pl'+Date.now(),nombre,co:document.getElementById('pl-co').value,tipo:document.getElementById('pl-tipo').value,texto:document.getElementById('pl-texto').value};
-  if(S.editing.plantilla){const i=S.plantillas.findIndex(x=>x.id===S.editing.plantilla);if(i>=0)S.plantillas[i]=obj;}
-  else{if(!S.plantillas)S.plantillas=[];S.plantillas.push(obj);}
-  closeM('modal-plantilla');render();saveState();toast('Plantilla guardada');
-}
-function delPlantilla(id){S.plantillas=S.plantillas.filter(x=>x.id!==id);render();saveState();}
-
-// ═══════════════════════════════════════
-// IDEAS
-// ═══════════════════════════════════════
-function renderIdeas(){
-  if(!S.ideas)S.ideas=[];
-  const tags=[...new Set(S.ideas.map(i=>i.tag).filter(Boolean))];
-  return`<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
-    <input id="idea-quick" placeholder="Anotá una idea rápida..." style="flex:1;background:var(--bg3);border:1px solid var(--border2);border-radius:var(--r);padding:9px 13px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none;min-width:200px" onkeydown="if(event.key==='Enter')quickIdea()">
-    <select id="idea-co-quick" style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--r);padding:9px 11px;color:var(--text);font-family:'Outfit',sans-serif;font-size:13px;outline:none">
-      <option value="voccel">Voccel</option><option value="prussia">Prussia</option><option value="mh">MH</option><option value="general">General</option>
-    </select>
-    <button class="btn-xs" onclick="quickIdea()">+ Agregar</button>
-    <button class="btn-xs" onclick="openIdeaModal()">+ Detallada</button>
-  </div>
-  <div style="display:flex;flex-direction:column;gap:6px">
-    ${S.ideas.map(idea=>`<div class="card" style="padding:12px 14px;border-left:3px solid ${CO_HEX[idea.co]||'var(--border)'}">
-      <div style="display:flex;align-items:flex-start;gap:10px">
-        <div style="flex:1">
-          <div style="font-size:13px;font-weight:500;margin-bottom:3px">${idea.texto}</div>
-          <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
-            <span class="co-badge ${CO_CC[idea.co]||''}">${CO_NAMES[idea.co]||idea.co}</span>
-            ${idea.tag?`<span style="font-size:9px;padding:1px 7px;border-radius:20px;background:var(--bg5);color:var(--muted)">${idea.tag}</span>`:''}
-            <span style="font-size:9px;color:var(--hint)">${idea.fecha||''}</span>
-          </div>
-          ${idea.detalle?`<div style="font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5">${idea.detalle}</div>`:''}
-        </div>
-        <button style="font-size:10px;padding:2px 7px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--hint);cursor:pointer;flex-shrink:0" onclick="delIdea('${idea.id}')">✕</button>
-      </div>
-    </div>`).join('')}
-    ${!S.ideas.length?'<div class="empty-hint" style="margin-top:40px">Sin ideas — escribí una arriba y presioná Enter</div>':''}
-  </div>`;
-}
-
-function quickIdea(){
-  const inp=document.getElementById('idea-quick');const co=document.getElementById('idea-co-quick').value;
-  const texto=inp.value.trim();if(!texto)return;
-  if(!S.ideas)S.ideas=[];
-  S.ideas.unshift({id:'idea'+Date.now(),texto,co,tag:'',detalle:'',fecha:todayStr()});
-  inp.value='';addXP(3,'Idea registrada');render();saveState();toast('Idea guardada');
-}
-function openIdeaModal(){
-  document.getElementById('idea-texto').value='';document.getElementById('idea-tag').value='';document.getElementById('idea-detalle').value='';document.getElementById('idea-co').value='voccel';
-  document.getElementById('modal-idea').classList.add('open');
-}
-function saveIdea(){
-  const texto=document.getElementById('idea-texto').value.trim();if(!texto)return;
-  if(!S.ideas)S.ideas=[];
-  S.ideas.unshift({id:'idea'+Date.now(),texto,co:document.getElementById('idea-co').value,tag:document.getElementById('idea-tag').value,detalle:document.getElementById('idea-detalle').value,fecha:todayStr()});
-  closeM('modal-idea');addXP(3,'Idea registrada');render();saveState();toast('Idea guardada');
-}
-function delIdea(id){S.ideas=S.ideas.filter(x=>x.id!==id);render();saveState();}
-
-// ═══════════════════════════════════════
-// PUBLICACIONES
-// ═══════════════════════════════════════
-function renderPublicaciones(){
-  if(!S.publicaciones)S.publicaciones=[];
-  if(!S.pubOpenCo)S.pubOpenCo={voccel:false,prussia:false,mh:false};
-  const cos=['voccel','prussia','mh'];
-  return`<div style="display:flex;justify-content:flex-end;margin-bottom:14px">
-    <button class="btn-xs" onclick="openPubModal(null)">+ Nueva publicación</button>
-  </div>
-  ${cos.map(co=>{
-    const pubs=S.publicaciones.filter(p=>p.co===co);
-    const isOpen=S.pubOpenCo[co]!==false;
-    const count=pubs.length;
-    // Group by red
-    const byRed={};
-    pubs.forEach(p=>{const r=p.red||'general';if(!byRed[r])byRed[r]=[];byRed[r].push(p);});
-    return`<div style="margin-bottom:10px;border:1px solid var(--border2);border-radius:var(--r2);overflow:hidden">
-      <div style="display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;background:var(--bg2);user-select:none" onclick="togglePubCo('${co}')">
-        <div style="width:10px;height:10px;border-radius:50%;background:${CO_HEX[co]};flex-shrink:0"></div>
-        <div style="font-size:14px;font-weight:600;flex:1;color:${CO_HEX[co]}">${CO_NAMES[co]}</div>
-        <div style="font-size:10px;color:var(--muted);font-family:'DM Mono',monospace">${count} publicaciones</div>
-        <div style="font-size:14px;color:var(--muted);transition:transform .2s;transform:rotate(${isOpen?'90':'0'}deg)">›</div>
-      </div>
-      ${isOpen?`<div style="padding:12px 16px;background:var(--bg);display:flex;flex-direction:column;gap:8px">
-        ${Object.entries(byRed).map(([red,items])=>`
-          <div style="font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:.1em;font-weight:700;margin:4px 0 6px;padding-bottom:4px;border-bottom:1px solid var(--border)">${red}</div>
-          ${items.map(p=>`<div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:12px;border-left:3px solid ${CO_HEX[p.co]}">
-            <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px">
-              <div style="font-size:13px;font-weight:600">${p.titulo}</div>
-              <div style="display:flex;gap:4px;flex-shrink:0;margin-left:8px">
-                <button onclick="openPubModal('${p.id}')" style="padding:3px 8px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--muted);font-size:10px;cursor:pointer">✏</button>
-                <button onclick="delPub('${p.id}')" style="padding:3px 8px;border-radius:4px;border:1px solid var(--border2);background:transparent;color:var(--danger);font-size:10px;cursor:pointer">✕</button>
+          <div class="panel-body">
+            <div class="local-hero" id="localHero">
+              <div>
+                <div class="city" id="localCity">Locating...</div>
+                <div class="country" id="localCountry">--</div>
+                <div class="time" id="localTime">--:--:--</div>
+                <div class="date" id="localDate">----.--.-- // --</div>
+              </div>
+              <div class="weather-block">
+                <span class="material-symbols-outlined icon-big" id="localIcon">cyclone</span>
+                <div class="temp" id="localTemp">--°</div>
+                <div class="cond" id="localCond">SYNC...</div>
               </div>
             </div>
-            <div style="font-size:11px;color:var(--muted);line-height:1.7;white-space:pre-wrap;margin-bottom:10px;background:var(--bg3);border-radius:var(--r);padding:10px;max-height:160px;overflow-y:auto">${p.texto}</div>
-            <button id="copy-btn-${p.id}" style="width:100%;padding:8px;border-radius:var(--r);border:none;background:var(--voccel);color:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:'Outfit',sans-serif;transition:all .2s" onclick="copyPub('${p.id}')">Copiar ✓</button>
-          </div>`).join('')}
-        `).join('')}
-        ${!count?'<div class="empty-hint">Sin publicaciones para esta empresa — agregá una</div>':''}
-      </div>`:''}
-    </div>`;
-  }).join('')}`;
-}
+          </div>
+        </div>
 
-function togglePubCo(co){
-  if(!S.pubOpenCo)S.pubOpenCo={voccel:true,prussia:true,mh:true};
-  S.pubOpenCo[co]=!S.pubOpenCo[co];
-  render();saveState();
-}
+        <!-- News feed -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">rss_feed</span>root/feed/arch_ind.dat</div>
+            <div class="right">
+              <button class="icon-btn" id="refreshNewsBtn" aria-label="Refrescar noticias" type="button" title="Refrescar">
+                <span class="material-symbols-outlined">refresh</span>
+              </button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="news-list" id="newsList">
+              <div class="loading">FETCHING_FEED</div>
+            </div>
+          </div>
+        </div>
 
-function copyPub(id){
-  const p=S.publicaciones.find(x=>x.id===id);if(!p)return;
-  navigator.clipboard.writeText(p.texto).then(()=>{
-    toast('Copiado al portapapeles ✓');
-    const btn=document.getElementById('copy-btn-'+id);
-    if(btn){btn.textContent='¡Copiado!';btn.style.background='var(--success)';btn.style.color='#000';setTimeout(()=>{btn.textContent='Copiar ✓';btn.style.background='var(--voccel)';btn.style.color='#fff';},2000);}
-  }).catch(()=>{
-    const ta=document.createElement('textarea');ta.value=p.texto;document.body.appendChild(ta);ta.select();document.execCommand('copy');document.body.removeChild(ta);toast('Copiado ✓');
-  });
-}
-function openPubModal(id){
-  S.editing.pub=id||null;
-  const p=id?S.publicaciones.find(x=>x.id===id):null;
-  document.getElementById('pub-titulo').value=p?p.titulo:'';
-  document.getElementById('pub-co').value=p?p.co:'voccel';
-  document.getElementById('pub-red').value=p?p.red||'instagram':'instagram';
-  document.getElementById('pub-texto').value=p?p.texto:'';
-  document.getElementById('pub-del').style.display=id?'flex':'none';
-  document.getElementById('modal-pub').classList.add('open');
-}
-function savePub(){
-  const titulo=document.getElementById('pub-titulo').value.trim();if(!titulo)return;
-  const obj={id:S.editing.pub||'pub'+Date.now(),titulo,co:document.getElementById('pub-co').value,red:document.getElementById('pub-red').value,texto:document.getElementById('pub-texto').value};
-  if(S.editing.pub){const i=S.publicaciones.findIndex(x=>x.id===S.editing.pub);if(i>=0)S.publicaciones[i]=obj;}
-  else{if(!S.publicaciones)S.publicaciones=[];S.publicaciones.push(obj);}
-  closeM('modal-pub');render();saveState();toast('Publicación guardada');
-}
-function delPub(id){S.publicaciones=S.publicaciones.filter(x=>x.id!==id);render();saveState();}
+        <!-- Mini world clocks -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">schedule</span>root/sys/chronos.exe</div>
+            <div class="right"><span class="material-symbols-outlined">public</span></div>
+          </div>
+          <div class="mini-clocks" id="miniClocks"></div>
+        </div>
 
-// ═══════════════════════════════════════
-// MODAL HELPERS
-// ═══════════════════════════════════════
-function closeM(id){document.getElementById(id).classList.remove('open');}
-document.querySelectorAll('.modal-bg').forEach(m=>m.addEventListener('click',e=>{if(e.target===m)m.classList.remove('open');}));
-document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-bg.open').forEach(m=>m.classList.remove('open'));});
+        <!-- Metrics -->
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">monitoring</span>root/sys/metrics.log</div>
+            <div class="right"><span class="material-symbols-outlined">trending_up</span></div>
+          </div>
+          <div class="panel-body" id="metricsBody"></div>
+        </div>
 
-// ═══════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════
-// ── THEME SWITCHER ──
-function setTheme(name){
-  document.documentElement.setAttribute('data-theme',name);
-  localStorage.setItem('hq-theme',name);
-  const sel=document.getElementById('theme-sel');if(sel)sel.value=name;
-}
-// Restore saved theme
-(function(){
-  const saved=localStorage.getItem('hq-theme');
-  if(saved){document.documentElement.setAttribute('data-theme',saved);}
-})();
+      </div>
+    </section>
 
-loadState();
-render();
-// Init emoji picker
-renderEmojiGrid('');
-// Restore currency selector
-const csel=document.getElementById('currency-sel');
-if(csel&&S.currency)csel.value=S.currency;
-// Restore theme selector
-const tsel=document.getElementById('theme-sel');
-const savedTheme=localStorage.getItem('hq-theme');
-if(tsel&&savedTheme){tsel.value=savedTheme;document.documentElement.setAttribute('data-theme',savedTheme);}
-// Show reminder badge in nav
-(function checkReminders(){
-  if(!S.recordatorios)return;
-  const today=new Date().toISOString().slice(0,10);
-  const urgent=S.recordatorios.filter(r=>!r.done&&r.fecha<=today).length;
-  const el=document.getElementById('n-recordatorios');
-  if(el&&urgent>0){
-    const badge=document.createElement('span');
-    badge.style.cssText='font-family:DM Mono,monospace;font-size:9px;padding:1px 5px;border-radius:20px;background:var(--danger);color:#fff;margin-left:auto';
-    badge.textContent=urgent;el.appendChild(badge);
-  }
-})();
-</script>
+    <!-- =========== COMMAND VIEW =========== -->
+    <section class="view" data-view="command" aria-labelledby="commandTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="commandTitle">COMMAND_CENTER</h1>
+        <div class="view-subtitle">
+          path: root/net/quick_links<span class="sep">//</span><span style="color:var(--success)">SYSTEM_STATUS [ONLINE]</span>
+        </div>
+      </div>
+
+      <div class="command-layout">
+        <div>
+          <div class="links-grid" id="linksGrid"></div>
+        </div>
+
+        <div>
+          <div class="panel accent search-panel">
+            <div class="panel-header">
+              <div class="left">[ INPUT_TERMINAL ]</div>
+              <div class="panel-controls"><span></span><span></span><span></span></div>
+            </div>
+            <div class="panel-body">
+              <form class="search-form" id="searchForm" autocomplete="off">
+                <div class="search-row">
+                  <input type="text" id="searchInput" placeholder="> query string..." aria-label="Buscar" />
+                  <select id="searchEngine" aria-label="Motor de búsqueda">
+                    <option value="duckduckgo">DDG</option>
+                    <option value="google">GOOGLE</option>
+                    <option value="github">GITHUB</option>
+                    <option value="youtube">YOUTUBE</option>
+                  </select>
+                </div>
+                <button type="submit" class="search-btn">[ EXECUTE_QUERY ]</button>
+              </form>
+              <div style="margin-top:14px; font-family:var(--font-mono); font-size:10px; color:var(--on-surface-dim); line-height:1.7">
+                <div>> SEARCH_PROTOCOL [ READY ]</div>
+                <div>> ENGINES: 4 NODES ACTIVE</div>
+                <div class="hide-mobile">> SHORTCUT: <span style="color:var(--accent)">/</span> to focus</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========== CHRONOS VIEW =========== -->
+    <section class="view" data-view="chronos" aria-labelledby="chronosTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="chronosTitle">WORLD_CLOCK_CONFIG</h1>
+        <div class="view-subtitle">
+          SYSTEM.GLOBAL.TIME.NODES<span class="sep">//</span><span id="nodeCount">--</span> ACTIVE
+        </div>
+      </div>
+
+      <div class="chronos-layout">
+        <div class="panel world-map-panel">
+          <div class="panel-header">
+            <div class="left">root/geo/global_map.svg</div>
+            <div class="right">SAT_LINK: <span style="color:var(--success)">ONLINE</span></div>
+          </div>
+          <div class="panel-body" style="padding:0;">
+            <svg class="world-map" viewBox="0 0 1000 500" id="worldMap" preserveAspectRatio="xMidYMid meet" aria-label="Mapa mundial con nodos activos"></svg>
+          </div>
+          <div class="world-map-info">
+            LAT/LON: <span class="v" id="mapLatLon">ENCRYPTED</span><br />
+            SAT_LINK: <span class="v">ONLINE</span><br />
+            PING: <span class="v">12ms</span>
+          </div>
+        </div>
+
+        <div>
+          <div style="font-family:var(--font-mono); font-size:11px; color:var(--on-surface-dim); letter-spacing:0.1em; margin-bottom:8px;">ACTIVE_NODES</div>
+          <div class="clock-nodes" id="clockNodes"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========== TOOLS VIEW =========== -->
+    <section class="view" data-view="tools" aria-labelledby="toolsTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="toolsTitle">SYSTEM_TOOLS_HUB</h1>
+        <div class="view-subtitle">
+          path: root/sys/tools_hub/active
+        </div>
+      </div>
+
+      <div class="tools-layout">
+
+        <!-- Music Visualizer -->
+        <div class="panel viz-panel full">
+          <div class="panel-header">
+            <div class="left">[ AUDIO_VISUALIZER ]</div>
+            <div class="right" id="vizStatusInline">IDLE</div>
+          </div>
+          <div class="panel-body">
+            <canvas class="viz-canvas" id="vizCanvas"></canvas>
+            <div class="viz-controls">
+              <button class="viz-btn" id="btnSysAudio" type="button" title="Capturar audio del sistema (desktop only)">
+                <span class="material-symbols-outlined" style="font-size:14px; vertical-align:middle">desktop_windows</span>
+                CAPTURE_SYS
+              </button>
+              <button class="viz-btn" id="btnMic" type="button" title="Capturar micrófono">
+                <span class="material-symbols-outlined" style="font-size:14px; vertical-align:middle">mic</span>
+                CAPTURE_MIC
+              </button>
+              <button class="viz-btn" id="btnStop" type="button">
+                <span class="material-symbols-outlined" style="font-size:14px; vertical-align:middle">stop</span>
+                STOP
+              </button>
+              <select class="viz-btn" id="vizMode" aria-label="Modo de visualización">
+                <option value="bars">MODE: BARS</option>
+                <option value="wave">MODE: WAVE</option>
+                <option value="circular">MODE: CIRCULAR</option>
+                <option value="terminal">MODE: TERMINAL</option>
+              </select>
+            </div>
+            <div class="viz-status">
+              <span>STATUS: <span class="v" id="vizStatus">AWAITING_INPUT</span></span>
+              <span>CHANNELS: <span class="v" id="vizChannels">--</span></span>
+              <span>SAMPLE_RATE: <span class="v" id="vizSampleRate">--</span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Pomodoro -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left">[ POMODORO_TIMER ]</div>
+            <div class="right"><span class="material-symbols-outlined">timer</span></div>
+          </div>
+          <div class="panel-body">
+            <div class="pomodoro">
+              <div class="pomo-mode" id="pomoMode">FOCUS</div>
+              <div class="pomo-display" id="pomoDisplay">25:00</div>
+              <div class="pomo-controls">
+                <button class="pomo-btn primary" id="pomoStartBtn" type="button">START</button>
+                <button class="pomo-btn" id="pomoResetBtn" type="button">RESET</button>
+                <button class="pomo-btn" id="pomoSkipBtn" type="button">SKIP</button>
+              </div>
+              <div class="pomo-stats">
+                CYCLES: <span class="v" id="pomoCycles">0</span>
+                <span style="margin-left:12px">FOCUS_TIME: <span class="v" id="pomoFocusTime">0m</span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left">[ UPLINK_SCRATCHPAD ]</div>
+            <div class="right"><span class="material-symbols-outlined">edit_note</span></div>
+          </div>
+          <div class="panel-body">
+            <textarea id="notesArea" placeholder="> init memo_daemon...
+> connection secure.
+
+- write your notes here
+- they persist locally
+- ping node_alpha at 2300 hrs
+
+> _" inputmode="text" autocapitalize="sentences"></textarea>
+            <div class="notes-meta">
+              <span><span id="notesCount">0</span> chars</span>
+              <span class="saved" id="notesSaved">[ SAVED ]</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Alarms -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left">[ ALARMS_DAEMON ]</div>
+            <div class="right">
+              <button class="icon-btn" id="alarmsPermBtn" type="button" title="Permitir notificaciones" aria-label="Permitir notificaciones">
+                <span class="material-symbols-outlined" id="alarmsPermIcon">notifications</span>
+              </button>
+            </div>
+          </div>
+          <div class="panel-body alarms-panel">
+            <form class="alarms-form" id="alarmsForm">
+              <input type="time" id="alarmTime" required aria-label="Hora" />
+              <input type="text" id="alarmLabel" placeholder="Etiqueta..." maxlength="40" aria-label="Etiqueta" />
+              <button type="submit">+ ADD</button>
+            </form>
+            <div class="alarms-list" id="alarmsList"></div>
+          </div>
+        </div>
+
+        <!-- Telemetry -->
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="left">[ HARDWARE_TELEMETRY ]</div>
+            <div class="panel-controls"><span></span><span></span><span></span></div>
+          </div>
+          <div class="panel-body" id="telemetryBody"></div>
+        </div>
+
+        <!-- Daemon log -->
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="left">[ DAEMON_STATUS_FEED ]</div>
+            <div class="right"><span class="material-symbols-outlined">rss_feed</span></div>
+          </div>
+          <div class="panel-body">
+            <div class="daemon-log" id="daemonLog"></div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========== THEMES VIEW =========== -->
+    <section class="view" data-view="themes" aria-labelledby="themesTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="themesTitle">SYSTEM // THEME CONFIGURATION</h1>
+        <div class="view-subtitle">
+          v4.2.0-STABLE<span class="sep">|</span>SELECT VISUAL_OVERRIDE PROTOCOL
+        </div>
+      </div>
+
+      <div class="themes-grid">
+        <div class="theme-card yellow current" data-theme="yellow">
+          <div class="header"><span>PROTOCOL_01: CYBER_YELLOW</span><span>● ●</span></div>
+          <div class="theme-preview"><div class="label">YELLOW</div></div>
+          <div class="actions">
+            <button class="preview" type="button">PREVIEW</button>
+            <button class="apply" type="button">APPLY</button>
+          </div>
+        </div>
+        <div class="theme-card green" data-theme="green">
+          <div class="header"><span>PROTOCOL_02: TOXIC_GREEN</span><span>● ●</span></div>
+          <div class="theme-preview"><div class="label">GREEN</div></div>
+          <div class="actions">
+            <button class="preview" type="button">PREVIEW</button>
+            <button class="apply" type="button">APPLY</button>
+          </div>
+        </div>
+        <div class="theme-card blue" data-theme="blue">
+          <div class="header"><span>PROTOCOL_03: COBALT_BLUE</span><span>● ●</span></div>
+          <div class="theme-preview"><div class="label">BLUE</div></div>
+          <div class="actions">
+            <button class="preview" type="button">PREVIEW</button>
+            <button class="apply" type="button">APPLY</button>
+          </div>
+        </div>
+        <div class="theme-card red" data-theme="red">
+          <div class="header"><span>PROTOCOL_04: BLOOD_RED</span><span>● ●</span></div>
+          <div class="theme-preview"><div class="label">RED</div></div>
+          <div class="actions">
+            <button class="preview" type="button">PREVIEW</button>
+            <button class="apply" type="button">APPLY</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============= STATUSBAR ============= -->
+  <footer class="statusbar">
+    <div class="left">
+      <span>SYS: <span class="ok">ONLINE</span></span>
+      <span class="hide-mobile">UPLINK: <span class="v">SECURE</span></span>
+      <span class="hide-mobile">NODE: <span class="v">ZEPHYR</span></span>
+    </div>
+    <div class="right">
+      <span id="statusTime">--:--:--</span>
+      <span class="hide-mobile">UTC<span id="statusTz"></span></span>
+      <span class="blink">█</span>
+    </div>
+  </footer>
+
+</div>
+
+<!-- ============= SETTINGS MODAL ============= -->
+<div class="modal-backdrop" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+  <div class="modal">
+    <div class="modal-header">
+      <span id="settingsTitle">[ SYS_CONFIG // OPERATOR_PREFS ]</span>
+      <button class="close" id="settingsCloseBtn" aria-label="Cerrar" type="button">
+        <span class="material-symbols-outlined">close</span>
+      </button>
+    </div>
+    <div class="modal-body">
+
+      <div class="modal-section">
+        <h3>OPERATOR</h3>
+        <div class="setting-row">
+          <div class="desc">
+            Operator name
+            <span class="hint">Mostrado en topbar y sidebar</span>
+          </div>
+          <input type="text" id="setOperatorName" maxlength="20" />
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>VISUAL</h3>
+        <div class="setting-row">
+          <div class="desc">
+            Scan lines (CRT effect)
+            <span class="hint">Líneas horizontales tipo monitor viejo</span>
+          </div>
+          <button class="toggle on" id="toggleScanlines" role="switch" aria-checked="true" type="button"></button>
+        </div>
+        <div class="setting-row">
+          <div class="desc">
+            Density
+            <span class="hint">Compacto = más info en pantalla</span>
+          </div>
+          <select id="setDensity">
+            <option value="normal">NORMAL</option>
+            <option value="compact">COMPACT</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>BEHAVIOR</h3>
+        <div class="setting-row">
+          <div class="desc">
+            Auto-refresh news
+            <span class="hint">Cada 30 minutos</span>
+          </div>
+          <button class="toggle on" id="toggleAutoNews" role="switch" aria-checked="true" type="button"></button>
+        </div>
+        <div class="setting-row">
+          <div class="desc">
+            Browser notifications
+            <span class="hint">Para alarmas y pomodoro</span>
+          </div>
+          <button class="toggle" id="toggleNotifs" role="switch" aria-checked="false" type="button"></button>
+        </div>
+      </div>
+
+      <div class="modal-section">
+        <h3>DATA</h3>
+        <div class="setting-row">
+          <div class="desc">
+            Geolocation
+            <span class="hint">Para hora y clima local</span>
+          </div>
+          <button class="btn-primary" id="reGeoBtn" type="button" style="padding: 6px 12px; font-size: 10px; min-height: 32px;">RE-DETECT</button>
+        </div>
+        <div class="setting-row">
+          <div class="desc" style="color: var(--error)">
+            Reset all data
+            <span class="hint">Borra notas, alarmas, settings, theme</span>
+          </div>
+          <button class="btn-danger" id="resetAllBtn" type="button" style="padding: 6px 12px; font-size: 10px; min-height: 32px;">WIPE</button>
+        </div>
+      </div>
+
+    </div>
+    <div class="modal-footer">
+      <button class="btn-danger" id="settingsCancelBtn" type="button">CANCEL</button>
+      <button class="btn-primary" id="settingsSaveBtn" type="button">SAVE</button>
+    </div>
+  </div>
+</div>
+
+<!-- Toast container -->
+<div class="toast-container" id="toastContainer" aria-live="polite" aria-atomic="false"></div>
+
 </body>
 </html>

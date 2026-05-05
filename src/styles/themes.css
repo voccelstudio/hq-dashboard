@@ -1,0 +1,41 @@
+/* ============================================================
+   THEMES - 4 protocolos visuales
+   ============================================================ */
+
+/* Default (fallback) */
+.theme-yellow {
+  --accent:     #fce300;
+  --accent-dim: #b09d00;
+  --accent-on:  #201c00;
+  --accent-glow: rgba(252,227,0,0.35);
+}
+
+.theme-green {
+  --accent:     #00ff41;
+  --accent-dim: #00b82e;
+  --accent-on:  #001a08;
+  --accent-glow: rgba(0,255,65,0.35);
+}
+
+.theme-blue {
+  --accent:     #00f1fd;
+  --accent-dim: #00a8b0;
+  --accent-on:  #001a1c;
+  --accent-glow: rgba(0,241,253,0.35);
+}
+
+.theme-red {
+  --accent:     #ff3860;
+  --accent-dim: #b8001a;
+  --accent-on:  #1a0006;
+  --accent-glow: rgba(255,56,96,0.4);
+}
+
+/* Density modifier (desde settings) */
+body.density-compact {
+  --gutter: 12px;
+  --margin: 16px;
+}
+body.density-compact .panel-body { padding: 12px; }
+body.density-compact .view-title { font-size: 28px; }
+body.density-compact .news-item { padding: 8px; gap: 10px; }

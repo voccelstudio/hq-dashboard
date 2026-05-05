@@ -1,0 +1,19 @@
+{
+  "name": "sys-dashboard",
+  "version": "1.0.0",
+  "description": "High-Tech Low-Life cyberpunk personal work dashboard",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "deploy": "npm run build && gh-pages -d dist"
+  },
+  "devDependencies": {
+    "vite": "^5.4.0",
+    "gh-pages": "^6.1.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
