@@ -1,0 +1,19 @@
+{
+  "name": "SYS_DASHBOARD V4.2",
+  "short_name": "SYS_DASH",
+  "description": "High-Tech Low-Life personal work dashboard",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0a0a",
+  "theme_color": "#fce300",
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
