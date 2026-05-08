@@ -197,27 +197,37 @@
         <div class="view-subtitle">ROOT/SEARCH_ENGINE // NODE_01</div>
       </div>
       <div class="command-layout">
-        <div class="search-panel panel">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">search</span>root/search.cmd</div>
-          </div>
-          <div class="panel-body">
-            <form class="search-form" id="searchForm">
-              <div class="search-row">
-                <input id="searchInput" placeholder="SEARCH_QUERY..." type="text" autocomplete="off" />
-                <select id="searchEngine">
-                  <option value="duckduckgo">DUCKDUCKGO</option>
-                  <option value="google">GOOGLE</option>
-                  <option value="github">GITHUB</option>
-                  <option value="youtube">YOUTUBE</option>
-                </select>
-              </div>
-              <button class="search-btn" type="submit">[ EXECUTE_SEARCH ]</button>
-            </form>
-          </div>
-        </div>
         <div class="links-grid" id="linksGrid">
           <!-- JS injects nodes here -->
+        </div>
+        <div class="command-sidebar">
+          <div class="search-panel panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">search</span>root/search.cmd</div>
+            </div>
+            <div class="panel-body">
+              <form class="search-form" id="searchForm">
+                <div class="search-row">
+                  <input id="searchInput" placeholder="SEARCH_QUERY..." type="text" autocomplete="off" />
+                  <select id="searchEngine">
+                    <option value="duckduckgo">DUCKDUCKGO</option>
+                    <option value="google">GOOGLE</option>
+                    <option value="github">GITHUB</option>
+                    <option value="youtube">YOUTUBE</option>
+                  </select>
+                </div>
+                <button class="search-btn" type="submit">[ EXECUTE_SEARCH ]</button>
+              </form>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">add_link</span>root/add_link.cmd</div>
+            </div>
+            <div class="panel-body" id="addNodeContainer">
+              <!-- JS injects the add form here -->
+            </div>
+          </div>
         </div>
       </div>
     </section>

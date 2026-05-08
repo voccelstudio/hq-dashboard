@@ -55,7 +55,7 @@ Esto borra notas, alarmas, theme, settings y datos cacheados. ¿Continuar?`))ret
       <div class="category">${L(n.category||"CUSTOM")}</div>
       <div class="name">${L(n.name)}</div>
       <div class="url">${L(n.url.replace(/^https?:\/\//,""))}</div>
-    </a>`}).join(""),e.querySelectorAll(".link-delete").forEach(n=>{n.addEventListener("click",o=>{o.preventDefault(),o.stopPropagation();const i=n.dataset.id,s=V().filter(a=>a.id!==i);We(s),me(),m("Link removed","ok","LINKS"),l("INFO","LINKS",`Removed custom link ${i}`)})}),l("OK","LINKS",`${t.length} nodes loaded (${V().length} custom)`)}function zt(){const e=document.querySelector(".search-panel .panel-body");if(!e)return;const t=document.createElement("div");t.style.cssText="margin-top:16px; padding-top:14px; border-top:1px dotted var(--outline)",t.innerHTML=`
+    </a>`}).join(""),e.querySelectorAll(".link-delete").forEach(n=>{n.addEventListener("click",o=>{o.preventDefault(),o.stopPropagation();const i=n.dataset.id,s=V().filter(a=>a.id!==i);We(s),me(),m("Link removed","ok","LINKS"),l("INFO","LINKS",`Removed custom link ${i}`)})}),l("OK","LINKS",`${t.length} nodes loaded (${V().length} custom)`)}function zt(){const e=document.getElementById("addNodeContainer");if(!e)return;const t=document.createElement("div");t.innerHTML=`
     <div style="font-family:var(--font-mono); font-size:10px; color:var(--info); letter-spacing:0.1em; margin-bottom:8px">> ADD_LINK_PROTOCOL</div>
     <form id="addLinkForm" autocomplete="off" style="display:flex; flex-direction:column; gap:8px">
       <input type="text" id="addLinkName" placeholder="Name (e.g. Notion)" maxlength="20" required
