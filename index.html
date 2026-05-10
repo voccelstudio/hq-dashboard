@@ -43,7 +43,6 @@
       <a class="nav-item active" data-view="terminal" href="#terminal">TERMINAL</a>
       <a class="nav-item" data-view="command" href="#command">COMMAND</a>
       <a class="nav-item" data-view="chronos" href="#chronos">CHRONOS</a>
-      <a class="nav-item" data-view="media" href="#media">MEDIA</a>
       <a class="nav-item" data-view="tools" href="#tools">TOOLS</a>
       <a class="nav-item" data-view="themes" href="#themes">THEMES</a>
     </nav>
@@ -81,10 +80,6 @@
         <span class="material-symbols-outlined">public</span>
         <span class="label">ROOT/WORLD_TIME</span>
       </a>
-      <a class="side-item" data-view="media" href="#media">
-        <span class="material-symbols-outlined">play_circle</span>
-        <span class="label">ROOT/MEDIA</span>
-      </a>
       <a class="side-item" data-view="tools" href="#tools">
         <span class="material-symbols-outlined">settings_input_component</span>
         <span class="label">ROOT/SYSTEM_SYS</span>
@@ -114,29 +109,7 @@
 
       <div class="dash-grid">
 
-        <div class="panel accent full">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">my_location</span>root/local/node.sys</div>
-            <div class="right" id="localHeroStatus">SYNCING...</div>
-          </div>
-          <div class="panel-body">
-            <div class="local-hero" id="localHero">
-              <div>
-                <div class="city" id="localCity">Locating...</div>
-                <div class="country" id="localCountry">--</div>
-                <div class="time" id="localTime">--:--:--</div>
-                <div class="date" id="localDate">----.--.-- // --</div>
-              </div>
-              <div class="weather-block">
-                <span class="material-symbols-outlined icon-big" id="localIcon">cyclone</span>
-                <div class="temp" id="localTemp">--°</div>
-                <div class="cond" id="localCond">SYNC...</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
+        <div class="panel full">
           <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">newspaper</span>root/remote/news.feed</div>
             <div class="right">
@@ -152,7 +125,7 @@
               <button class="viz-btn" data-cat="MUSIC">MUSIC</button>
               <button class="viz-btn" data-cat="ANIME">ANIME</button>
             </div>
-            <div class="news-list" id="newsList">
+            <div class="news-list" id="newsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
               <div class="loading">CONNECTING_TO_NODES</div>
             </div>
           </div>
@@ -174,6 +147,27 @@
               <div class="pomo-stats">
                 CYCLES: <span class="v" id="pomoCycles">0</span> // 
                 TOTAL_FOCUS: <span class="v" id="pomoFocusTime">0m</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">my_location</span>root/local/node.sys</div>
+            <div class="right" id="localHeroStatus">SYNCING...</div>
+          </div>
+          <div class="panel-body">
+            <div class="local-hero" id="localHero" style="padding: 10px; height: auto;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div class="city" id="localCity" style="font-size: 1.5rem;">Locating...</div>
+                  <div class="time" id="localTime" style="font-size: 1.2rem; color: var(--accent);">--:--:--</div>
+                </div>
+                <div class="weather-block" style="text-align: right;">
+                  <div class="temp" id="localTemp" style="font-size: 1.5rem;">--°</div>
+                  <div class="cond" id="localCond" style="font-size: 0.8rem;">SYNC...</div>
+                </div>
               </div>
             </div>
           </div>
@@ -245,9 +239,35 @@
               <div class="left"><span class="material-symbols-outlined">mood</span>sys/kaomoji_lib.sh</div>
             </div>
             <div class="panel-body">
-              <input type="text" id="kaomojiSearch" placeholder="FILTER_EXPRESSIONS..." class="search-btn" style="width: 100%; text-align: left; padding-left: 12px; margin-bottom: 8px; cursor: text; background: var(--surface-low); color: var(--on-surface);">
-              <div id="kaomojiList" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; max-height: 300px; overflow-y: auto;">
-                <!-- Kaomojis will appear here -->
+              <select id="kaomojiDropdown" class="search-btn" style="width: 100%; text-align: left; padding-left: 12px; margin-bottom: 8px; cursor: pointer; background: var(--surface-low); color: var(--on-surface);">
+                <option value="">-- SELECT_EXPRESSION --</option>
+              </select>
+              <button class="viz-btn" onclick="copyK(document.getElementById('kaomojiDropdown').value)" style="width: 100%">COPY_SELECTED</button>
+            </div>
+          </div>
+
+          <div class="panel emoji-panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">sentiment_satisfied</span>sys/emoji_picker.sh</div>
+            </div>
+            <div class="panel-body">
+              <input type="text" id="emojiSearch" placeholder="SEARCH_EMOJIS..." class="search-btn" style="width: 100%; text-align: left; padding-left: 12px; margin-bottom: 8px; cursor: text;">
+              <div id="emojiList" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; max-height: 200px; overflow-y: auto; font-size: 20px; padding: 5px; background: var(--surface-low);">
+                <!-- Emojis here -->
+              </div>
+            </div>
+          </div>
+
+          <div class="panel architect-tools-panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">architecture</span>sys/dev_arch.tools</div>
+            </div>
+            <div class="panel-body">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <button class="viz-btn" onclick="m('JSON Formatter active','info')">JSON_FORMAT</button>
+                <button class="viz-btn" onclick="m('Base64 Encoder active','info')">BASE64_CONV</button>
+                <button class="viz-btn" onclick="m('Color Picker active','info')">COLOR_PICK</button>
+                <button class="viz-btn" onclick="m('Scale Calc active','info')">SCALE_CALC</button>
               </div>
             </div>
           </div>
@@ -281,80 +301,12 @@
       </div>
     </section>
 
-    <section class="view" data-view="media" id="view-media">
-      <div class="view-header">
-        <h1 class="view-title">MEDIA_CENTER</h1>
-        <div class="view-subtitle">YOUTUBE_REPRODUCER // BROADCAST // SIGNAL_RX</div>
-      </div>
-      <div class="dash-grid">
-        <div class="panel media-player-panel">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">tv</span>root/sys/media_rx.sh</div>
-            <div class="right" id="ytStatus">OFFLINE</div>
-          </div>
-          <div class="panel-body">
-            <div id="ytPlayerContainer" style="aspect-ratio: 16/9; background: #000; border: 1px solid var(--outline); position: relative; overflow: hidden;">
-              <div id="ytPlayer"></div>
-            </div>
-            <div class="viz-controls" style="margin-top: 12px;">
-              <input type="text" id="ytSearchInput" placeholder="SEARCH_YOUTUBE..." class="viz-btn" style="flex: 1; text-align: left; padding-left: 12px; cursor: text;">
-              <button class="viz-btn" id="btnYtSearch">SEARCH</button>
-            </div>
-          </div>
-        </div>
-        <div class="panel library-panel">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">library_music</span>sys/media_library.db</div>
-          </div>
-          <div class="panel-body">
-            <div id="ytLibrary" class="daemon-log" style="max-height: 400px;">
-              <!-- Library items will appear here -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <section class="view" data-view="tools" aria-labelledby="toolsTitle">
       <div class="view-header">
         <h1 class="view-title" id="toolsTitle">SYSTEM_TOOLS</h1>
         <div class="view-subtitle">DIAGNOSTICS // UTILITIES // ROOT</div>
       </div>
       <div class="tools-layout">
-
-        <div class="panel pet-panel">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">pets</span>root/sys/companion.sh</div>
-            <div class="right" id="petState">IDLE</div>
-          </div>
-          <div class="panel-body">
-            <div class="pet-container" id="petContainer">
-              <pre class="pet-ascii" id="petAscii">
- ( •_•)
- ( m m)
-              </pre>
-            </div>
-            <div class="pet-stats">
-              <div class="pet-stat">
-                <div class="label">HAPPY</div>
-                <div class="bar-bg"><div class="bar" id="barHappy" style="width: 80%"></div></div>
-              </div>
-              <div class="pet-stat">
-                <div class="label">ENERGY</div>
-                <div class="bar-bg"><div class="bar" id="barEnergy" style="width: 100%"></div></div>
-              </div>
-              <div class="pet-stat">
-                <div class="label">HUNGER</div>
-                <div class="bar-bg"><div class="bar" id="barHunger" style="width: 20%"></div></div>
-              </div>
-            </div>
-            <div class="pet-actions">
-              <button class="viz-btn" id="btnPetFeed">FEED</button>
-              <button class="viz-btn" id="btnPetPlay">PLAY</button>
-              <button class="viz-btn" id="btnPetSleep">SLEEP</button>
-            </div>
-          </div>
-        </div>
 
         <div class="panel calc-panel">
           <div class="panel-header">
@@ -418,10 +370,60 @@
           </div>
         </div>
 
+        <div class="panel timer-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">hourglass_empty</span>sys/timer.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="pomodoro" style="padding: 10px;">
+              <input type="number" id="timerInput" placeholder="MINUTES" value="5" style="width: 100%; margin-bottom: 8px; text-align: center;">
+              <div class="pomo-display" id="timerDisplay">05:00</div>
+              <div class="pomo-controls">
+                <button class="pomo-btn primary" id="timerStartBtn">START</button>
+                <button class="pomo-btn" id="timerResetBtn">RESET</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel unit-conv-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">straighten</span>sys/unit_conv.arch</div>
+          </div>
+          <div class="panel-body">
+            <div class="search-form">
+              <div class="search-row">
+                <input type="number" id="unitVal" value="1" style="flex: 1;">
+                <select id="unitFrom">
+                  <option value="in">INCH</option>
+                  <option value="ft">FOOT</option>
+                  <option value="m">METER</option>
+                  <option value="cm">CM</option>
+                </select>
+              </div>
+              <div class="search-row">
+                <input type="text" id="unitRes" readonly value="--" style="flex: 1; color: var(--accent);">
+                <select id="unitTo">
+                  <option value="cm">CM</option>
+                  <option value="m">METER</option>
+                  <option value="in">INCH</option>
+                  <option value="ft">FOOT</option>
+                </select>
+              </div>
+              <button class="search-btn" id="btnUnitConv">[ CONVERT_UNITS ]</button>
+            </div>
+          </div>
+        </div>
+
         <div class="panel notes-panel">
           <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">edit_note</span>root/user/notes.txt</div>
-            <div class="right" id="notesSaved">[ SAVED ]</div>
+            <div class="right">
+              <button class="icon-btn" onclick="downloadNotes()" title="Download as .txt">
+                <span class="material-symbols-outlined">download</span>
+              </button>
+              <span id="notesSaved" style="font-size: 10px; margin-right: 8px;"></span>
+            </div>
           </div>
           <div class="panel-body" style="padding:0">
             <textarea id="notesArea" placeholder="Write something..."></textarea>
