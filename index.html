@@ -24,6 +24,13 @@
 
   <script type="module" crossorigin src="./assets/index-Cpp8q40q.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/style-CxH7Ekp1.css">
+  <style>
+    @media (min-width: 1101px) {
+      .dash-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+    }
+  </style>
 </head>
 
 <body>
@@ -120,7 +127,7 @@
           </div>
           <div class="panel-body">
             <div class="viz-controls" id="newsCategories" style="margin-bottom: 12px; border-bottom: 1px dotted var(--outline); padding-bottom: 8px;">
-              <button class="viz-btn active" data-cat="GENERAL">GENERAL</button>
+              <button class="viz-btn active" data-cat="ARCHITECTURE">ARCHITECTURE</button>
               <button class="viz-btn" data-cat="TECH">TECH</button>
               <button class="viz-btn" data-cat="MUSIC">MUSIC</button>
               <button class="viz-btn" data-cat="ANIME">ANIME</button>
@@ -161,12 +168,12 @@
             <div class="local-hero" id="localHero" style="padding: 10px; height: auto;">
               <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                  <div class="city" id="localCity" style="font-size: 1.5rem;">Locating...</div>
-                  <div class="time" id="localTime" style="font-size: 1.2rem; color: var(--accent);">--:--:--</div>
+                  <div class="city" id="localCity" style="font-size: 1.2rem;">Locating...</div>
+                  <div class="time" id="localTime" style="font-size: 1rem; color: var(--accent);">--:--:--</div>
                 </div>
                 <div class="weather-block" style="text-align: right;">
-                  <div class="temp" id="localTemp" style="font-size: 1.5rem;">--°</div>
-                  <div class="cond" id="localCond" style="font-size: 0.8rem;">SYNC...</div>
+                  <div class="temp" id="localTemp" style="font-size: 1.2rem;">--°</div>
+                  <div class="cond" id="localCond" style="font-size: 0.7rem;">SYNC...</div>
                 </div>
               </div>
             </div>
