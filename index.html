@@ -43,6 +43,7 @@
       <a class="nav-item active" data-view="terminal" href="#terminal">TERMINAL</a>
       <a class="nav-item" data-view="command" href="#command">COMMAND</a>
       <a class="nav-item" data-view="chronos" href="#chronos">CHRONOS</a>
+      <a class="nav-item" data-view="media" href="#media">MEDIA</a>
       <a class="nav-item" data-view="tools" href="#tools">TOOLS</a>
       <a class="nav-item" data-view="themes" href="#themes">THEMES</a>
     </nav>
@@ -79,6 +80,10 @@
       <a class="side-item" data-view="chronos" href="#chronos">
         <span class="material-symbols-outlined">public</span>
         <span class="label">ROOT/WORLD_TIME</span>
+      </a>
+      <a class="side-item" data-view="media" href="#media">
+        <span class="material-symbols-outlined">play_circle</span>
+        <span class="label">ROOT/MEDIA</span>
       </a>
       <a class="side-item" data-view="tools" href="#tools">
         <span class="material-symbols-outlined">settings_input_component</span>
@@ -141,6 +146,12 @@
             </div>
           </div>
           <div class="panel-body">
+            <div class="viz-controls" id="newsCategories" style="margin-bottom: 12px; border-bottom: 1px dotted var(--outline); padding-bottom: 8px;">
+              <button class="viz-btn active" data-cat="GENERAL">GENERAL</button>
+              <button class="viz-btn" data-cat="TECH">TECH</button>
+              <button class="viz-btn" data-cat="MUSIC">MUSIC</button>
+              <button class="viz-btn" data-cat="ANIME">ANIME</button>
+            </div>
             <div class="news-list" id="newsList">
               <div class="loading">CONNECTING_TO_NODES</div>
             </div>
@@ -228,6 +239,18 @@
               <!-- JS injects the add form here -->
             </div>
           </div>
+
+          <div class="panel kaomoji-panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">mood</span>sys/kaomoji_lib.sh</div>
+            </div>
+            <div class="panel-body">
+              <input type="text" id="kaomojiSearch" placeholder="FILTER_EXPRESSIONS..." class="search-btn" style="width: 100%; text-align: left; padding-left: 12px; margin-bottom: 8px; cursor: text; background: var(--surface-low); color: var(--on-surface);">
+              <div id="kaomojiList" style="display: grid; grid-template-columns: 1fr 1fr; gap: 4px; max-height: 300px; overflow-y: auto;">
+                <!-- Kaomojis will appear here -->
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -258,34 +281,139 @@
       </div>
     </section>
 
+    <section class="view" data-view="media" id="view-media">
+      <div class="view-header">
+        <h1 class="view-title">MEDIA_CENTER</h1>
+        <div class="view-subtitle">YOUTUBE_REPRODUCER // BROADCAST // SIGNAL_RX</div>
+      </div>
+      <div class="dash-grid">
+        <div class="panel media-player-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">tv</span>root/sys/media_rx.sh</div>
+            <div class="right" id="ytStatus">OFFLINE</div>
+          </div>
+          <div class="panel-body">
+            <div id="ytPlayerContainer" style="aspect-ratio: 16/9; background: #000; border: 1px solid var(--outline); position: relative; overflow: hidden;">
+              <div id="ytPlayer"></div>
+            </div>
+            <div class="viz-controls" style="margin-top: 12px;">
+              <input type="text" id="ytSearchInput" placeholder="SEARCH_YOUTUBE..." class="viz-btn" style="flex: 1; text-align: left; padding-left: 12px; cursor: text;">
+              <button class="viz-btn" id="btnYtSearch">SEARCH</button>
+            </div>
+          </div>
+        </div>
+        <div class="panel library-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">library_music</span>sys/media_library.db</div>
+          </div>
+          <div class="panel-body">
+            <div id="ytLibrary" class="daemon-log" style="max-height: 400px;">
+              <!-- Library items will appear here -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <section class="view" data-view="tools" aria-labelledby="toolsTitle">
       <div class="view-header">
         <h1 class="view-title" id="toolsTitle">SYSTEM_TOOLS</h1>
         <div class="view-subtitle">DIAGNOSTICS // UTILITIES // ROOT</div>
       </div>
       <div class="tools-layout">
-        <div class="panel viz-panel">
+
+        <div class="panel pet-panel">
           <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">equalizer</span>root/sys/audio_viz.sh</div>
-            <div class="right" id="vizStatusInline">IDLE</div>
+            <div class="left"><span class="material-symbols-outlined">pets</span>root/sys/companion.sh</div>
+            <div class="right" id="petState">IDLE</div>
           </div>
           <div class="panel-body">
-            <canvas class="viz-canvas" id="vizCanvas"></canvas>
-            <div class="viz-controls">
-              <button class="viz-btn" id="btnSysAudio" type="button">SYS_AUDIO</button>
-              <button class="viz-btn" id="btnMic" type="button">MIC_INPUT</button>
-              <button class="viz-btn" id="btnStop" type="button">STOP</button>
-              <select class="viz-btn" id="vizMode" style="margin-left:auto">
-                <option value="bars">BARS</option>
-                <option value="wave">WAVE</option>
-                <option value="circular">CIRCULAR</option>
-                <option value="terminal">TERMINAL</option>
-              </select>
+            <div class="pet-container" id="petContainer">
+              <pre class="pet-ascii" id="petAscii">
+ ( •_•)
+ ( m m)
+              </pre>
             </div>
-            <div class="viz-status">
-              <span>STATUS: <span class="v" id="vizStatus">IDLE</span></span>
-              <span>CHANNELS: <span class="v" id="vizChannels">--</span></span>
-              <span>RATE: <span class="v" id="vizSampleRate">--</span></span>
+            <div class="pet-stats">
+              <div class="pet-stat">
+                <div class="label">HAPPY</div>
+                <div class="bar-bg"><div class="bar" id="barHappy" style="width: 80%"></div></div>
+              </div>
+              <div class="pet-stat">
+                <div class="label">ENERGY</div>
+                <div class="bar-bg"><div class="bar" id="barEnergy" style="width: 100%"></div></div>
+              </div>
+              <div class="pet-stat">
+                <div class="label">HUNGER</div>
+                <div class="bar-bg"><div class="bar" id="barHunger" style="width: 20%"></div></div>
+              </div>
+            </div>
+            <div class="pet-actions">
+              <button class="viz-btn" id="btnPetFeed">FEED</button>
+              <button class="viz-btn" id="btnPetPlay">PLAY</button>
+              <button class="viz-btn" id="btnPetSleep">SLEEP</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel calc-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">calculate</span>sys/calc.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="search-row" style="margin-bottom: 8px;">
+              <input type="text" id="calcDisplay" readonly value="0" style="text-align: right; font-size: 20px; padding: 12px; color: var(--accent);">
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;">
+              <button class="viz-btn" onclick="calcInput('7')">7</button>
+              <button class="viz-btn" onclick="calcInput('8')">8</button>
+              <button class="viz-btn" onclick="calcInput('9')">9</button>
+              <button class="viz-btn" onclick="calcInput('/')">/</button>
+              <button class="viz-btn" onclick="calcInput('4')">4</button>
+              <button class="viz-btn" onclick="calcInput('5')">5</button>
+              <button class="viz-btn" onclick="calcInput('6')">6</button>
+              <button class="viz-btn" onclick="calcInput('*')">*</button>
+              <button class="viz-btn" onclick="calcInput('1')">1</button>
+              <button class="viz-btn" onclick="calcInput('2')">2</button>
+              <button class="viz-btn" onclick="calcInput('3')">3</button>
+              <button class="viz-btn" onclick="calcInput('-')">-</button>
+              <button class="viz-btn" onclick="calcInput('0')">0</button>
+              <button class="viz-btn" onclick="calcInput('.')">.</button>
+              <button class="viz-btn" onclick="calcClear()">C</button>
+              <button class="viz-btn" onclick="calcInput('+')">+</button>
+              <button class="viz-btn" style="grid-column: span 4; background: var(--accent); color: var(--accent-on);" onclick="calcEqual()">=</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel currency-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">payments</span>sys/currency_conv.rx</div>
+          </div>
+          <div class="panel-body">
+            <div class="search-form">
+              <div class="search-row">
+                <input type="number" id="currAmount" value="1" style="flex: 1;">
+                <select id="currFrom">
+                  <option value="USD">USD</option>
+                  <option value="PYG">PYG</option>
+                  <option value="EUR">EUR</option>
+                  <option value="BRL">BRL</option>
+                  <option value="ARS">ARS</option>
+                </select>
+              </div>
+              <div style="text-align: center; color: var(--info);">TO</div>
+              <div class="search-row">
+                <input type="text" id="currResult" readonly value="--" style="flex: 1; color: var(--accent);">
+                <select id="currTo">
+                  <option value="PYG">PYG</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="BRL">BRL</option>
+                  <option value="ARS">ARS</option>
+                </select>
+              </div>
+              <button class="search-btn" id="btnConvert">[ CONVERT_SIGNAL ]</button>
             </div>
           </div>
         </div>
