@@ -31,9 +31,164 @@
       }
     }
   </style>
+  <style>
+    #loadingScreen {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      transition: opacity .6s ease;
+    }
+    #loadingScreen.hide { opacity: 0; pointer-events: none; }
+    #matrixCanvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      opacity: .35;
+    }
+    .ls-scanline {
+      position: absolute; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, #00ff41, transparent);
+      opacity: .5;
+      animation: lsScan 2s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes lsScan {
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
+    .ls-center {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 28px; min-width: 520px;
+    }
+    .ls-terminal {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .ls-line {
+      font-size: 14px; color: #00ff41;
+      letter-spacing: .05em; opacity: 0;
+      white-space: nowrap;
+      text-shadow: 0 0 6px rgba(0,255,65,.5);
+      transition: opacity .15s ease;
+    }
+    .ls-line.typed { opacity: 1; }
+    .ls-line.done { opacity: 0.55; }
+    .ls-progress-wrap {
+      width: 100%; max-width: 400px;
+      border: 1px solid #00ff41;
+      padding: 2px;
+      box-shadow: 0 0 10px rgba(0,255,65,.15);
+    }
+    .ls-progress-bar {
+      height: 6px;
+      background: #00ff41;
+      width: 0%;
+      transition: width .2s ease;
+      box-shadow: 0 0 8px rgba(0,255,65,.6);
+    }
+    .ls-footer {
+      font-size: 11px; color: #999;
+      letter-spacing: .15em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ls-blink {
+      animation: lsBlink .8s step-end infinite;
+      color: #00ff41;
+    }
+    @keyframes lsBlink {
+      50% { opacity: 0; }
+    }
+  </style>
 </head>
 
 <body>
+<div id="loadingScreen">
+  <canvas id="matrixCanvas"></canvas>
+  <div class="ls-scanline"></div>
+  <div class="ls-center">
+    <div class="ls-terminal" id="lsTerminal">
+      <div class="ls-line">&gt; SYSTEM_BOOT_SEQUENCE_INITIALIZED...</div>
+      <div class="ls-line">&gt; LOADING_KERNEL_EXTENSIONS...</div>
+      <div class="ls-line">&gt; ESTABLISHING_SECURE_UPLINK...</div>
+      <div class="ls-line">&gt; DECRYPTING_DASHBOARD_ASSETS...</div>
+      <div class="ls-line">&gt; MOUNTING_VIRTUAL_FILESYSTEM...</div>
+      <div class="ls-line">&gt; ALL_SYSTEMS_NOMINAL. READY.</div>
+    </div>
+    <div class="ls-progress-wrap">
+      <div class="ls-progress-bar" id="lsProgressBar"></div>
+    </div>
+    <div class="ls-footer">
+      <span class="ls-blink">█</span> SYS_DASHBOARD v4.2 // BOOT_SEQUENCE
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var canvas = document.getElementById('matrixCanvas');
+  var ctx = canvas.getContext('2d');
+  var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+  var fontSize = 12;
+  var drops = [];
+  var columns, frame;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    columns = Math.floor(canvas.width / fontSize);
+    drops = [];
+    for (var i = 0; i < columns; i++) {
+      drops[i] = Math.floor(Math.random() * -canvas.height / fontSize);
+    }
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00ff41';
+    ctx.font = fontSize + 'px monospace';
+    for (var i = 0; i < drops.length; i++) {
+      var text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillStyle = i % 3 === 0 ? '#00ff41' : '#0a6e1a';
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  frame = setInterval(draw, 45);
+
+  // Boot sequence
+  var lines = document.querySelectorAll('#lsTerminal .ls-line');
+  var bar = document.getElementById('lsProgressBar');
+  var total = lines.length;
+  var idx = 0;
+  var progress = 0;
+
+  function bootNext() {
+    if (idx >= total) {
+      setTimeout(function() {
+        document.getElementById('loadingScreen').classList.add('hide');
+        setTimeout(function() { clearInterval(frame); }, 600);
+      }, 400);
+      return;
+    }
+    var line = lines[idx];
+    line.classList.add('typed');
+    if (idx > 0) lines[idx - 1].classList.add('done');
+    progress = ((idx + 1) / total) * 100;
+    bar.style.width = progress + '%';
+    idx++;
+    setTimeout(bootNext, 350);
+  }
+
+  setTimeout(bootNext, 250);
+})();
+</script>
 
 <div class="app">
 
