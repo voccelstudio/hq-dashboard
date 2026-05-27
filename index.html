@@ -24,6 +24,7 @@
 
   <script type="module" crossorigin src="./assets/index-Cpp8q40q.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/style-CxH7Ekp1.css">
+  <link rel="stylesheet" crossorigin href="./assets/features.css">
   <style>
     @media (min-width: 1101px) {
       .dash-grid {
@@ -213,6 +214,10 @@
       <div class="user-chip">
         <span class="dot"></span>USER: <span id="opName">OPERATOR</span> // SECURE
       </div>
+      <button class="icon-btn" id="fullscreenBtn" aria-label="Fullscreen" type="button" title="Fullscreen">
+        <span class="material-symbols-outlined icon-full">fullscreen</span>
+        <span class="material-symbols-outlined icon-compress">fullscreen_exit</span>
+      </button>
       <button class="icon-btn" id="settingsBtn" aria-label="Configuración" type="button" title="Settings">
         <span class="material-symbols-outlined">settings</span>
       </button>
@@ -316,6 +321,30 @@
 
         <div class="panel">
           <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">checklist</span>root/user/todo.exe</div>
+          </div>
+          <div class="panel-body">
+            <form class="todo-form" id="todoForm">
+              <input id="todoInput" placeholder="NEW_TASK..." type="text" autocomplete="off" />
+              <select id="todoPriority">
+                <option value="low">LOW</option>
+                <option value="medium" selected>MEDIUM</option>
+                <option value="high">HIGH</option>
+              </select>
+              <select id="todoFilter">
+                <option value="all">ALL</option>
+                <option value="active">ACTIVE</option>
+                <option value="done">DONE</option>
+              </select>
+              <button type="submit">[ ADD ]</button>
+            </form>
+            <div class="todo-list" id="todoList"></div>
+            <div class="todo-stats" id="todoStats">0 TASKS // 0 DONE</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">my_location</span>root/local/node.sys</div>
             <div class="right" id="localHeroStatus">SYNCING...</div>
           </div>
@@ -337,10 +366,36 @@
 
         <div class="panel">
           <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">track_changes</span>root/user/habits.exe</div>
+          </div>
+          <div class="panel-body">
+            <form class="habit-form" id="habitForm">
+              <input id="habitInput" placeholder="NEW_HABIT..." type="text" autocomplete="off" />
+              <button type="submit">[ ADD ]</button>
+            </form>
+            <div class="habit-list" id="habitList"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">monitoring</span>root/sys/metrics.sys</div>
           </div>
           <div class="panel-body" id="metricsBody">
             <!-- JS updates this -->
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">headphones</span>root/user/ambient.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="sounds-grid" id="soundsGrid"></div>
+            <div class="sound-controls">
+              <label>VOL: <input type="range" id="soundVolume" min="0" max="1" step="0.05" value="0.3" /></label>
+              <button class="sound-btn" id="soundStopBtn">STOP</button>
+            </div>
           </div>
         </div>
 
@@ -548,6 +603,39 @@
           </div>
         </div>
 
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">password</span>sys/password_gen.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="password-display">
+              <input type="text" id="pwOutput" readonly />
+              <button id="pwCopyBtn" title="Copy">COPY</button>
+            </div>
+            <div class="password-options">
+              <div class="password-opt">
+                <label>LENGTH</label>
+                <input type="range" id="pwLength" min="6" max="32" value="16" />
+                <span class="password-length" id="pwLengthVal">16</span>
+              </div>
+              <div class="password-opt">
+                <input type="checkbox" id="pwUpper" checked /> <label for="pwUpper">UPPERCASE (A-Z)</label>
+              </div>
+              <div class="password-opt">
+                <input type="checkbox" id="pwLower" checked /> <label for="pwLower">LOWERCASE (a-z)</label>
+              </div>
+              <div class="password-opt">
+                <input type="checkbox" id="pwDigits" checked /> <label for="pwDigits">DIGITS (0-9)</label>
+              </div>
+              <div class="password-opt">
+                <input type="checkbox" id="pwSymbols" checked /> <label for="pwSymbols">SYMBOLS (!@#$)</label>
+              </div>
+            </div>
+            <div class="password-strength strong" id="pwStrength">STRENGTH: STRONG</div>
+            <button class="search-btn" id="pwGenBtn" style="margin-top:10px;width:100%">[ GENERATE_NEW ]</button>
+          </div>
+        </div>
+
         <div class="panel unit-conv-panel">
           <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">straighten</span>sys/unit_conv.arch</div>
@@ -740,6 +828,21 @@
         </div>
 
         <div class="modal-section">
+          <h3>DATA_SYNC</h3>
+          <div class="setting-row">
+            <div class="desc">
+              EXPORT / IMPORT
+              <span class="hint">Backup or restore all local data</span>
+            </div>
+            <div class="export-import">
+              <button class="btn-export" id="exportBtn" type="button">[ EXPORT ]</button>
+              <button class="btn-import" id="importBtn" type="button">[ IMPORT ]</button>
+              <input type="file" id="importInput" accept=".json" style="display:none" />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
           <h3>DANGER_ZONE</h3>
           <div class="setting-row">
             <div class="desc">
@@ -856,7 +959,7 @@
     document.querySelectorAll('.side-item .label').forEach(function(s,i){if(sl[i])s.textContent=sl[i]});
     var st=['VELVET.ROOM<span class="sep">//</span>HANG_OUT<span class="sep">//</span><span style="color:var(--success)">HEART_SHLD</span>','SHIBUYA/LINKS // NODE_ACTIVE','PALACE_NETWORK // <span id="nodeCount">0</span> ACTIVE','PERSONA // ITEMS // SYSTEM','AESTHETIC // REBELLION'];
     document.querySelectorAll('.view-subtitle').forEach(function(s,i){if(st[i])s.innerHTML=st[i]});
-    var ph=['<span class="material-symbols-outlined">newspaper</span>news/phantom.feed','<span class="material-symbols-outlined">timer</span>hq/curriculum.exe','<span class="material-symbols-outlined">my_location</span>shibuya/station.sys','<span class="material-symbols-outlined">monitoring</span>party/status.sys','<span class="material-symbols-outlined">terminal</span>phantom/daemon.log'];
+    var ph=['<span class="material-symbols-outlined">newspaper</span>news/phantom.feed','<span class="material-symbols-outlined">timer</span>hq/curriculum.exe','<span class="material-symbols-outlined">checklist</span>hq/requests.exe','<span class="material-symbols-outlined">my_location</span>shibuya/station.sys','<span class="material-symbols-outlined">track_changes</span>hq/goals.exe','<span class="material-symbols-outlined">monitoring</span>party/status.sys','<span class="material-symbols-outlined">headphones</span>hq/soundscape.exe','<span class="material-symbols-outlined">terminal</span>phantom/daemon.log'];
     document.querySelectorAll('.panel-header .left').forEach(function(p,i){if(ph[i])p.innerHTML=ph[i]});
     var so=document.querySelector('.statusbar .ok');if(so)so.textContent='HEART_SHLD';
     var sv=document.querySelectorAll('.statusbar .v');if(sv.length)sv[0].textContent='HIDEOUT';
@@ -888,5 +991,6 @@
 })();
 </script>
 
+<script src="./assets/features.js"></script>
 </body>
 </html>
