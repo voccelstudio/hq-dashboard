@@ -159,7 +159,9 @@
   /* ===== 3. AMBIENT SOUNDS ===== */
   var audioCtx = null;
   var activeSources = {};
+  var activeAudios = {};
   var soundGain = null;
+  var globalVolume = 0.3;
 
   var soundDefs = [
     { id: 'rain', icon: '\u2614', label: 'RAIN' },
@@ -169,6 +171,57 @@
     { id: 'fire', icon: '\uD83D\uDD25', label: 'FIRE' },
     { id: 'brown', icon: '\uD83C\uDFB5', label: 'BROWN_NOISE' }
   ];
+
+  function toggleSound(id) {
+    // If using Audio file, stop it
+    if (activeAudios[id]) {
+      activeAudios[id].pause();
+      activeAudios[id].currentTime = 0;
+      delete activeAudios[id];
+      document.querySelectorAll('[data-sound="'+id+'"]').forEach(function(b){b.classList.remove('active')});
+      return;
+    }
+    // If using procedural, stop it
+    if (activeSources[id]) {
+      try { activeSources[id].stop(); } catch(e) {}
+      delete activeSources[id];
+      document.querySelectorAll('[data-sound="'+id+'"]').forEach(function(b){b.classList.remove('active')});
+      return;
+    }
+
+    // Try loading audio file first
+    var audio = new Audio('assets/sounds/' + id + '.mp3');
+    audio.loop = true;
+    audio.volume = globalVolume;
+
+    audio.addEventListener('canplaythrough', function() {
+      audio.play().catch(function(){});
+      activeAudios[id] = audio;
+      document.querySelectorAll('[data-sound="'+id+'"]').forEach(function(b){b.classList.add('active')});
+    });
+
+    audio.addEventListener('error', function() {
+      // File not found — use procedural fallback
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        soundGain = audioCtx.createGain();
+        soundGain.gain.value = globalVolume;
+        soundGain.connect(audioCtx.destination);
+      }
+      if (activeSources[id]) return; // already started
+      var buf = createNoise(id);
+      var src = audioCtx.createBufferSource();
+      src.buffer = buf;
+      src.loop = true;
+      applyFilter(id, src);
+      src.start();
+      activeSources[id] = src;
+      document.querySelectorAll('[data-sound="'+id+'"]').forEach(function(b){b.classList.add('active')});
+    });
+
+    // Initiate loading
+    audio.load();
+  }
 
   function createNoise(type) {
     var sr = audioCtx.sampleRate;
@@ -226,32 +279,22 @@
     biquad.connect(soundGain);
   }
 
-  function toggleSound(id) {
-    if (!audioCtx) initAudio();
-    if (activeSources[id]) {
-      try { activeSources[id].stop(); } catch(e) {}
-      delete activeSources[id];
-      document.querySelectorAll('[data-sound="'+id+'"]').forEach(function(b){b.classList.remove('active')});
-      return;
+  function setVolume(val) {
+    globalVolume = val;
+    // Update audio elements
+    for (var k in activeAudios) {
+      activeAudios[k].volume = val;
     }
-    var buf = createNoise(id);
-    var src = audioCtx.createBufferSource();
-    src.buffer = buf;
-    src.loop = true;
-    applyFilter(id, src);
-    src.start();
-    activeSources[id] = src;
-    document.querySelectorAll('[data-sound="'+id+'"]').forEach(function(b){b.classList.add('active')});
-  }
-
-  function initAudio() {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    soundGain = audioCtx.createGain();
-    soundGain.gain.value = 0.3;
-    soundGain.connect(audioCtx.destination);
+    // Update procedural gain
+    if (soundGain) soundGain.gain.value = val;
   }
 
   function stopAllSounds() {
+    for (var k in activeAudios) {
+      activeAudios[k].pause();
+      activeAudios[k].currentTime = 0;
+      delete activeAudios[k];
+    }
     for (var k in activeSources) {
       try { activeSources[k].stop(); } catch(e) {}
       delete activeSources[k];
@@ -273,7 +316,7 @@
     var volSlider = document.getElementById('soundVolume');
     if (volSlider) {
       volSlider.addEventListener('input', function() {
-        if (soundGain) soundGain.gain.value = parseFloat(this.value);
+        setVolume(parseFloat(this.value));
       });
     }
     var stopBtn = document.getElementById('soundStopBtn');
@@ -527,6 +570,140 @@
     document.addEventListener('fullscreenchange', function() {
       document.body.classList.toggle('fullscreen', !!document.fullscreenElement);
     });
+  });
+
+  /* ===== 9. MOOD CHART ===== */
+  var moodData = LS('mood') || {};
+  var moodLabels = {1:'TERRIBLE',2:'BAD',3:'NEUTRAL',4:'OK',5:'GOOD'};
+  var moodColors = {1:'#ef4444',2:'#f97316',3:'#eab308',4:'#22c55e',5:'#16a34a'};
+  var moodEmojis = {1:'\uD83D\uDE21',2:'\uD83D\uDE1E',3:'\uD83D\uDE10',4:'\uD83D\uDE42',5:'\uD83D\uDE04'};
+
+  function saveMood(val) {
+    var today = new Date().toISOString().slice(0,10);
+    moodData[today] = val;
+    LS('mood', moodData);
+    renderMood();
+  }
+
+  function renderMood() {
+    var opts = document.getElementById('moodOptions');
+    var canvas = document.getElementById('moodChart');
+    var avgEl = document.getElementById('moodAvg');
+    var bestEl = document.getElementById('moodBest');
+    var totalEl = document.getElementById('moodTotal');
+    var streakEl = document.getElementById('moodStreak');
+    if (!opts) return;
+
+    var today = new Date().toISOString().slice(0,10);
+    var current = moodData[today] || 0;
+
+    // highlight today
+    opts.querySelectorAll('.mood-btn').forEach(function(b) {
+      var v = parseInt(b.dataset.mood);
+      b.classList.toggle('active', v === current);
+    });
+
+    // stats
+    var vals = Object.keys(moodData).map(function(k){return moodData[k]});
+    if (vals.length) {
+      var sum = vals.reduce(function(a,b){return a+b}, 0);
+      var avg = (sum / vals.length);
+      if (avgEl) avgEl.textContent = 'AVG: ' + moodLabels[Math.round(avg)] + ' (' + avg.toFixed(1) + ')';
+      var best = Math.max.apply(null, vals);
+      if (bestEl) bestEl.textContent = 'BEST: ' + moodLabels[best];
+    }
+    if (totalEl) totalEl.textContent = 'LOGGED: ' + vals.length + ' days';
+
+    // streak
+    var streak = 0, d = new Date();
+    while (true) {
+      var ds = d.toISOString().slice(0,10);
+      if (moodData[ds]) { streak++; d.setDate(d.getDate()-1); }
+      else break;
+    }
+    if (streakEl) streakEl.textContent = streak > 1 ? 'STREAK: ' + streak + ' days' : '';
+
+    // chart
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    var rect = canvas.parentElement.getBoundingClientRect();
+    canvas.width = rect.width - 16;
+    canvas.height = 180;
+    var W = canvas.width, H = canvas.height;
+    ctx.clearRect(0, 0, W, H);
+
+    var days = 30;
+    var entries = [];
+    for (var i = days - 1; i >= 0; i--) {
+      var date = new Date();
+      date.setDate(date.getDate() - i);
+      var ds = date.toISOString().slice(0,10);
+      var v = moodData[ds] || 0;
+      entries.push({ date: ds, val: v, day: date.getDate() });
+    }
+
+    var pad = { t: 20, r: 16, b: 24, l: 16 };
+    var cw = W - pad.l - pad.r;
+    var ch = H - pad.t - pad.b;
+
+    // grid lines
+    ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+    ctx.lineWidth = 1;
+    for (var g = 1; g <= 5; g++) {
+      var gy = pad.t + ch - (g / 5) * ch;
+      ctx.beginPath();
+      ctx.moveTo(pad.l, gy);
+      ctx.lineTo(W - pad.r, gy);
+      ctx.stroke();
+      ctx.fillStyle = 'rgba(255,255,255,0.2)';
+      ctx.font = '8px monospace';
+      ctx.textAlign = 'right';
+      ctx.fillText(moodLabels[g] || '', pad.l - 4, gy + 3);
+    }
+
+    // bars
+    var barW = Math.max(4, Math.min(14, cw / entries.length - 2));
+    var gap = (cw - barW * entries.length) / (entries.length + 1);
+
+    entries.forEach(function(e, i) {
+      var x = pad.l + gap + i * (barW + gap);
+      if (e.val === 0) return;
+
+      var bh = (e.val / 5) * ch;
+      var y = pad.t + ch - bh;
+
+      // bar color
+      var c = moodColors[e.val] || '#555';
+      ctx.fillStyle = c;
+      ctx.globalAlpha = 0.5;
+      ctx.fillRect(x, y, barW, bh);
+      ctx.globalAlpha = 1;
+
+      // dot on top
+      ctx.fillStyle = c;
+      ctx.beginPath();
+      ctx.arc(x + barW/2, y, 3, 0, Math.PI*2);
+      ctx.fill();
+
+      // day label every 5
+      if (i % 5 === 0 || i === entries.length - 1) {
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.font = '7px monospace';
+        ctx.textAlign = 'center';
+        ctx.fillText(e.day, x + barW/2, H - pad.b + 14);
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var opts = document.getElementById('moodOptions');
+    if (opts) {
+      opts.addEventListener('click', function(e) {
+        var btn = e.target.closest('.mood-btn');
+        if (btn) saveMood(parseInt(btn.dataset.mood));
+      });
+    }
+    renderMood();
   });
 
 })();

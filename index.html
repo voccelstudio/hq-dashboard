@@ -401,6 +401,35 @@
 
         <div class="panel full">
           <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">mood</span>root/user/mood_chart.exe</div>
+            <div class="right">
+              <span id="moodStreak" style="font-size:10px;color:var(--accent);font-family:var(--font-mono)"></span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="mood-today">
+              <span class="mood-label">TODAY'S MOOD:</span>
+              <div class="mood-options" id="moodOptions">
+                <button class="mood-btn" data-mood="1"><span class="mood-icon">😡</span><span class="mood-text">TERRIBLE</span></button>
+                <button class="mood-btn" data-mood="2"><span class="mood-icon">😞</span><span class="mood-text">BAD</span></button>
+                <button class="mood-btn" data-mood="3"><span class="mood-icon">😐</span><span class="mood-text">NEUTRAL</span></button>
+                <button class="mood-btn" data-mood="4"><span class="mood-icon">🙂</span><span class="mood-text">OK</span></button>
+                <button class="mood-btn" data-mood="5"><span class="mood-icon">😄</span><span class="mood-text">GOOD</span></button>
+              </div>
+            </div>
+            <div class="mood-chart-wrap">
+              <canvas id="moodChart" height="180"></canvas>
+            </div>
+            <div class="mood-stats">
+              <span id="moodAvg">AVG: --</span>
+              <span id="moodBest">BEST: --</span>
+              <span id="moodTotal">LOGGED: 0 days</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel full">
+          <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">terminal</span>root/sys/daemon.log</div>
           </div>
           <div class="panel-body">
@@ -959,7 +988,7 @@
     document.querySelectorAll('.side-item .label').forEach(function(s,i){if(sl[i])s.textContent=sl[i]});
     var st=['VELVET.ROOM<span class="sep">//</span>HANG_OUT<span class="sep">//</span><span style="color:var(--success)">HEART_SHLD</span>','SHIBUYA/LINKS // NODE_ACTIVE','PALACE_NETWORK // <span id="nodeCount">0</span> ACTIVE','PERSONA // ITEMS // SYSTEM','AESTHETIC // REBELLION'];
     document.querySelectorAll('.view-subtitle').forEach(function(s,i){if(st[i])s.innerHTML=st[i]});
-    var ph=['<span class="material-symbols-outlined">newspaper</span>news/phantom.feed','<span class="material-symbols-outlined">timer</span>hq/curriculum.exe','<span class="material-symbols-outlined">checklist</span>hq/requests.exe','<span class="material-symbols-outlined">my_location</span>shibuya/station.sys','<span class="material-symbols-outlined">track_changes</span>hq/goals.exe','<span class="material-symbols-outlined">monitoring</span>party/status.sys','<span class="material-symbols-outlined">headphones</span>hq/soundscape.exe','<span class="material-symbols-outlined">terminal</span>phantom/daemon.log'];
+    var ph=['<span class="material-symbols-outlined">newspaper</span>news/phantom.feed','<span class="material-symbols-outlined">timer</span>hq/curriculum.exe','<span class="material-symbols-outlined">checklist</span>hq/requests.exe','<span class="material-symbols-outlined">my_location</span>shibuya/station.sys','<span class="material-symbols-outlined">track_changes</span>hq/goals.exe','<span class="material-symbols-outlined">monitoring</span>party/status.sys','<span class="material-symbols-outlined">headphones</span>hq/soundscape.exe','<span class="material-symbols-outlined">mood</span>hq/emotion.exe','<span class="material-symbols-outlined">terminal</span>phantom/daemon.log'];
     document.querySelectorAll('.panel-header .left').forEach(function(p,i){if(ph[i])p.innerHTML=ph[i]});
     var so=document.querySelector('.statusbar .ok');if(so)so.textContent='HEART_SHLD';
     var sv=document.querySelectorAll('.statusbar .v');if(sv.length)sv[0].textContent='HIDEOUT';
