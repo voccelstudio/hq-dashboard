@@ -19,7 +19,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=VT323&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=VT323&family=Staatliches&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
 
   <script type="module" crossorigin src="./assets/index-Cpp8q40q.js"></script>
@@ -667,6 +667,14 @@
             <button class="preview" type="button">PREVIEW</button>
           </div>
         </div>
+        <div class="theme-card p5" data-theme="p5">
+          <div class="header">PROTOCOL: PHANTOM_THIEF</div>
+          <div class="theme-preview"><div class="label">P5</div></div>
+          <div class="actions">
+            <button class="apply" type="button">APPLY</button>
+            <button class="preview" type="button">PREVIEW</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -812,6 +820,72 @@
   }
 
   document.addEventListener('DOMContentLoaded', updateWeather);
+</script>
+
+<script>
+(function(){
+  var stored={};
+  function store(){
+    var e;
+    ['terminalTitle','commandTitle','chronosTitle','toolsTitle','themesTitle','opName','sideOpName'].forEach(function(id){
+      e=document.getElementById(id);if(e)stored[id]=e.textContent;
+    });
+    e=document.querySelector('.brand');if(e)stored.brand=e.innerHTML;
+    e=document.querySelectorAll('.nav-item');stored.nav=[];e.forEach(function(n){stored.nav.push(n.textContent)});
+    e=document.querySelectorAll('.side-item .label');stored.side=[];e.forEach(function(s){stored.side.push(s.textContent)});
+    e=document.querySelectorAll('.view-subtitle');stored.subs=[];e.forEach(function(s){stored.subs.push(s.innerHTML)});
+    e=document.querySelectorAll('.panel-header .left');stored.pheads=[];e.forEach(function(p){stored.pheads.push(p.innerHTML)});
+    e=document.querySelector('.statusbar .ok');if(e)stored.statusOnline=e.textContent;
+    e=document.querySelectorAll('.statusbar .v');if(e.length)stored.statusSecure=e[0].textContent;
+    e=document.querySelector('.operator-card .status .val');if(e)stored.opStatus=e.textContent;
+    e=document.querySelector('.btn-process .label');if(e)stored.processBtn=e.textContent;
+  }
+  function txt(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+  window.P5_updateLabels=function(){
+    txt('terminalTitle','CAFE_LEBLANC');
+    txt('commandTitle','ACCESS_POINT');
+    txt('chronosTitle','METAVERSE_NAV');
+    txt('toolsTitle','SMARTPHONE_APPS');
+    txt('themesTitle','COSTUME_CHANGE');
+    txt('opName','JOKER');
+    txt('sideOpName','JOKER');
+    var b=document.querySelector('.brand');if(b){var bv=b.querySelector('.brand-ver');b.childNodes[0].textContent='PHANTOM_SYS';if(bv)bv.textContent=' // REBEL';}
+    var nl=['LEBLANC','ACCESS','METAVERSE','PHONE','COSTUME'];
+    document.querySelectorAll('.nav-item').forEach(function(n,i){if(nl[i])n.textContent=nl[i]});
+    var sl=['CAFE/LEBLANC','SHIBUYA/LINKS','MEMENTOS/MAP','PALACE/APPS','BATHROOM/CFG'];
+    document.querySelectorAll('.side-item .label').forEach(function(s,i){if(sl[i])s.textContent=sl[i]});
+    var st=['VELVET.ROOM<span class="sep">//</span>HANG_OUT<span class="sep">//</span><span style="color:var(--success)">HEART_SHLD</span>','SHIBUYA/LINKS // NODE_ACTIVE','PALACE_NETWORK // <span id="nodeCount">0</span> ACTIVE','PERSONA // ITEMS // SYSTEM','AESTHETIC // REBELLION'];
+    document.querySelectorAll('.view-subtitle').forEach(function(s,i){if(st[i])s.innerHTML=st[i]});
+    var ph=['<span class="material-symbols-outlined">newspaper</span>news/phantom.feed','<span class="material-symbols-outlined">timer</span>hq/curriculum.exe','<span class="material-symbols-outlined">my_location</span>shibuya/station.sys','<span class="material-symbols-outlined">monitoring</span>party/status.sys','<span class="material-symbols-outlined">terminal</span>phantom/daemon.log'];
+    document.querySelectorAll('.panel-header .left').forEach(function(p,i){if(ph[i])p.innerHTML=ph[i]});
+    var so=document.querySelector('.statusbar .ok');if(so)so.textContent='HEART_SHLD';
+    var sv=document.querySelectorAll('.statusbar .v');if(sv.length)sv[0].textContent='HIDEOUT';
+    var os=document.querySelector('.operator-card .status .val');if(os)os.textContent='MASQUERADE';
+    var pb=document.querySelector('.btn-process .label');if(pb)pb.textContent='NEW_CONFIDANT';
+  };
+  window.P5_resetLabels=function(){
+    if(!Object.keys(stored).length)return;
+    txt('terminalTitle',stored.terminalTitle);
+    txt('commandTitle',stored.commandTitle);
+    txt('chronosTitle',stored.chronosTitle);
+    txt('toolsTitle',stored.toolsTitle);
+    txt('themesTitle',stored.themesTitle);
+    txt('opName',stored.opName);
+    txt('sideOpName',stored.sideOpName);
+    var b=document.querySelector('.brand');if(b&&stored.brand)b.innerHTML=stored.brand;
+    document.querySelectorAll('.nav-item').forEach(function(n,i){if(stored.nav[i])n.textContent=stored.nav[i]});
+    document.querySelectorAll('.side-item .label').forEach(function(s,i){if(stored.side[i])s.textContent=stored.side[i]});
+    document.querySelectorAll('.view-subtitle').forEach(function(s,i){if(stored.subs[i])s.innerHTML=stored.subs[i]});
+    document.querySelectorAll('.panel-header .left').forEach(function(p,i){if(stored.pheads[i])p.innerHTML=stored.pheads[i]});
+    var so=document.querySelector('.statusbar .ok');if(so&&stored.statusOnline)so.textContent=stored.statusOnline;
+    var sv=document.querySelectorAll('.statusbar .v');if(sv.length&&stored.statusSecure)sv[0].textContent=stored.statusSecure;
+    var os=document.querySelector('.operator-card .status .val');if(os&&stored.opStatus)os.textContent=stored.opStatus;
+    var pb=document.querySelector('.btn-process .label');if(pb&&stored.processBtn)pb.textContent=stored.processBtn;
+  };
+  store();
+  var chk=function(){if(document.documentElement.className==='theme-p5'){window.P5_updateLabels()}};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',chk);else chk();
+})();
 </script>
 
 </body>
