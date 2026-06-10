@@ -708,18 +708,19 @@
 
   /* ===== 10. RADIO ===== */
   var radioDefs = [
-    { id: 'nightride', label: 'NIGHTRIDE', stream: 'https://stream.nightride.fm/nightride.mp3', genre: 'Synthwave' },
-    { id: 'chillsynth', label: 'CHILLSYNTH', stream: 'https://stream.nightride.fm/chillsynth.mp3', genre: 'Chill Synthwave' },
-    { id: 'darksynth', label: 'DARKSYNTH', stream: 'https://stream.nightride.fm/darksynth.mp3', genre: 'Dark Synthwave' },
-    { id: 'spacesynth', label: 'SPACESYNTH', stream: 'https://stream.nightride.fm/spacesynth.mp3', genre: 'Space Synth' },
-    { id: 'horrorsynth', label: 'HORRORSYNTH', stream: 'https://stream.nightride.fm/horrorsynth.mp3', genre: 'Horror Synth' },
-    { id: 'datawave', label: 'DATAWAVE', stream: 'https://stream.nightride.fm/datawave.mp3', genre: 'Datawave' },
-    { id: 'ebsm', label: 'EBSM', stream: 'https://stream.nightride.fm/ebsm.mp3', genre: 'Industrial' },
-    { id: 'synthdragon', label: 'SYNTHDRAGON', stream: 'https://stream.synthdragonradio.com/listen/synthdragon_chill/radio.mp3', genre: 'Chill Synth' }
+    { id: 'nightride', label: 'NIGHTRIDE', stream: 'https://stream.nightride.fm/nightride.mp3', genre: 'Synthwave', mount: 'nightride.mp3' },
+    { id: 'chillsynth', label: 'CHILLSYNTH', stream: 'https://stream.nightride.fm/chillsynth.mp3', genre: 'Chill Synthwave', mount: 'chillsynth.mp3' },
+    { id: 'darksynth', label: 'DARKSYNTH', stream: 'https://stream.nightride.fm/darksynth.mp3', genre: 'Dark Synthwave', mount: 'darksynth.mp3' },
+    { id: 'spacesynth', label: 'SPACESYNTH', stream: 'https://stream.nightride.fm/spacesynth.mp3', genre: 'Space Synth', mount: 'spacesynth.mp3' },
+    { id: 'horrorsynth', label: 'HORRORSYNTH', stream: 'https://stream.nightride.fm/horrorsynth.mp3', genre: 'Horror Synth', mount: 'horrorsynth.mp3' },
+    { id: 'datawave', label: 'DATAWAVE', stream: 'https://stream.nightride.fm/datawave.mp3', genre: 'Datawave', mount: 'datawave.mp3' },
+    { id: 'ebsm', label: 'EBSM', stream: 'https://stream.nightride.fm/ebsm.mp3', genre: 'Industrial', mount: 'ebsm.mp3' },
+    { id: 'synthdragon', label: 'SYNTHDRAGON', stream: 'https://stream.synthdragonradio.com/listen/synthdragon_chill/radio.mp3', genre: 'Chill Synth', mount: null }
   ];
 
   var radioAudio = null;
   var radioCurrentId = null;
+  var radioMetaInterval = null;
 
   function initRadio() {
     var grid = document.getElementById('radioStations');
@@ -769,6 +770,7 @@
     radioAudio.play().then(function() {
       var statusEl = document.getElementById('radioStatus');
       if (statusEl) { statusEl.textContent = 'PLAYING'; statusEl.className = 'radio-status playing'; }
+      startMetadataPolling();
     }).catch(function(err) {
       var statusEl = document.getElementById('radioStatus');
       if (statusEl) { statusEl.textContent = 'STREAM_ERROR'; statusEl.className = 'radio-status'; }
@@ -785,8 +787,60 @@
       radioAudio.src = '';
       radioAudio = null;
     }
+    stopMetadataPolling();
     var statusEl = document.getElementById('radioStatus');
     if (statusEl) { statusEl.textContent = 'STATION_IDLE'; statusEl.className = 'radio-status'; }
+    var npEl = document.getElementById('npTrack');
+    if (npEl) npEl.textContent = '--';
+  }
+
+  function startMetadataPolling() {
+    stopMetadataPolling();
+    fetchMetadata();
+    radioMetaInterval = setInterval(fetchMetadata, 15000);
+  }
+
+  function stopMetadataPolling() {
+    if (radioMetaInterval) {
+      clearInterval(radioMetaInterval);
+      radioMetaInterval = null;
+    }
+  }
+
+  function fetchMetadata() {
+    var def = radioDefs.find(function(s) { return s.id === radioCurrentId; });
+    if (!def || !def.mount) return;
+
+    fetch('https://stream.nightride.fm/status-json.xsl', { mode: 'cors' })
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        if (!data.icestats || !data.icestats.source) return;
+        var sources = Array.isArray(data.icestats.source) ? data.icestats.source : [data.icestats.source];
+        var match = null;
+        for (var i = 0; i < sources.length; i++) {
+          if (sources[i].server_name === def.mount) {
+            match = sources[i];
+            break;
+          }
+        }
+        if (!match) return;
+        var track = match.title || match['display-title'] || null;
+        var artist = match.artist || null;
+        var npEl = document.getElementById('npTrack');
+        if (!npEl) return;
+        if (track) {
+          if (artist && track.indexOf(artist) === -1) {
+            npEl.textContent = artist + ' - ' + track;
+          } else {
+            npEl.textContent = track;
+          }
+        } else {
+          npEl.textContent = 'NO_METADATA';
+        }
+      })
+      .catch(function() {
+        // CORS or network error — silently ignore
+      });
   }
 
   document.addEventListener('DOMContentLoaded', initRadio);
