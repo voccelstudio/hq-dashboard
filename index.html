@@ -1,0 +1,1047 @@
+<!DOCTYPE html>
+<html lang="es" class="theme-yellow">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, maximum-scale=5" />
+  <meta name="description" content="High-Tech Low-Life personal work dashboard" />
+  <meta name="theme-color" content="#fce300" />
+  <meta name="color-scheme" content="dark" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="SYS_DASH" />
+  <link rel="apple-touch-icon" href="favicon.svg" />
+
+  <title>SYS_DASHBOARD_V4.2 // OPERATOR</title>
+
+  <link rel="icon" type="image/svg+xml" href="favicon.svg" />
+  <link rel="manifest" href="manifest.webmanifest" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=JetBrains+Mono:wght@400;500;700&family=VT323&family=Staatliches&family=Rajdhani:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+
+  <script type="module" crossorigin src="./assets/index-Cpp8q40q.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/style-CxH7Ekp1.css">
+  <link rel="stylesheet" crossorigin href="./assets/features.css">
+  <style>
+    @media (min-width: 1101px) {
+      .dash-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+      }
+    }
+  </style>
+  <style>
+    #loadingScreen {
+      position: fixed; inset: 0; z-index: 99999;
+      background: #000;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'JetBrains Mono', 'Fira Code', monospace;
+      transition: opacity .6s ease;
+    }
+    #loadingScreen.hide { opacity: 0; pointer-events: none; }
+    #matrixCanvas {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      opacity: .35;
+    }
+    .ls-scanline {
+      position: absolute; left: 0; width: 100%; height: 2px;
+      background: linear-gradient(90deg, transparent, #00ff41, transparent);
+      opacity: .5;
+      animation: lsScan 2s linear infinite;
+      pointer-events: none;
+    }
+    @keyframes lsScan {
+      0% { top: 0; }
+      100% { top: 100%; }
+    }
+    .ls-center {
+      position: relative; z-index: 1;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 28px; min-width: 520px;
+    }
+    .ls-terminal {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .ls-line {
+      font-size: 14px; color: #00ff41;
+      letter-spacing: .05em; opacity: 0;
+      white-space: nowrap;
+      text-shadow: 0 0 6px rgba(0,255,65,.5);
+      transition: opacity .15s ease;
+    }
+    .ls-line.typed { opacity: 1; }
+    .ls-line.done { opacity: 0.55; }
+    .ls-progress-wrap {
+      width: 100%; max-width: 400px;
+      border: 1px solid #00ff41;
+      padding: 2px;
+      box-shadow: 0 0 10px rgba(0,255,65,.15);
+    }
+    .ls-progress-bar {
+      height: 6px;
+      background: #00ff41;
+      width: 0%;
+      transition: width .2s ease;
+      box-shadow: 0 0 8px rgba(0,255,65,.6);
+    }
+    .ls-footer {
+      font-size: 11px; color: #999;
+      letter-spacing: .15em;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ls-blink {
+      animation: lsBlink .8s step-end infinite;
+      color: #00ff41;
+    }
+    @keyframes lsBlink {
+      50% { opacity: 0; }
+    }
+  </style>
+</head>
+
+<body>
+<div id="loadingScreen">
+  <canvas id="matrixCanvas"></canvas>
+  <div class="ls-scanline"></div>
+  <div class="ls-center">
+    <div class="ls-terminal" id="lsTerminal">
+      <div class="ls-line">&gt; SYSTEM_BOOT_SEQUENCE_INITIALIZED...</div>
+      <div class="ls-line">&gt; LOADING_KERNEL_EXTENSIONS...</div>
+      <div class="ls-line">&gt; ESTABLISHING_SECURE_UPLINK...</div>
+      <div class="ls-line">&gt; DECRYPTING_DASHBOARD_ASSETS...</div>
+      <div class="ls-line">&gt; MOUNTING_VIRTUAL_FILESYSTEM...</div>
+      <div class="ls-line">&gt; ALL_SYSTEMS_NOMINAL. READY.</div>
+    </div>
+    <div class="ls-progress-wrap">
+      <div class="ls-progress-bar" id="lsProgressBar"></div>
+    </div>
+    <div class="ls-footer">
+      <span class="ls-blink">█</span> SYS_DASHBOARD v4.2 // BOOT_SEQUENCE
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var canvas = document.getElementById('matrixCanvas');
+  var ctx = canvas.getContext('2d');
+  var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
+  var fontSize = 12;
+  var drops = [];
+  var columns, frame;
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    columns = Math.floor(canvas.width / fontSize);
+    drops = [];
+    for (var i = 0; i < columns; i++) {
+      drops[i] = Math.floor(Math.random() * -canvas.height / fontSize);
+    }
+  }
+
+  function draw() {
+    ctx.fillStyle = 'rgba(0,0,0,0.05)';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = '#00ff41';
+    ctx.font = fontSize + 'px monospace';
+    for (var i = 0; i < drops.length; i++) {
+      var text = chars[Math.floor(Math.random() * chars.length)];
+      ctx.fillStyle = i % 3 === 0 ? '#00ff41' : '#0a6e1a';
+      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+        drops[i] = 0;
+      }
+      drops[i]++;
+    }
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  frame = setInterval(draw, 45);
+
+  // Boot sequence
+  var lines = document.querySelectorAll('#lsTerminal .ls-line');
+  var bar = document.getElementById('lsProgressBar');
+  var total = lines.length;
+  var idx = 0;
+  var progress = 0;
+
+  function bootNext() {
+    if (idx >= total) {
+      setTimeout(function() {
+        document.getElementById('loadingScreen').classList.add('hide');
+        setTimeout(function() { clearInterval(frame); }, 600);
+      }, 400);
+      return;
+    }
+    var line = lines[idx];
+    line.classList.add('typed');
+    if (idx > 0) lines[idx - 1].classList.add('done');
+    progress = ((idx + 1) / total) * 100;
+    bar.style.width = progress + '%';
+    idx++;
+    setTimeout(bootNext, 350);
+  }
+
+  setTimeout(bootNext, 250);
+})();
+</script>
+
+<div class="app">
+
+  <header class="topbar">
+    <button class="hamburger" id="hamburgerBtn" aria-label="Abrir menú" type="button">
+      <span class="material-symbols-outlined">menu</span>
+    </button>
+
+    <div class="brand">
+      SYS_DASHBOARD<span class="brand-ver">// V4.2</span>
+    </div>
+
+    <nav class="nav" id="topnav" aria-label="Navegación principal">
+      <a class="nav-item active" data-view="terminal" href="#terminal">TERMINAL</a>
+      <a class="nav-item" data-view="command" href="#command">COMMAND</a>
+      <a class="nav-item" data-view="chronos" href="#chronos">CHRONOS</a>
+      <a class="nav-item" data-view="tools" href="#tools">TOOLS</a>
+      <a class="nav-item" data-view="themes" href="#themes">THEMES</a>
+    </nav>
+
+    <div class="topbar-right">
+      <div class="user-chip">
+        <span class="dot"></span>USER: <span id="opName">OPERATOR</span> // SECURE
+      </div>
+      <button class="icon-btn" id="fullscreenBtn" aria-label="Fullscreen" type="button" title="Fullscreen">
+        <span class="material-symbols-outlined icon-full">fullscreen</span>
+        <span class="material-symbols-outlined icon-compress">fullscreen_exit</span>
+      </button>
+      <button class="icon-btn" id="settingsBtn" aria-label="Configuración" type="button" title="Settings">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+      <button class="icon-btn" id="powerBtn" aria-label="Power" type="button" title="Power">
+        <span class="material-symbols-outlined">power_settings_new</span>
+      </button>
+    </div>
+  </header>
+
+  <div class="sidebar-backdrop" id="sidebarBackdrop"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="operator-card">
+      <div class="name" id="sideOpName">OPERATOR</div>
+      <div class="status">STATUS: <span class="val">ENCRYPTED</span></div>
+    </div>
+
+    <nav class="side-nav" id="sidenav" aria-label="Navegación lateral">
+      <a class="side-item active" data-view="terminal" href="#terminal">
+        <span class="material-symbols-outlined">terminal</span>
+        <span class="label">ROOT/DASHBOARD</span>
+      </a>
+      <a class="side-item" data-view="command" href="#command">
+        <span class="material-symbols-outlined">grid_view</span>
+        <span class="label">ROOT/COMMANDS</span>
+      </a>
+      <a class="side-item" data-view="chronos" href="#chronos">
+        <span class="material-symbols-outlined">public</span>
+        <span class="label">ROOT/WORLD_TIME</span>
+      </a>
+      <a class="side-item" data-view="tools" href="#tools">
+        <span class="material-symbols-outlined">settings_input_component</span>
+        <span class="label">ROOT/SYSTEM_SYS</span>
+      </a>
+      <a class="side-item" data-view="themes" href="#themes">
+        <span class="material-symbols-outlined">palette</span>
+        <span class="label">ROOT/THEMES</span>
+      </a>
+    </nav>
+
+    <div class="sidebar-footer">
+      <button class="btn-process" id="newProcessBtn" type="button">
+        <span class="label">NEW_PROCESS</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main" id="main">
+
+    <section class="view active" data-view="terminal" aria-labelledby="terminalTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="terminalTitle">SYSTEM_INITIALIZED</h1>
+        <div class="view-subtitle">
+          SYS.VER.4.2<span class="sep">//</span>MAIN_TERMINAL<span class="sep">//</span><span style="color:var(--success)">NODE_ACTIVE</span>
+        </div>
+      </div>
+
+      <div class="dash-grid">
+
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">newspaper</span>root/remote/news.feed</div>
+            <div class="right">
+              <button class="icon-btn" id="refreshNewsBtn" title="Refresh Feed" type="button">
+                <span class="material-symbols-outlined">refresh</span>
+              </button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="viz-controls" id="newsCategories" style="margin-bottom: 12px; border-bottom: 1px dotted var(--outline); padding-bottom: 8px;">
+              <button class="viz-btn active" data-cat="ARCHITECTURE">ARCHITECTURE</button>
+              <button class="viz-btn" data-cat="TECH">TECH</button>
+              <button class="viz-btn" data-cat="MUSIC">MUSIC</button>
+              <button class="viz-btn" data-cat="LIFESTYLE">LIFESTYLE</button>
+            </div>
+            <div class="news-list" id="newsList" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;">
+              <div class="loading">CONNECTING_TO_NODES</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">timer</span>root/sys/pomodoro.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="pomodoro">
+              <div class="pomo-mode" id="pomoMode">FOCUS</div>
+              <div class="pomo-display" id="pomoDisplay">25:00</div>
+              <div class="pomo-controls">
+                <button class="pomo-btn primary" id="pomoStartBtn" type="button">START</button>
+                <button class="pomo-btn" id="pomoResetBtn" type="button">RESET</button>
+                <button class="pomo-btn" id="pomoSkipBtn" type="button">SKIP</button>
+              </div>
+              <div class="pomo-stats">
+                CYCLES: <span class="v" id="pomoCycles">0</span> // 
+                TOTAL_FOCUS: <span class="v" id="pomoFocusTime">0m</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">checklist</span>root/user/todo.exe</div>
+          </div>
+          <div class="panel-body">
+            <form class="todo-form" id="todoForm">
+              <input id="todoInput" placeholder="NEW_TASK..." type="text" autocomplete="off" />
+              <select id="todoPriority">
+                <option value="low">LOW</option>
+                <option value="medium" selected>MEDIUM</option>
+                <option value="high">HIGH</option>
+              </select>
+              <select id="todoFilter">
+                <option value="all">ALL</option>
+                <option value="active">ACTIVE</option>
+                <option value="done">DONE</option>
+              </select>
+              <button type="submit">[ ADD ]</button>
+            </form>
+            <div class="todo-list" id="todoList"></div>
+            <div class="todo-stats" id="todoStats">0 TASKS // 0 DONE</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">my_location</span>root/local/node.sys</div>
+            <div class="right" id="localHeroStatus">SYNCING...</div>
+          </div>
+          <div class="panel-body">
+            <div class="local-hero" id="localHero" style="padding: 10px; height: auto;">
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                  <div class="city" id="localCity" style="font-size: 1.2rem;">Locating...</div>
+                  <div class="time" id="localTime" style="font-size: 1rem; color: var(--accent);">--:--:--</div>
+                </div>
+                <div class="weather-block" style="text-align: right;">
+                  <div class="temp" id="localTemp" style="font-size: 1.2rem;">--°</div>
+                  <div class="cond" id="localCond" style="font-size: 0.7rem;">SYNC...</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">track_changes</span>root/user/habits.exe</div>
+          </div>
+          <div class="panel-body">
+            <form class="habit-form" id="habitForm">
+              <input id="habitInput" placeholder="NEW_HABIT..." type="text" autocomplete="off" />
+              <button type="submit">[ ADD ]</button>
+            </form>
+            <div class="habit-list" id="habitList"></div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">monitoring</span>root/sys/metrics.sys</div>
+          </div>
+          <div class="panel-body" id="metricsBody">
+            <!-- JS updates this -->
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">headphones</span>root/user/ambient.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="sounds-grid" id="soundsGrid"></div>
+            <div class="sound-controls">
+              <label>VOL: <input type="range" id="soundVolume" min="0" max="1" step="0.05" value="0.3" /></label>
+              <button class="sound-btn" id="soundStopBtn">STOP</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">radio</span>root/user/radio.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="radio-stations" id="radioStations"></div>
+            <div class="radio-controls">
+              <div class="radio-info" id="radioInfo">
+                <span class="radio-status" id="radioStatus">STATION_IDLE</span>
+                <span class="radio-station-name" id="radioStationName">--</span>
+              </div>
+              <div class="radio-buttons">
+                <button class="radio-btn primary" id="radioPlayBtn" type="button">[ PLAY ]</button>
+                <button class="radio-btn" id="radioStopBtn" type="button">[ STOP ]</button>
+              </div>
+              <div class="radio-volume">
+                <label>VOL: <input type="range" id="radioVolume" min="0" max="1" step="0.05" value="0.5" /></label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">mood</span>root/user/mood_chart.exe</div>
+            <div class="right">
+              <span id="moodStreak" style="font-size:10px;color:var(--accent);font-family:var(--font-mono)"></span>
+            </div>
+          </div>
+          <div class="panel-body">
+            <div class="mood-today">
+              <span class="mood-label">TODAY'S MOOD:</span>
+              <div class="mood-options" id="moodOptions">
+                <button class="mood-btn" data-mood="1"><span class="mood-icon">😡</span><span class="mood-text">TERRIBLE</span></button>
+                <button class="mood-btn" data-mood="2"><span class="mood-icon">😞</span><span class="mood-text">BAD</span></button>
+                <button class="mood-btn" data-mood="3"><span class="mood-icon">😐</span><span class="mood-text">NEUTRAL</span></button>
+                <button class="mood-btn" data-mood="4"><span class="mood-icon">🙂</span><span class="mood-text">OK</span></button>
+                <button class="mood-btn" data-mood="5"><span class="mood-icon">😄</span><span class="mood-text">GOOD</span></button>
+              </div>
+            </div>
+            <div class="mood-chart-wrap">
+              <canvas id="moodChart" height="180"></canvas>
+            </div>
+            <div class="mood-stats">
+              <span id="moodAvg">AVG: --</span>
+              <span id="moodBest">BEST: --</span>
+              <span id="moodTotal">LOGGED: 0 days</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel full">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">terminal</span>root/sys/daemon.log</div>
+          </div>
+          <div class="panel-body">
+            <div class="daemon-log" id="daemonLog">
+              <div class="loading">INITIALIZING_LOG_STREAM</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="view" data-view="command" aria-labelledby="commandTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="commandTitle">COMMAND_INTERFACE</h1>
+        <div class="view-subtitle">ROOT/SEARCH_ENGINE // NODE_01</div>
+      </div>
+      <div class="command-layout">
+        <div class="links-grid" id="linksGrid">
+          <!-- JS injects nodes here -->
+        </div>
+        <div class="command-sidebar">
+          <div class="search-panel panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">search</span>root/search.cmd</div>
+            </div>
+            <div class="panel-body">
+              <form class="search-form" id="searchForm">
+                <div class="search-row">
+                  <input id="searchInput" placeholder="SEARCH_QUERY..." type="text" autocomplete="off" />
+                  <select id="searchEngine">
+                    <option value="duckduckgo">DUCKDUCKGO</option>
+                    <option value="google">GOOGLE</option>
+                    <option value="github">GITHUB</option>
+                    <option value="youtube">YOUTUBE</option>
+                  </select>
+                </div>
+                <button class="search-btn" type="submit">[ EXECUTE_SEARCH ]</button>
+              </form>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">add_link</span>root/add_link.cmd</div>
+            </div>
+            <div class="panel-body" id="addNodeContainer">
+              <!-- JS injects the add form here -->
+            </div>
+          </div>
+
+          <div class="panel kaomoji-panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">mood</span>sys/kaomoji_lib.sh</div>
+            </div>
+            <div class="panel-body">
+              <select id="kaomojiDropdown" class="search-btn" style="width: 100%; text-align: left; padding-left: 12px; margin-bottom: 8px; cursor: pointer; background: var(--surface-low); color: var(--on-surface);">
+                <option value="">-- SELECT_EXPRESSION --</option>
+              </select>
+              <button class="viz-btn" onclick="copyK(document.getElementById('kaomojiDropdown').value)" style="width: 100%">COPY_SELECTED</button>
+            </div>
+          </div>
+
+          <div class="panel emoji-panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">sentiment_satisfied</span>sys/emoji_picker.sh</div>
+            </div>
+            <div class="panel-body">
+              <input type="text" id="emojiSearch" placeholder="SEARCH_EMOJIS..." class="search-btn" style="width: 100%; text-align: left; padding-left: 12px; margin-bottom: 8px; cursor: text;">
+              <div id="emojiList" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; max-height: 200px; overflow-y: auto; font-size: 20px; padding: 5px; background: var(--surface-low);">
+                <!-- Emojis here -->
+              </div>
+            </div>
+          </div>
+
+          <div class="panel architect-tools-panel">
+            <div class="panel-header">
+              <div class="left"><span class="material-symbols-outlined">architecture</span>sys/dev_arch.tools</div>
+            </div>
+            <div class="panel-body">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+                <button class="viz-btn" onclick="m('JSON Formatter active','info')">JSON_FORMAT</button>
+                <button class="viz-btn" onclick="m('Base64 Encoder active','info')">BASE64_CONV</button>
+                <button class="viz-btn" onclick="m('Color Picker active','info')">COLOR_PICK</button>
+                <button class="viz-btn" onclick="m('Scale Calc active','info')">SCALE_CALC</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view="chronos" aria-labelledby="chronosTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="chronosTitle">WORLD_CHRONOS</h1>
+        <div class="view-subtitle">DISTRIBUTED_TIME_NODES // <span id="nodeCount">0</span> ACTIVE</div>
+      </div>
+      <div class="chronos-layout">
+        <div class="world-map-panel panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">public</span>root/net/world.map</div>
+          </div>
+          <div class="panel-body" style="padding:0; height:100%">
+            <svg class="world-map" id="worldMap" viewBox="0 0 1000 500">
+              <!-- SVG content by JS -->
+            </svg>
+            <div class="world-map-info">
+              UPLINK: <span class="v">ESTABLISHED</span><br>
+              PROTOCOL: <span class="v">TCP/IP_SECURE</span>
+            </div>
+          </div>
+        </div>
+        <div class="clock-nodes" id="clockNodes">
+          <!-- JS injects clocks here -->
+        </div>
+      </div>
+    </section>
+
+    <section class="view" data-view="tools" aria-labelledby="toolsTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="toolsTitle">SYSTEM_TOOLS</h1>
+        <div class="view-subtitle">DIAGNOSTICS // UTILITIES // ROOT</div>
+      </div>
+      <div class="tools-layout">
+
+        <div class="panel calc-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">calculate</span>sys/calc.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="search-row" style="margin-bottom: 8px;">
+              <input type="text" id="calcDisplay" readonly value="0" style="text-align: right; font-size: 20px; padding: 12px; color: var(--accent);">
+            </div>
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 4px;">
+              <button class="viz-btn" onclick="calcInput('7')">7</button>
+              <button class="viz-btn" onclick="calcInput('8')">8</button>
+              <button class="viz-btn" onclick="calcInput('9')">9</button>
+              <button class="viz-btn" onclick="calcInput('/')">/</button>
+              <button class="viz-btn" onclick="calcInput('4')">4</button>
+              <button class="viz-btn" onclick="calcInput('5')">5</button>
+              <button class="viz-btn" onclick="calcInput('6')">6</button>
+              <button class="viz-btn" onclick="calcInput('*')">*</button>
+              <button class="viz-btn" onclick="calcInput('1')">1</button>
+              <button class="viz-btn" onclick="calcInput('2')">2</button>
+              <button class="viz-btn" onclick="calcInput('3')">3</button>
+              <button class="viz-btn" onclick="calcInput('-')">-</button>
+              <button class="viz-btn" onclick="calcInput('0')">0</button>
+              <button class="viz-btn" onclick="calcInput('.')">.</button>
+              <button class="viz-btn" onclick="calcClear()">C</button>
+              <button class="viz-btn" onclick="calcInput('+')">+</button>
+              <button class="viz-btn" style="grid-column: span 4; background: var(--accent); color: var(--accent-on);" onclick="calcEqual()">=</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel currency-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">payments</span>sys/currency_conv.rx</div>
+          </div>
+          <div class="panel-body">
+            <div class="search-form">
+              <div class="search-row">
+                <input type="number" id="currAmount" value="1" style="flex: 1;">
+                <select id="currFrom">
+                  <option value="USD">USD</option>
+                  <option value="PYG">PYG</option>
+                  <option value="EUR">EUR</option>
+                  <option value="BRL">BRL</option>
+                  <option value="ARS">ARS</option>
+                </select>
+              </div>
+              <div style="text-align: center; color: var(--info);">TO</div>
+              <div class="search-row">
+                <input type="text" id="currResult" readonly value="--" style="flex: 1; color: var(--accent);">
+                <select id="currTo">
+                  <option value="PYG">PYG</option>
+                  <option value="USD">USD</option>
+                  <option value="EUR">EUR</option>
+                  <option value="BRL">BRL</option>
+                  <option value="ARS">ARS</option>
+                </select>
+              </div>
+              <button class="search-btn" id="btnConvert">[ CONVERT_SIGNAL ]</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel timer-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">hourglass_empty</span>sys/timer.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="pomodoro" style="padding: 10px;">
+              <input type="number" id="timerInput" placeholder="MINUTES" value="5" style="width: 100%; margin-bottom: 8px; text-align: center;">
+              <div class="pomo-display" id="timerDisplay">05:00</div>
+              <div class="pomo-controls">
+                <button class="pomo-btn primary" id="timerStartBtn">START</button>
+                <button class="pomo-btn" id="timerResetBtn">RESET</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">password</span>sys/password_gen.exe</div>
+          </div>
+          <div class="panel-body">
+            <div class="password-display">
+              <input type="text" id="pwOutput" readonly />
+              <button id="pwCopyBtn" title="Copy">COPY</button>
+            </div>
+            <div class="password-options">
+              <div class="password-opt">
+                <label>LENGTH</label>
+                <input type="range" id="pwLength" min="6" max="32" value="16" />
+                <span class="password-length" id="pwLengthVal">16</span>
+              </div>
+              <div class="password-opt">
+                <input type="checkbox" id="pwUpper" checked /> <label for="pwUpper">UPPERCASE (A-Z)</label>
+              </div>
+              <div class="password-opt">
+                <input type="checkbox" id="pwLower" checked /> <label for="pwLower">LOWERCASE (a-z)</label>
+              </div>
+              <div class="password-opt">
+                <input type="checkbox" id="pwDigits" checked /> <label for="pwDigits">DIGITS (0-9)</label>
+              </div>
+              <div class="password-opt">
+                <input type="checkbox" id="pwSymbols" checked /> <label for="pwSymbols">SYMBOLS (!@#$)</label>
+              </div>
+            </div>
+            <div class="password-strength strong" id="pwStrength">STRENGTH: STRONG</div>
+            <button class="search-btn" id="pwGenBtn" style="margin-top:10px;width:100%">[ GENERATE_NEW ]</button>
+          </div>
+        </div>
+
+        <div class="panel unit-conv-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">straighten</span>sys/unit_conv.arch</div>
+          </div>
+          <div class="panel-body">
+            <div class="search-form">
+              <div class="search-row">
+                <input type="number" id="unitVal" value="1" style="flex: 1;">
+                <select id="unitFrom">
+                  <option value="in">INCH</option>
+                  <option value="ft">FOOT</option>
+                  <option value="m">METER</option>
+                  <option value="cm">CM</option>
+                </select>
+              </div>
+              <div class="search-row">
+                <input type="text" id="unitRes" readonly value="--" style="flex: 1; color: var(--accent);">
+                <select id="unitTo">
+                  <option value="cm">CM</option>
+                  <option value="m">METER</option>
+                  <option value="in">INCH</option>
+                  <option value="ft">FOOT</option>
+                </select>
+              </div>
+              <button class="search-btn" id="btnUnitConv">[ CONVERT_UNITS ]</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel notes-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">edit_note</span>root/user/notes.txt</div>
+            <div class="right">
+              <button class="icon-btn" onclick="downloadNotes()" title="Download as .txt">
+                <span class="material-symbols-outlined">download</span>
+              </button>
+              <span id="notesSaved" style="font-size: 10px; margin-right: 8px;"></span>
+            </div>
+          </div>
+          <div class="panel-body" style="padding:0">
+            <textarea id="notesArea" placeholder="Write something..."></textarea>
+            <div class="notes-meta">
+              <span>CHARS: <span id="notesCount">0</span></span>
+              <span>UTF-8 // SECURE</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel alarms-panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">alarm</span>root/sys/alarms.cron</div>
+            <div class="right">
+              <button class="icon-btn" id="alarmsPermBtn" title="Toggle Notifications" type="button">
+                <span class="material-symbols-outlined" id="alarmsPermIcon">notifications</span>
+              </button>
+            </div>
+          </div>
+          <div class="panel-body">
+            <form class="alarms-form" id="alarmsForm">
+              <input id="alarmTime" type="time" required />
+              <input id="alarmLabel" placeholder="LABEL..." type="text" maxlength="20" />
+              <button type="submit">[ SET ]</button>
+            </form>
+            <div class="alarms-list" id="alarmsList">
+              <!-- Alarms here -->
+            </div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">memory</span>root/sys/telemetry.sys</div>
+          </div>
+          <div class="panel-body" id="telemetryBody">
+            <!-- JS updates this -->
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="view" data-view="themes" aria-labelledby="themesTitle">
+      <div class="view-header">
+        <h1 class="view-title" id="themesTitle">INTERFACE_THEMES</h1>
+        <div class="view-subtitle">VISUAL_PROTOCOLS // SELECT_OVERRIDE</div>
+      </div>
+      <div class="themes-grid">
+        <div class="theme-card yellow" data-theme="yellow">
+          <div class="header">PROTOCOL: CYBER_YELLOW</div>
+          <div class="theme-preview"><div class="label">SYS_01</div></div>
+          <div class="actions">
+            <button class="apply" type="button">APPLY</button>
+            <button class="preview" type="button">PREVIEW</button>
+          </div>
+        </div>
+        <div class="theme-card green" data-theme="green">
+          <div class="header">PROTOCOL: TOXIC_GREEN</div>
+          <div class="theme-preview"><div class="label">SYS_02</div></div>
+          <div class="actions">
+            <button class="apply" type="button">APPLY</button>
+            <button class="preview" type="button">PREVIEW</button>
+          </div>
+        </div>
+        <div class="theme-card blue" data-theme="blue">
+          <div class="header">PROTOCOL: COBALT_BLUE</div>
+          <div class="theme-preview"><div class="label">SYS_03</div></div>
+          <div class="actions">
+            <button class="apply" type="button">APPLY</button>
+            <button class="preview" type="button">PREVIEW</button>
+          </div>
+        </div>
+        <div class="theme-card red" data-theme="red">
+          <div class="header">PROTOCOL: BLOOD_RED</div>
+          <div class="theme-preview"><div class="label">SYS_04</div></div>
+          <div class="actions">
+            <button class="apply" type="button">APPLY</button>
+            <button class="preview" type="button">PREVIEW</button>
+          </div>
+        </div>
+        <div class="theme-card p5" data-theme="p5">
+          <div class="header">PROTOCOL: PHANTOM_THIEF</div>
+          <div class="theme-preview"><div class="label">P5</div></div>
+          <div class="actions">
+            <button class="apply" type="button">APPLY</button>
+            <button class="preview" type="button">PREVIEW</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div class="modal-backdrop" id="settingsModal">
+    <div class="modal">
+      <div class="modal-header">
+        <div class="left">SYSTEM_CONFIGURATION</div>
+        <button class="close" id="settingsCloseBtn" type="button">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="modal-section">
+          <h3>USER_PROFILE</h3>
+          <div class="setting-row">
+            <div class="desc">
+              OPERATOR_NAME
+              <span class="hint">Identificador de sesión</span>
+            </div>
+            <input id="setOperatorName" maxlength="15" type="text" placeholder="OPERATOR" />
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3>VISUAL_PREFS</h3>
+          <div class="setting-row">
+            <div class="desc">
+              SCANLINES_DAEMON
+              <span class="hint">Efecto visual de monitor antiguo</span>
+            </div>
+            <div class="toggle on" id="toggleScanlines" role="switch" aria-checked="true"></div>
+          </div>
+          <div class="setting-row">
+            <div class="desc">
+              UI_DENSITY
+              <span class="hint">Ajuste de espaciado general</span>
+            </div>
+            <select id="setDensity">
+              <option value="normal">NORMAL</option>
+              <option value="compact">COMPACT</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3>BEHAVIOR</h3>
+          <div class="setting-row">
+            <div class="desc">
+              AUTO_REFRESH_NEWS
+              <span class="hint">Actualizar feed cada 30m</span>
+            </div>
+            <div class="toggle on" id="toggleAutoNews" role="switch" aria-checked="true"></div>
+          </div>
+          <div class="setting-row">
+            <div class="desc">
+              SYSTEM_NOTIFICATIONS
+              <span class="hint">Alertas de escritorio</span>
+            </div>
+            <div class="toggle" id="toggleNotifs" role="switch" aria-checked="false"></div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3>DATA_SYNC</h3>
+          <div class="setting-row">
+            <div class="desc">
+              EXPORT / IMPORT
+              <span class="hint">Backup or restore all local data</span>
+            </div>
+            <div class="export-import">
+              <button class="btn-export" id="exportBtn" type="button">[ EXPORT ]</button>
+              <button class="btn-import" id="importBtn" type="button">[ IMPORT ]</button>
+              <input type="file" id="importInput" accept=".json" style="display:none" />
+            </div>
+          </div>
+        </div>
+
+        <div class="modal-section">
+          <h3>DANGER_ZONE</h3>
+          <div class="setting-row">
+            <div class="desc">
+              FACTORY_RESET
+              <span class="hint">Borra toda la data local</span>
+            </div>
+            <button class="btn-danger" id="resetAllBtn" type="button">WIPE_SYSTEM</button>
+          </div>
+          <div class="setting-row">
+            <div class="desc">
+              FORCE_RE_GEO
+              <span class="hint">Recalcular ubicación local</span>
+            </div>
+            <button class="viz-btn" id="reGeoBtn" type="button">SYNC_GEO</button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="viz-btn" id="settingsCancelBtn" type="button">CANCEL</button>
+        <button class="btn-primary" id="settingsSaveBtn" type="button">SAVE_CHANGES</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <footer class="statusbar">
+    <div class="left">
+      <span>SYS: <span class="ok">ONLINE</span></span>
+      <span class="hide-mobile">UPLINK: <span class="v">SECURE</span></span>
+      <span class="hide-mobile">NODE: <span class="v">ZEPHYR</span></span>
+    </div>
+    <div class="right">
+      <span id="statusTime">--:--:--</span>
+      <span class="hide-mobile">UTC<span id="statusTz"></span></span>
+      <span class="blink">█</span>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // 1. Registro del Service Worker
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('DAEMON_UPLINK: SW activo', reg.scope))
+        .catch(err => console.error('DAEMON_ERROR:', err));
+    });
+  }
+
+  // 2. Lógica de Clima (Open-Meteo)
+  const weatherMap = {
+    0: "CLEAR_SKY", 1: "MAINLY_CLEAR", 2: "PARTLY_CLOUDY", 3: "OVERCAST",
+    45: "FOG_NODE", 48: "RIME_FOG", 51: "LIGHT_DRIZZLE", 61: "LIGHT_RAIN",
+    80: "RAIN_SHOWERS", 95: "THUNDERSTORM"
+  };
+
+  async function updateWeather() {
+    const statusEl = document.getElementById('localHeroStatus');
+    // Coordenadas default: Asunción
+    let lat = -25.26, lon = -57.57;
+
+    try {
+      statusEl.innerText = "UPLINKING...";
+      const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
+      const data = await res.json();
+      
+      document.getElementById('localTemp').innerText = `${Math.round(data.current_weather.temperature)}°`;
+      document.getElementById('localCond').innerText = weatherMap[data.current_weather.weathercode] || "NODE_SYNC";
+      document.getElementById('localCity').innerText = "ASUNCION_NODE";
+      
+      statusEl.innerText = "SYNCED";
+      statusEl.style.color = "var(--success)";
+    } catch (e) {
+      statusEl.innerText = "OFFLINE_MODE";
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', updateWeather);
+</script>
+
+<script>
+(function(){
+  var stored={};
+  function store(){
+    var e;
+    ['terminalTitle','commandTitle','chronosTitle','toolsTitle','themesTitle','opName','sideOpName'].forEach(function(id){
+      e=document.getElementById(id);if(e)stored[id]=e.textContent;
+    });
+    e=document.querySelector('.brand');if(e)stored.brand=e.innerHTML;
+    e=document.querySelectorAll('.nav-item');stored.nav=[];e.forEach(function(n){stored.nav.push(n.textContent)});
+    e=document.querySelectorAll('.side-item .label');stored.side=[];e.forEach(function(s){stored.side.push(s.textContent)});
+    e=document.querySelectorAll('.view-subtitle');stored.subs=[];e.forEach(function(s){stored.subs.push(s.innerHTML)});
+    e=document.querySelectorAll('.panel-header .left');stored.pheads=[];e.forEach(function(p){stored.pheads.push(p.innerHTML)});
+    e=document.querySelector('.statusbar .ok');if(e)stored.statusOnline=e.textContent;
+    e=document.querySelectorAll('.statusbar .v');if(e.length)stored.statusSecure=e[0].textContent;
+    e=document.querySelector('.operator-card .status .val');if(e)stored.opStatus=e.textContent;
+    e=document.querySelector('.btn-process .label');if(e)stored.processBtn=e.textContent;
+  }
+  function txt(id,v){var e=document.getElementById(id);if(e)e.textContent=v;}
+  window.P5_updateLabels=function(){
+    txt('terminalTitle','CAFE_LEBLANC');
+    txt('commandTitle','ACCESS_POINT');
+    txt('chronosTitle','METAVERSE_NAV');
+    txt('toolsTitle','SMARTPHONE_APPS');
+    txt('themesTitle','COSTUME_CHANGE');
+    txt('opName','JOKER');
+    txt('sideOpName','JOKER');
+    var b=document.querySelector('.brand');if(b){var bv=b.querySelector('.brand-ver');b.childNodes[0].textContent='PHANTOM_SYS';if(bv)bv.textContent=' // REBEL';}
+    var nl=['LEBLANC','ACCESS','METAVERSE','PHONE','COSTUME'];
+    document.querySelectorAll('.nav-item').forEach(function(n,i){if(nl[i])n.textContent=nl[i]});
+    var sl=['CAFE/LEBLANC','SHIBUYA/LINKS','MEMENTOS/MAP','PALACE/APPS','BATHROOM/CFG'];
+    document.querySelectorAll('.side-item .label').forEach(function(s,i){if(sl[i])s.textContent=sl[i]});
+    var st=['VELVET.ROOM<span class="sep">//</span>HANG_OUT<span class="sep">//</span><span style="color:var(--success)">HEART_SHLD</span>','SHIBUYA/LINKS // NODE_ACTIVE','PALACE_NETWORK // <span id="nodeCount">0</span> ACTIVE','PERSONA // ITEMS // SYSTEM','AESTHETIC // REBELLION'];
+    document.querySelectorAll('.view-subtitle').forEach(function(s,i){if(st[i])s.innerHTML=st[i]});
+    var ph=['<span class="material-symbols-outlined">newspaper</span>news/phantom.feed','<span class="material-symbols-outlined">timer</span>hq/curriculum.exe','<span class="material-symbols-outlined">checklist</span>hq/requests.exe','<span class="material-symbols-outlined">my_location</span>shibuya/station.sys','<span class="material-symbols-outlined">track_changes</span>hq/goals.exe','<span class="material-symbols-outlined">monitoring</span>party/status.sys','<span class="material-symbols-outlined">headphones</span>hq/soundscape.exe','<span class="material-symbols-outlined">radio</span>hq/radio.exe','<span class="material-symbols-outlined">mood</span>hq/emotion.exe','<span class="material-symbols-outlined">terminal</span>phantom/daemon.log'];
+    document.querySelectorAll('.panel-header .left').forEach(function(p,i){if(ph[i])p.innerHTML=ph[i]});
+    var so=document.querySelector('.statusbar .ok');if(so)so.textContent='HEART_SHLD';
+    var sv=document.querySelectorAll('.statusbar .v');if(sv.length)sv[0].textContent='HIDEOUT';
+    var os=document.querySelector('.operator-card .status .val');if(os)os.textContent='MASQUERADE';
+    var pb=document.querySelector('.btn-process .label');if(pb)pb.textContent='NEW_CONFIDANT';
+  };
+  window.P5_resetLabels=function(){
+    if(!Object.keys(stored).length)return;
+    txt('terminalTitle',stored.terminalTitle);
+    txt('commandTitle',stored.commandTitle);
+    txt('chronosTitle',stored.chronosTitle);
+    txt('toolsTitle',stored.toolsTitle);
+    txt('themesTitle',stored.themesTitle);
+    txt('opName',stored.opName);
+    txt('sideOpName',stored.sideOpName);
+    var b=document.querySelector('.brand');if(b&&stored.brand)b.innerHTML=stored.brand;
+    document.querySelectorAll('.nav-item').forEach(function(n,i){if(stored.nav[i])n.textContent=stored.nav[i]});
+    document.querySelectorAll('.side-item .label').forEach(function(s,i){if(stored.side[i])s.textContent=stored.side[i]});
+    document.querySelectorAll('.view-subtitle').forEach(function(s,i){if(stored.subs[i])s.innerHTML=stored.subs[i]});
+    document.querySelectorAll('.panel-header .left').forEach(function(p,i){if(stored.pheads[i])p.innerHTML=stored.pheads[i]});
+    var so=document.querySelector('.statusbar .ok');if(so&&stored.statusOnline)so.textContent=stored.statusOnline;
+    var sv=document.querySelectorAll('.statusbar .v');if(sv.length&&stored.statusSecure)sv[0].textContent=stored.statusSecure;
+    var os=document.querySelector('.operator-card .status .val');if(os&&stored.opStatus)os.textContent=stored.opStatus;
+    var pb=document.querySelector('.btn-process .label');if(pb&&stored.processBtn)pb.textContent=stored.processBtn;
+  };
+  store();
+  var chk=function(){if(document.documentElement.className==='theme-p5'){window.P5_updateLabels()}};
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',chk);else chk();
+})();
+</script>
+
+<script src="./assets/features.js"></script>
+</body>
+</html>
