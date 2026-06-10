@@ -721,6 +721,10 @@
   var radioAudio = null;
   var radioCurrentId = null;
   var radioMetaInterval = null;
+  var radioAudioCtx = null;
+  var radioAnalyser = null;
+  var radioGain = null;
+  var radioAnimFrame = null;
 
   function initRadio() {
     var grid = document.getElementById('radioStations');
@@ -746,7 +750,9 @@
     });
     if (stopBtn) stopBtn.addEventListener('click', stopRadio);
     if (volSlider) volSlider.addEventListener('input', function() {
-      if (radioAudio) radioAudio.volume = parseFloat(this.value);
+      var v = parseFloat(this.value);
+      if (radioGain) radioGain.gain.value = v;
+      if (radioAudio) radioAudio.volume = v;
     });
   }
 
@@ -766,7 +772,28 @@
     if (!def) return;
     stopRadio();
     radioAudio = new Audio(def.stream);
-    radioAudio.volume = parseFloat((document.getElementById('radioVolume') || {}).value || 0.5);
+    radioAudio.crossOrigin = 'anonymous';
+    var vol = parseFloat((document.getElementById('radioVolume') || {}).value || 0.5);
+    radioAudio.volume = vol;
+
+    var canvas = document.getElementById('radioViz');
+    if (canvas) {
+      try {
+        radioAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        radioAnalyser = radioAudioCtx.createAnalyser();
+        radioAnalyser.fftSize = 256;
+        radioGain = radioAudioCtx.createGain();
+        radioGain.gain.value = vol;
+        var src = radioAudioCtx.createMediaElementSource(radioAudio);
+        src.connect(radioAnalyser);
+        radioAnalyser.connect(radioGain);
+        radioGain.connect(radioAudioCtx.destination);
+        startViz(canvas);
+      } catch(e) {
+        // AudioContext not available, play without viz
+      }
+    }
+
     radioAudio.play().then(function() {
       var statusEl = document.getElementById('radioStatus');
       if (statusEl) { statusEl.textContent = 'PLAYING'; statusEl.className = 'radio-status playing'; }
@@ -781,12 +808,65 @@
     });
   }
 
+  function startViz(canvas) {
+    var ctx = canvas.getContext('2d');
+    var W = canvas.width;
+    var H = canvas.height;
+    var bins = radioAnalyser.frequencyBinCount;
+    var data = new Uint8Array(bins);
+
+    function resize() {
+      var rect = canvas.parentElement.getBoundingClientRect();
+      W = canvas.width = Math.floor(rect.width - 4);
+      H = canvas.height = 96;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    function draw() {
+      radioAnimFrame = requestAnimationFrame(draw);
+      radioAnalyser.getByteFrequencyData(data);
+      ctx.clearRect(0, 0, W, H);
+
+      var barCount = Math.min(bins, 64);
+      var barW = Math.max(2, Math.floor(W / barCount) - 1);
+      var gap = 1;
+      var totalW = barCount * (barW + gap) - gap;
+      var offsetX = Math.floor((W - totalW) / 2);
+
+      for (var i = 0; i < barCount; i++) {
+        var val = data[i] / 255;
+        var barH = Math.max(1, val * H * 0.9);
+        var x = offsetX + i * (barW + gap);
+        var y = H - barH;
+
+        var hue = 200 + (i / barCount) * 160;
+        ctx.fillStyle = 'hsl(' + hue + ', 80%, ' + (40 + val * 40) + '%)';
+        ctx.fillRect(x, y, barW, barH);
+      }
+    }
+    draw();
+  }
+
+  function stopViz() {
+    if (radioAnimFrame) { cancelAnimationFrame(radioAnimFrame); radioAnimFrame = null; }
+    if (radioAudioCtx) { radioAudioCtx.close(); radioAudioCtx = null; }
+    radioAnalyser = null;
+    radioGain = null;
+    var canvas = document.getElementById('radioViz');
+    if (canvas) {
+      var ctx = canvas.getContext('2d');
+      if (ctx) ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
   function stopRadio() {
     if (radioAudio) {
       radioAudio.pause();
       radioAudio.src = '';
       radioAudio = null;
     }
+    stopViz();
     stopMetadataPolling();
     var statusEl = document.getElementById('radioStatus');
     if (statusEl) { statusEl.textContent = 'STATION_IDLE'; statusEl.className = 'radio-status'; }
