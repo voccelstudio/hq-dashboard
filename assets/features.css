@@ -14,6 +14,33 @@
 .radio-stations{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:8px}.radio-station-btn{padding:8px 6px;background:var(--surface-low);border:1px solid var(--outline);font-family:var(--font-mono);font-size:9px;letter-spacing:.06em;color:var(--on-surface-dim);text-align:center;cursor:pointer;transition:all .15s}.radio-station-btn:hover{border-color:var(--accent);color:var(--on-surface)}.radio-station-btn.active{background:var(--accent);color:var(--accent-on);border-color:var(--accent);font-weight:700}.radio-viz{display:block;width:100%;height:80px;background:var(--surface-low);border:1px solid var(--outline);margin-bottom:8px;image-rendering:pixelated}.radio-controls{display:flex;flex-direction:column;gap:8px}.radio-info{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;background:var(--surface-low);border:1px solid var(--outline);font-size:10px;font-family:var(--font-mono)}.radio-status{color:var(--on-surface-dim);letter-spacing:.1em}.radio-status.playing{color:var(--success)}.radio-station-name{color:var(--accent);font-weight:700;letter-spacing:.05em}.radio-nowplaying{display:flex;flex-direction:column;gap:2px;padding:6px 10px;background:var(--surface-low);border:1px solid var(--outline);font-family:var(--font-mono);font-size:9px;min-height:32px}.radio-nowplaying .np-label{color:var(--on-surface-dim);letter-spacing:.1em;font-size:8px}.radio-nowplaying .np-track{color:var(--accent);font-weight:700;letter-spacing:.03em;word-break:break-all}.radio-buttons{display:flex;gap:8px}.radio-btn{flex:1;padding:10px;font-family:var(--font-display);font-weight:700;font-size:11px;letter-spacing:.1em;cursor:pointer;transition:all .15s}.radio-btn.primary{background:var(--accent);color:var(--accent-on);border:1px solid var(--accent)}.radio-btn.primary:hover{filter:brightness(1.15)}.radio-btn:not(.primary){background:var(--surface-low);color:var(--on-surface);border:1px solid var(--outline)}.radio-btn:not(.primary):hover{border-color:var(--accent)}.radio-btn:disabled{opacity:.35;cursor:not-allowed}.radio-volume label{font-size:10px;color:var(--on-surface-dim);font-family:var(--font-mono);display:flex;align-items:center;gap:8px}.radio-volume input[type=range]{flex:1;accent-color:var(--accent);height:4px}
 
 
+/* MOBILE FIXES */
+@media (max-width: 768px) {
+  .radio-stations{grid-template-columns:1fr}.radio-viz{height:60px}.radio-nowplaying .np-track{font-size:8px}
+  .todo-form{flex-wrap:wrap}.todo-form select{min-width:0}
+  .habit-form{flex-wrap:wrap}
+  #newsList{gap:10px!important}
+  .mood-options{gap:4px}.mood-btn{padding:6px 8px}.mood-btn .mood-icon{font-size:16px}.mood-chart-wrap canvas{height:120px}.mood-stats{gap:12px;flex-wrap:wrap}
+  .sound-controls{flex-wrap:wrap}
+  .password-display{flex-direction:column}.password-display button{width:100%}
+  .search-row{flex-wrap:wrap}.search-row select{width:100%;border-left:none;border-top:1px solid var(--outline);padding:10px}.search-btn{width:100%}
+  .password-options{gap:6px}
+  .calc-panel .viz-btn{padding:10px 6px;font-size:9px}#calcDisplay{font-size:16px!important}
+  .pomo-display{font-size:clamp(36px,15vw,48px)!important}
+}
+@media (max-width: 480px) {
+  .radio-stations{grid-template-columns:1fr}.radio-viz{height:48px}
+  #newsList{gap:6px!important}
+  .mood-options{display:grid;grid-template-columns:repeat(5,1fr);gap:3px}.mood-btn{padding:6px 4px;justify-content:center}.mood-btn .mood-text{display:none}
+  .alarms-form{grid-template-columns:1fr 1fr}.alarms-form button{grid-column:1/-1}
+  .habit-days{gap:2px}.habit-day{width:20px;height:20px;font-size:8px}
+  .todo-form input{font-size:14px}.todo-form select{font-size:10px;padding:8px}
+  .notes-panel textarea{min-height:200px;font-size:13px}
+  .password-opt{flex-wrap:wrap;gap:6px}.password-opt label{font-size:10px}
+  .search-row input{font-size:14px;padding:10px 8px}.search-row select{font-size:11px}
+  .radio-buttons{gap:6px}.radio-btn{font-size:10px;padding:8px}
+}
+
 /* COLLAPSE */
 .panel-header .collapse-btn{width:24px;height:24px;display:grid;place-items:center;color:var(--on-surface-dim);cursor:pointer;flex-shrink:0;font-size:10px;transition:transform .2s}.panel-header .collapse-btn:hover{color:var(--accent)}.panel-header .collapse-btn.collapsed{transform:rotate(-90deg)}.panel.collapsed>.panel-body{display:none!important}.panel.collapsed{margin-bottom:8px}
 
