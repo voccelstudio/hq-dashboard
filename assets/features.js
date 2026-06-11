@@ -928,7 +928,7 @@
   /* ===== 11. XP THEME ===== */
   function applyXPTheme() {
     document.documentElement.className = 'theme-xp';
-    localStorage.setItem('sys_theme', '"xp"');
+    localStorage.setItem('sys_theme', 'xp');
     if (window.XP_updateLabels) window.XP_updateLabels();
   }
 
@@ -955,11 +955,20 @@
         applyXPTheme();
       });
     }
-    // Restore XP theme on page load if saved
+    // Migrate old JSON-encoded format if present
     try {
-      var saved = JSON.parse(localStorage.getItem('sys_theme'));
-      if (saved === 'xp') applyXPTheme();
+      var old = JSON.parse(localStorage.getItem('sys_theme'));
+      if (old === 'xp') { localStorage.setItem('sys_theme', 'xp'); }
     } catch(e) {}
+    // Restore XP theme on page load.
+    // Use setTimeout(0) to run AFTER the built-in module's DOMContentLoaded
+    // handler (Ue/yt/Z) has already run and potentially overwritten the class.
+    setTimeout(function() {
+      try {
+        var saved = localStorage.getItem('sys_theme');
+        if (saved === 'xp') applyXPTheme();
+      } catch(e) {}
+    }, 0);
   });
 
 })();
