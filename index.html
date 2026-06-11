@@ -25,6 +25,7 @@
   <script type="module" crossorigin src="./assets/index-Cpp8q40q.js"></script>
   <link rel="stylesheet" crossorigin href="./assets/style-CxH7Ekp1.css">
   <link rel="stylesheet" crossorigin href="./assets/features.css">
+  <link rel="stylesheet" crossorigin href="./assets/xp-theme.css">
   <style>
     @media (min-width: 1101px) {
       .dash-grid {
@@ -818,6 +819,14 @@
             <button class="preview" type="button">PREVIEW</button>
           </div>
         </div>
+        <div class="theme-card xp" data-theme="xp">
+          <div class="header">OS: WINDOWS_XP</div>
+          <div class="theme-preview" style="background:linear-gradient(135deg,#3a6ea5,#24508c)"><div class="label" style="color:#fff;text-shadow:0 1px 3px rgba(0,0,0,.5);font-family:Tahoma,sans-serif">XP</div></div>
+          <div class="actions">
+            <button class="apply-xp" type="button">BOOT_XP</button>
+            <button class="preview-xp" type="button">PREVIEW</button>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -1021,6 +1030,29 @@
     var os=document.querySelector('.operator-card .status .val');if(os)os.textContent='MASQUERADE';
     var pb=document.querySelector('.btn-process .label');if(pb)pb.textContent='NEW_CONFIDANT';
   };
+  window.XP_updateLabels=function(){
+    txt('terminalTitle','MY_COMPUTER');
+    txt('commandTitle','CONTROL_PANEL');
+    txt('chronosTitle','WORLD_CLOCK');
+    txt('toolsTitle','ACCESSORIES');
+    txt('themesTitle','DISPLAY_SETTINGS');
+    txt('opName','XP_USER');
+    txt('sideOpName','XP_USER');
+    var b=document.querySelector('.brand');if(b){var bv=b.querySelector('.brand-ver');b.childNodes[0].textContent='start';if(bv)bv.textContent='';}
+    var nl=['MY_COMPUTER','CONTROL_PANEL','WORLD_CLOCK','ACCESSORIES','DISPLAY'];
+    document.querySelectorAll('.nav-item').forEach(function(n,i){if(nl[i])n.textContent=nl[i]});
+    var sl=['DESKTOP/MY_COMPUTER','CONTROL_PANEL','DATE_AND_TIME','ACCESSORIES','DISPLAY_SETTINGS'];
+    document.querySelectorAll('.side-item .label').forEach(function(s,i){if(sl[i])s.textContent=sl[i]});
+    var st=['SYSTEM<span class="sep">//</span>MY_COMPUTER<span class="sep">//</span><span style="color:var(--success)">CONNECTED</span>','CONTROL_PANEL // CATEGORY_VIEW','WORLD_CLOCK // <span id="nodeCount">0</span> TIMEZONES','ACCESSORIES // SYSTEM_TOOLS','DISPLAY_SETTINGS // APPEARANCE'];
+    document.querySelectorAll('.view-subtitle').forEach(function(s,i){if(st[i])s.innerHTML=st[i]});
+    var ph=['<span class="material-symbols-outlined">globe</span>system/internet_explorer.exe','<span class="material-symbols-outlined">timer</span>system/task_manager.exe','<span class="material-symbols-outlined">checklist</span>system/notepad.exe','<span class="material-symbols-outlined">my_location</span>system/tray_clock.exe','<span class="material-symbols-outlined">track_changes</span>system/sticky_notes.exe','<span class="material-symbols-outlined">monitoring</span>system/perf_mon.exe','<span class="material-symbols-outlined">headphones</span>system/wmp.exe','<span class="material-symbols-outlined">radio</span>system/wmp_radio.exe','<span class="material-symbols-outlined">mood</span>system/wordpad.exe','<span class="material-symbols-outlined">terminal</span>system/cmd.exe'];
+    document.querySelectorAll('.panel-header .left').forEach(function(p,i){if(ph[i])p.innerHTML=ph[i]});
+    var so=document.querySelector('.statusbar .ok');if(so)so.textContent='CONNECTED';
+    var sv=document.querySelectorAll('.statusbar .v');if(sv.length)sv[0].textContent='LOCAL_NET';
+    var os=document.querySelector('.operator-card .status .val');if(os)os.textContent='WELCOME';
+    var pb=document.querySelector('.btn-process .label');if(pb)pb.textContent='RUN...';
+  };
+  window.XP_resetLabels=window.P5_resetLabels;
   window.P5_resetLabels=function(){
     if(!Object.keys(stored).length)return;
     txt('terminalTitle',stored.terminalTitle);
@@ -1041,7 +1073,7 @@
     var pb=document.querySelector('.btn-process .label');if(pb&&stored.processBtn)pb.textContent=stored.processBtn;
   };
   store();
-  var chk=function(){if(document.documentElement.className==='theme-p5'){window.P5_updateLabels()}};
+  var chk=function(){var c=document.documentElement.className;if(c==='theme-p5'){window.P5_updateLabels()}else if(c==='theme-xp'&&window.XP_updateLabels){window.XP_updateLabels()}};
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',chk);else chk();
 })();
 </script>

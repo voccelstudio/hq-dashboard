@@ -925,4 +925,41 @@
 
   document.addEventListener('DOMContentLoaded', initRadio);
 
+  /* ===== 11. XP THEME ===== */
+  function applyXPTheme() {
+    document.documentElement.className = 'theme-xp';
+    localStorage.setItem('sys_theme', '"xp"');
+    if (window.XP_updateLabels) window.XP_updateLabels();
+  }
+
+  function removeXPTheme() {
+    document.documentElement.className = 'theme-yellow';
+    localStorage.removeItem('sys_theme');
+    if (window.XP_resetLabels) window.XP_resetLabels();
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var applyBtn = document.querySelector('.apply-xp');
+    var previewBtn = document.querySelector('.preview-xp');
+    if (applyBtn) {
+      applyBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        applyXPTheme();
+      });
+    }
+    if (previewBtn) {
+      previewBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        applyXPTheme();
+      });
+    }
+    // Restore XP theme on page load if saved
+    try {
+      var saved = JSON.parse(localStorage.getItem('sys_theme'));
+      if (saved === 'xp') applyXPTheme();
+    } catch(e) {}
+  });
+
 })();
