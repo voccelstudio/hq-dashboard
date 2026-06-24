@@ -665,6 +665,28 @@
     var barW = Math.max(4, Math.min(14, cw / entries.length - 2));
     var gap = (cw - barW * entries.length) / (entries.length + 1);
 
+    // trend line
+    var trendPoints = [];
+    entries.forEach(function(e, i) {
+      if (e.val === 0) return;
+      var tx = pad.l + gap + i * (barW + gap);
+      var tbh = (e.val / 5) * ch;
+      var ty = pad.t + ch - tbh;
+      trendPoints.push({ x: tx + barW/2, y: ty });
+    });
+    if (trendPoints.length > 1) {
+      ctx.strokeStyle = 'var(--accent)';
+      ctx.lineWidth = 1.5;
+      ctx.globalAlpha = 0.35;
+      ctx.beginPath();
+      ctx.moveTo(trendPoints[0].x, trendPoints[0].y);
+      for (var ti = 1; ti < trendPoints.length; ti++) {
+        ctx.lineTo(trendPoints[ti].x, trendPoints[ti].y);
+      }
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+
     entries.forEach(function(e, i) {
       var x = pad.l + gap + i * (barW + gap);
       if (e.val === 0) return;
@@ -672,20 +694,63 @@
       var bh = (e.val / 5) * ch;
       var y = pad.t + ch - bh;
 
-      // bar color
       var c = moodColors[e.val] || '#555';
-      ctx.fillStyle = c;
-      ctx.globalAlpha = 0.5;
-      ctx.fillRect(x, y, barW, bh);
+      var grad = ctx.createLinearGradient(0, y, 0, pad.t + ch);
+      grad.addColorStop(0, c);
+      grad.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad;
+      ctx.globalAlpha = 0.55;
+      var radius = Math.min(3, barW / 2);
+      ctx.beginPath();
+      ctx.moveTo(x + radius, y);
+      ctx.lineTo(x + barW - radius, y);
+      ctx.quadraticCurveTo(x + barW, y, x + barW, y + radius);
+      ctx.lineTo(x + barW, pad.t + ch);
+      ctx.lineTo(x, pad.t + ch);
+      ctx.lineTo(x, y + radius);
+      ctx.quadraticCurveTo(x, y, x + radius, y);
+      ctx.closePath();
+      ctx.fill();
       ctx.globalAlpha = 1;
 
-      // dot on top
       ctx.fillStyle = c;
       ctx.beginPath();
       ctx.arc(x + barW/2, y, 3, 0, Math.PI*2);
       ctx.fill();
 
-      // day label every 5
+      // tooltip hover
+      var wrap = canvas.parentElement;
+      if (wrap && !wrap._moodHoverInit) {
+        wrap._moodHoverInit = true;
+        var tooltip = document.createElement('div');
+        tooltip.className = 'mood-tooltip';
+        wrap.appendChild(tooltip);
+        wrap.addEventListener('mousemove', function(ev) {
+          var rect = canvas.getBoundingClientRect();
+          var mx = ev.clientX - rect.left;
+          var my = ev.clientY - rect.top;
+          var found = false;
+          entries.forEach(function(ee, ii) {
+            if (ee.val === 0) return;
+            var bx = pad.l + gap + ii * (barW + gap);
+            var bx2 = bx + barW;
+            if (mx >= bx && mx <= bx2) {
+              var bbh = (ee.val / 5) * ch;
+              var by = pad.t + ch - bbh;
+              if (my >= by - 6 && my <= by + 6) {
+                tooltip.textContent = moodLabels[ee.val] + ' (' + ee.val + ')';
+                tooltip.style.left = (bx + barW/2) + 'px';
+                tooltip.style.top = (by - 30) + 'px';
+                tooltip.style.display = 'block';
+                found = true;
+              }
+            }
+          });
+          if (!found) tooltip.style.display = 'none';
+        });
+        wrap.addEventListener('mouseleave', function() { tooltip.style.display = 'none'; });
+      }
+
       if (i % 5 === 0 || i === entries.length - 1) {
         ctx.fillStyle = 'rgba(255,255,255,0.3)';
         ctx.font = '7px monospace';
@@ -1065,5 +1130,213 @@
   }
 
   document.addEventListener('DOMContentLoaded', initComprehensiveEmoji);
+
+  /* ===== 13. PET VIRTUAL ===== */
+  var petAsciiVariants = {
+    happy: '  /\\___/\\\n (  o o  )\n (  :^:  )\n  \\   /  ',
+    sleepy: '  /\\___/\\\n (  - -  )\n  \\ ___ /\n   \\   /  ',
+    angry: '  /\\___/\\\n (  > <  )\n  \\  ^  /\n   \\___/  ',
+    default: '  /\\___/\\\n (  o o  )\n /   ^   \\'
+  };
+  var petState = LS('petState') || { hunger: 80, happiness: 60, energy: 70 };
+
+  function updatePetUI() {
+    var asciiEl = document.getElementById('petAscii');
+    var hungerEl = document.getElementById('petHunger');
+    var happyEl = document.getElementById('petHappy');
+    var energyEl = document.getElementById('petEnergy');
+    if (asciiEl) {
+      var variant = 'default';
+      if (petState.hunger < 30) variant = 'sleepy';
+      else if (petState.happiness < 30) variant = 'angry';
+      else if (petState.happiness > 70 && petState.hunger > 70) variant = 'happy';
+      asciiEl.textContent = petAsciiVariants[variant] || petAsciiVariants.default;
+    }
+    if (hungerEl) hungerEl.style.width = Math.min(100, Math.max(0, petState.hunger)) + '%';
+    if (happyEl) happyEl.style.width = Math.min(100, Math.max(0, petState.happiness)) + '%';
+    if (energyEl) energyEl.style.width = Math.min(100, Math.max(0, petState.energy)) + '%';
+    LS('petState', petState);
+  }
+
+  function petFeed() {
+    petState.hunger = Math.min(100, petState.hunger + 15);
+    updatePetUI();
+  }
+  function petPlay() {
+    petState.happiness = Math.min(100, petState.happiness + 15);
+    petState.energy = Math.max(0, petState.energy - 10);
+    updatePetUI();
+  }
+  function petSleep() {
+    petState.energy = Math.min(100, petState.energy + 20);
+    updatePetUI();
+  }
+  function petDecay() {
+    petState.hunger = Math.max(0, petState.hunger - 2);
+    petState.happiness = Math.max(0, petState.happiness - 1);
+    petState.energy = Math.max(0, petState.energy - 1);
+    updatePetUI();
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    updatePetUI();
+    setInterval(petDecay, 30000);
+  });
+
+  /* ===== 14. MARKDOWN SUPPORT ===== */
+  function renderMarkdown(text) {
+    var html = text
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/```([\s\S]*?)```/g, function(m, code) {
+        return '<pre style="background:var(--surface-high);border:1px solid var(--outline);padding:8px;overflow-x:auto;font-size:12px">' + code.replace(/\n$/, '').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
+      })
+      .replace(/######\s*(.*?)(\n|$)/g, '<h6 style="font-size:11px;margin:12px 0 4px;color:var(--accent)">$1</h6>')
+      .replace(/#####\s*(.*?)(\n|$)/g, '<h5 style="font-size:12px;margin:12px 0 4px;color:var(--accent)">$1</h5>')
+      .replace(/####\s*(.*?)(\n|$)/g, '<h4 style="font-size:13px;margin:12px 0 4px;color:var(--accent)">$1</h4>')
+      .replace(/###\s*(.*?)(\n|$)/g, '<h3 style="font-size:14px;margin:12px 0 4px;color:var(--accent)">$1</h3>')
+      .replace(/##\s*(.*?)(\n|$)/g, '<h2 style="font-size:16px;margin:12px 0 4px;color:var(--accent)">$1</h2>')
+      .replace(/#\s*(.*?)(\n|$)/g, '<h1 style="font-size:18px;margin:12px 0 4px;color:var(--accent)">$1</h1>')
+      .replace(/^- (.+)/gm, '<li style="margin-left:16px;list-style:disc">$1</li>')
+      .replace(/`([^`]+)`/g, '<code style="background:var(--surface-high);padding:1px 4px;font-size:12px;border:1px solid var(--outline)">$1</code>')
+      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.+?)\*/g, '<em>$1</em>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--accent);text-decoration:underline">$1</a>')
+      .replace(/\n/g, '<br>');
+    return html;
+  }
+
+  var notesPreviewVisible = false;
+
+  function toggleNotesPreview() {
+    var textarea = document.getElementById('notesArea');
+    var preview = document.getElementById('notesPreview');
+    if (!textarea || !preview) return;
+    notesPreviewVisible = !notesPreviewVisible;
+    if (notesPreviewVisible) {
+      preview.innerHTML = renderMarkdown(textarea.value);
+      preview.style.display = 'block';
+      textarea.style.display = 'none';
+    } else {
+      preview.style.display = 'none';
+      textarea.style.display = '';
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var pv = document.getElementById('notesPreview');
+    if (pv) pv.style.display = 'none';
+  });
+
+  /* ===== 15. INTERNAL SEARCH ===== */
+  function doLocalSearch() {
+    var query = (document.getElementById('localSearch') || {}).value || '';
+    var resultsEl = document.getElementById('localSearchResults');
+    if (!resultsEl) return;
+    if (!query.trim()) { resultsEl.innerHTML = '<div class="todo-empty">ENTER_QUERY</div>'; return; }
+    var q = query.toLowerCase();
+    var html = '';
+
+    var notes = localStorage.getItem('dash_notes') || '';
+    if (notes.toLowerCase().indexOf(q) !== -1) {
+      var idx = notes.toLowerCase().indexOf(q);
+      var snippet = notes.substring(Math.max(0, idx - 30), idx + q.length + 30);
+      html += '<div class="todo-item"><span class="todo-priority high">[NOTE]</span><span class="todo-text">' + esc(snippet) + '</span></div>';
+    }
+
+    var todosLocal = LS('todos') || [];
+    todosLocal.forEach(function(t) {
+      if (t.text.toLowerCase().indexOf(q) !== -1) {
+        html += '<div class="todo-item"><span class="todo-priority medium">[TODO]</span><span class="todo-text">' + esc(t.text) + '</span></div>';
+      }
+    });
+
+    var habitsLocal = LS('habits') || [];
+    habitsLocal.forEach(function(h) {
+      if (h.name.toLowerCase().indexOf(q) !== -1) {
+        html += '<div class="todo-item"><span class="todo-priority low">[HABIT]</span><span class="todo-text">' + esc(h.name) + '</span></div>';
+      }
+    });
+
+    if (!html) {
+      resultsEl.innerHTML = '<div class="todo-empty">NO_MATCHES</div>';
+    } else {
+      resultsEl.innerHTML = html;
+    }
+  }
+
+  /* ===== 16. CUSTOM THEME ===== */
+  function openCustomThemeEditor() {
+    var el = document.getElementById('customThemeEditor');
+    if (!el) return;
+    el.style.display = el.style.display === 'none' ? 'block' : 'none';
+    var ct = LS('customTheme');
+    if (ct) {
+      var m = { accent: 'ct-accent', bg: 'ct-bg', surface: 'ct-surface', text: 'ct-text', success: 'ct-success', error: 'ct-error' };
+      for (var k in m) {
+        var inp = document.getElementById(m[k]);
+        if (inp && ct[k]) inp.value = ct[k];
+      }
+    }
+  }
+
+  function applyCustomTheme(fromCard) {
+    var ct;
+    if (fromCard) {
+      ct = LS('customTheme');
+      if (!ct) {
+        ct = { accent: '#fce300', bg: '#0a0a0a', surface: '#131313', text: '#e5e2e1', success: '#00ff41', error: '#ff3860' };
+      }
+    } else {
+      ct = {
+        accent: (document.getElementById('ct-accent') || {}).value || '#fce300',
+        bg: (document.getElementById('ct-bg') || {}).value || '#0a0a0a',
+        surface: (document.getElementById('ct-surface') || {}).value || '#131313',
+        text: (document.getElementById('ct-text') || {}).value || '#e5e2e1',
+        success: (document.getElementById('ct-success') || {}).value || '#00ff41',
+        error: (document.getElementById('ct-error') || {}).value || '#ff3860'
+      };
+    }
+    LS('customTheme', ct);
+    document.documentElement.className = 'theme-custom';
+    localStorage.setItem('sys_theme', 'custom');
+    setCustomCSSVars(ct);
+  }
+
+  function setCustomCSSVars(ct) {
+    var root = document.documentElement;
+    root.style.setProperty('--accent', ct.accent || '#fce300');
+    root.style.setProperty('--bg', ct.bg || '#0a0a0a');
+    root.style.setProperty('--surface', ct.surface || '#131313');
+    root.style.setProperty('--on-surface', ct.text || '#e5e2e1');
+    root.style.setProperty('--success', ct.success || '#00ff41');
+    root.style.setProperty('--error', ct.error || '#ff3860');
+  }
+
+  function loadCustomTheme() {
+    var root = document.documentElement;
+    var ct = LS('customTheme');
+    if (root.classList.contains('theme-custom')) {
+      if (ct) setCustomCSSVars(ct);
+    } else {
+      var keys = ['--accent', '--bg', '--surface', '--on-surface', '--success', '--error'];
+      keys.forEach(function(k) { root.style.removeProperty(k); });
+    }
+  }
+
+  var ctObserver = new MutationObserver(loadCustomTheme);
+  ctObserver.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+  document.addEventListener('DOMContentLoaded', loadCustomTheme);
+
+  (function() {
+    var savedTheme = localStorage.getItem('sys_theme');
+    if (savedTheme === 'custom') {
+      document.addEventListener('DOMContentLoaded', function() {
+        document.documentElement.classList.add('theme-custom');
+        var ct = LS('customTheme');
+        if (ct) setCustomCSSVars(ct);
+      });
+    }
+  })();
 
 })();

@@ -406,6 +406,30 @@
           </div>
         </div>
 
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">pets</span>root/sys/pet.daemon</div>
+          </div>
+          <div class="panel-body">
+            <div class="pet-container">
+              <pre class="pet-ascii" id="petAscii">
+  /\___/\
+ (  o o  )
+ /   ^   \</pre>
+            </div>
+            <div class="pet-stats">
+              <div class="pet-stat"><span class="label">HUNGER</span><div class="bar-bg"><div class="bar" id="petHunger" style="width:80%"></div></div></div>
+              <div class="pet-stat"><span class="label">HAPPINESS</span><div class="bar-bg"><div class="bar" id="petHappy" style="width:60%"></div></div></div>
+              <div class="pet-stat"><span class="label">ENERGY</span><div class="bar-bg"><div class="bar" id="petEnergy" style="width:70%"></div></div></div>
+            </div>
+            <div class="pet-actions">
+              <button class="viz-btn" onclick="petFeed()">[ FEED ]</button>
+              <button class="viz-btn" onclick="petPlay()">[ PLAY ]</button>
+              <button class="viz-btn" onclick="petSleep()">[ SLEEP ]</button>
+            </div>
+          </div>
+        </div>
+
         <div class="panel full">
           <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">terminal</span>root/sys/daemon.log</div>
@@ -677,11 +701,15 @@
               <button class="icon-btn" onclick="downloadNotes()" title="Download as .txt">
                 <span class="material-symbols-outlined">download</span>
               </button>
+              <button class="icon-btn" onclick="toggleNotesPreview()" title="Toggle Preview">
+                <span class="material-symbols-outlined">visibility</span>
+              </button>
               <span id="notesSaved" style="font-size: 10px; margin-right: 8px;"></span>
             </div>
           </div>
           <div class="panel-body" style="padding:0">
             <textarea id="notesArea" placeholder="Write something..."></textarea>
+            <div id="notesPreview" class="notes-preview" style="display:none"></div>
             <div class="notes-meta">
               <span>CHARS: <span id="notesCount">0</span></span>
               <span>UTF-8 // SECURE</span>
@@ -710,6 +738,22 @@
           </div>
         </div>
 
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left"><span class="material-symbols-outlined">search</span>root/sys/search.local</div>
+          </div>
+          <div class="panel-body">
+            <div class="search-form">
+              <div class="search-row">
+                <input type="text" id="localSearch" placeholder="SEARCH_NOTES_TASKS_HABITS..." style="flex:1">
+                <button class="viz-btn" onclick="doLocalSearch()">SEARCH</button>
+              </div>
+            </div>
+            <div class="todo-list" id="localSearchResults" style="max-height:200px;overflow-y:auto;margin-top:8px">
+              <div class="todo-empty">ENTER_QUERY</div>
+            </div>
+          </div>
+        </div>
         <div class="panel">
           <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">memory</span>root/sys/telemetry.sys</div>
@@ -774,6 +818,32 @@
           <div class="actions">
             <button class="apply-xp" type="button">BOOT_XP</button>
             <button class="preview-xp" type="button">PREVIEW</button>
+          </div>
+        </div>
+        <div class="theme-card custom" data-theme="custom" style="border-color:var(--outline)">
+          <div class="header">PROTOCOL: CUSTOM</div>
+          <div class="theme-preview" style="background:linear-gradient(135deg,#333,#111)"><div class="label" style="color:var(--accent)">CUSTOM</div></div>
+          <div class="actions">
+            <button class="viz-btn" onclick="openCustomThemeEditor()">EDIT</button>
+            <button class="viz-btn" onclick="applyCustomTheme(true)">APPLY</button>
+          </div>
+        </div>
+      </div>
+      <div id="customThemeEditor" style="display:none;margin-top:16px">
+        <div class="panel">
+          <div class="panel-header">
+            <div class="left">CUSTOM_THEME // COLOR_MATRIX</div>
+          </div>
+          <div class="panel-body">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px" id="customColorGrid">
+              <div><label style="font-size:10px;color:var(--on-surface-dim)">ACCENT</label><input type="color" id="ct-accent" value="#fce300" style="width:100%;height:32px;background:var(--surface-low);border:1px solid var(--outline);cursor:pointer"></div>
+              <div><label style="font-size:10px;color:var(--on-surface-dim)">BG</label><input type="color" id="ct-bg" value="#0a0a0a" style="width:100%;height:32px;background:var(--surface-low);border:1px solid var(--outline);cursor:pointer"></div>
+              <div><label style="font-size:10px;color:var(--on-surface-dim)">SURFACE</label><input type="color" id="ct-surface" value="#131313" style="width:100%;height:32px;background:var(--surface-low);border:1px solid var(--outline);cursor:pointer"></div>
+              <div><label style="font-size:10px;color:var(--on-surface-dim)">TEXT</label><input type="color" id="ct-text" value="#e5e2e1" style="width:100%;height:32px;background:var(--surface-low);border:1px solid var(--outline);cursor:pointer"></div>
+              <div><label style="font-size:10px;color:var(--on-surface-dim)">SUCCESS</label><input type="color" id="ct-success" value="#00ff41" style="width:100%;height:32px;background:var(--surface-low);border:1px solid var(--outline);cursor:pointer"></div>
+              <div><label style="font-size:10px;color:var(--on-surface-dim)">ERROR</label><input type="color" id="ct-error" value="#ff3860" style="width:100%;height:32px;background:var(--surface-low);border:1px solid var(--outline);cursor:pointer"></div>
+            </div>
+            <button class="search-btn" onclick="applyCustomTheme()" style="margin-top:12px;width:100%">[ APPLY_CUSTOM_THEME ]</button>
           </div>
         </div>
       </div>
