@@ -51,22 +51,6 @@
       transition: opacity .6s ease;
     }
     #loadingScreen.hide { opacity: 0; pointer-events: none; }
-    #matrixCanvas {
-      position: absolute; inset: 0;
-      width: 100%; height: 100%;
-      opacity: .35;
-    }
-    .ls-scanline {
-      position: absolute; left: 0; width: 100%; height: 2px;
-      background: linear-gradient(90deg, transparent, #00ff41, transparent);
-      opacity: .5;
-      animation: lsScan 2s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes lsScan {
-      0% { top: 0; }
-      100% { top: 100%; }
-    }
     .ls-center {
       position: relative; z-index: 1;
       display: flex; flex-direction: column; align-items: center;
@@ -113,9 +97,8 @@
 </head>
 
 <body>
+<div id="vanta-bg" style="position:fixed;inset:0;z-index:0;pointer-events:none;"></div>
 <div id="loadingScreen">
-  <canvas id="matrixCanvas"></canvas>
-  <div class="ls-scanline"></div>
   <div class="ls-center">
     <div class="ls-terminal" id="lsTerminal">
       <div class="ls-line">&gt; SYSTEM_BOOT_SEQUENCE_INITIALIZED...</div>
@@ -136,63 +119,22 @@
 
 <script>
 (function(){
-  var canvas = document.getElementById('matrixCanvas');
-  var ctx = canvas.getContext('2d');
-  var chars = 'アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン0123456789ABCDEF';
-  var fontSize = 12;
-  var drops = [];
-  var columns, frame;
-
-  function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-    columns = Math.floor(canvas.width / fontSize);
-    drops = [];
-    for (var i = 0; i < columns; i++) {
-      drops[i] = Math.floor(Math.random() * -canvas.height / fontSize);
-    }
-  }
-
-  function draw() {
-    ctx.fillStyle = 'rgba(0,0,0,0.05)';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = '#00ff41';
-    ctx.font = fontSize + 'px monospace';
-    for (var i = 0; i < drops.length; i++) {
-      var text = chars[Math.floor(Math.random() * chars.length)];
-      ctx.fillStyle = i % 3 === 0 ? '#00ff41' : '#0a6e1a';
-      ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-      if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-        drops[i] = 0;
-      }
-      drops[i]++;
-    }
-  }
-
-  window.addEventListener('resize', resize);
-  resize();
-  frame = setInterval(draw, 45);
-
-  // Boot sequence
   var lines = document.querySelectorAll('#lsTerminal .ls-line');
   var bar = document.getElementById('lsProgressBar');
   var total = lines.length;
   var idx = 0;
-  var progress = 0;
 
   function bootNext() {
     if (idx >= total) {
       setTimeout(function() {
         document.getElementById('loadingScreen').classList.add('hide');
-        setTimeout(function() { clearInterval(frame); }, 600);
       }, 400);
       return;
     }
     var line = lines[idx];
     line.classList.add('typed');
     if (idx > 0) lines[idx - 1].classList.add('done');
-    progress = ((idx + 1) / total) * 100;
-    bar.style.width = progress + '%';
+    bar.style.width = ((idx + 1) / total) * 100 + '%';
     idx++;
     setTimeout(bootNext, 350);
   }
@@ -1416,5 +1358,17 @@
   }
 </script>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+  <script>
+    VANTA.NET({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      gyroControls: false,
+      minHeight: 200.00,
+      minWidth: 200.00
+    })
+  </script>
 </body>
 </html>
