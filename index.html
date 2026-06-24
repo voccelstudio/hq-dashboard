@@ -1052,11 +1052,8 @@
     transition: border-color 0.3s, box-shadow 0.3s;
   }
   .globe-label .name { font-weight: 700; font-size: 11px; letter-spacing: 1px; }
-  .globe-label .tz { font-size: 9px; opacity: 0.7; color: var(--accent); }
-  .globe-label .time { font-size: 10px; opacity: 0.9; letter-spacing: 0.5px; color: var(--accent); }
-  .globe-label.local .ring { border-color: var(--accent); box-shadow: 0 0 10px var(--accent-glow), inset 0 0 10px var(--accent-glow); }
-  .globe-label.local .name { color: var(--accent); }
-  .globe-label.local .time { color: var(--accent); }
+  .globe-label .tz { font-size: 9px; opacity: 0.7; }
+  .globe-label .time { font-size: 10px; opacity: 0.9; letter-spacing: 0.5px; }
   .theme-xp .globe-label { font-family: Tahoma, sans-serif; font-size: 11px; }
   .theme-xp .globe-label .name { font-size: 11px; }
   .theme-xp .globe-label .time { font-size: 10px; }
@@ -1085,11 +1082,11 @@
   const R = 5;
 
   const ciudades = [
-    { code: 'LQE', name: 'LUQUE', city: 'Luque', tz: 'America/Asuncion', lat: -25.2697, lon: -57.4869, local: true },
-    { code: 'TIJ', name: 'BAJA_CAL', city: 'Tijuana', tz: 'America/Tijuana', lat: 32.5149, lon: -117.0382, local: false },
-    { code: 'SGN', name: 'SINGEN', city: 'Singen', tz: 'Europe/Berlin', lat: 47.7596, lon: 8.84, local: false },
-    { code: 'KOL', name: 'KOLKATA', city: 'Kolkata', tz: 'Asia/Kolkata', lat: 22.5726, lon: 88.3639, local: false },
-    { code: 'BIO', name: 'BILBAO', city: 'Bilbao', tz: 'Europe/Madrid', lat: 43.263, lon: -2.935, local: false },
+    { code: 'LQE', name: 'LUQUE', city: 'Luque', tz: 'America/Asuncion', lat: -25.2697, lon: -57.4869, local: true, color: 'var(--accent)' },
+    { code: 'TIJ', name: 'BAJA_CAL', city: 'Tijuana', tz: 'America/Tijuana', lat: 32.5149, lon: -117.0382, local: false, color: 'var(--success)' },
+    { code: 'SGN', name: 'SINGEN', city: 'Singen', tz: 'Europe/Berlin', lat: 47.7596, lon: 8.84, local: false, color: 'var(--info)' },
+    { code: 'KOL', name: 'KOLKATA', city: 'Kolkata', tz: 'Asia/Kolkata', lat: 22.5726, lon: 88.3639, local: false, color: 'var(--warn)' },
+    { code: 'BIO', name: 'BILBAO', city: 'Bilbao', tz: 'Europe/Madrid', lat: 43.263, lon: -2.935, local: false, color: 'var(--error)' },
   ];
 
   const labelEls = [];
@@ -1233,10 +1230,10 @@
       const div = document.createElement('div');
       div.className = 'globe-label' + (c.local ? ' local' : '');
       div.innerHTML = `
-        <span class="ring"></span>
-        <div class="name">${c.name}</div>
-        <div class="tz">${c.tz}</div>
-        <div class="time" data-tz="${c.tz}">--:--:--</div>
+        <span class="ring" style="border-color:${c.color};box-shadow:0 0 6px ${c.color}, inset 0 0 6px ${c.color}"></span>
+        <div class="name" style="color:${c.local ? c.color : ''}">${c.name}</div>
+        <div class="tz" style="color:${c.color}">${c.tz}</div>
+        <div class="time" data-tz="${c.tz}" style="color:${c.color}">--:--:--</div>
       `;
       const label = new CSS2DObject(div);
       label.position.copy(pos.clone().multiplyScalar(1.06));
@@ -1360,15 +1357,31 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
   <script>
-    VANTA.NET({
-      el: "#vanta-bg",
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 200.00,
-      minWidth: 200.00
-    })
+    var currentEffect = null;
+
+    function initVanta(effect) {
+      if (currentEffect) { try { currentEffect.destroy(); } catch(e) {} }
+      var opts = {
+        el: "#vanta-bg",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 200.00,
+        minWidth: 200.00
+      };
+      currentEffect = effect === 'clouds' ? VANTA.CLOUDS(opts) : VANTA.NET(opts);
+    }
+
+    function updateVantaTheme() {
+      initVanta(document.documentElement.classList.contains('theme-xp') ? 'clouds' : 'net');
+    }
+
+    var obs = new MutationObserver(updateVantaTheme);
+    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+
+    updateVantaTheme();
   </script>
 </body>
 </html>
