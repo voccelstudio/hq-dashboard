@@ -43,6 +43,17 @@
     }
   </style>
   <style>
+    @media (max-width: 480px) {
+      #globeContainer { min-height: 300px !important; }
+      .globe-panel .panel-body { min-height: 300px !important; }
+      .command-sidebar .panel { margin-bottom: 12px; }
+      .modal { max-width: 96%; }
+      .modal-body { padding: 12px; }
+      .setting-row { grid-template-columns: 1fr; }
+      .links-grid { gap: 8px; }
+    }
+  </style>
+  <style>
     #loadingScreen {
       position: fixed; inset: 0; z-index: 99999;
       background: #000;
@@ -58,6 +69,7 @@
     }
     .ls-terminal {
       display: flex; flex-direction: column; gap: 6px;
+      width: 100%;
     }
     .ls-line {
       font-size: 14px; color: #00ff41;
@@ -65,6 +77,16 @@
       white-space: nowrap;
       text-shadow: 0 0 6px rgba(0,255,65,.5);
       transition: opacity .15s ease;
+    }
+    @media (max-width: 600px) {
+      .ls-center { min-width: 0; width: 92%; gap: 20px; }
+      .ls-line { font-size: 11px; white-space: normal; word-break: break-all; }
+      .ls-progress-wrap { max-width: 100%; }
+      .ls-footer { font-size: 9px; }
+    }
+    @media (max-width: 380px) {
+      .ls-line { font-size: 10px; }
+      .ls-center { gap: 16px; }
     }
     .ls-line.typed { opacity: 1; }
     .ls-line.done { opacity: 0.55; }
