@@ -520,12 +520,7 @@
             <div class="panel-header">
               <div class="left"><span class="material-symbols-outlined">sentiment_satisfied</span>sys/emoji_picker.sh</div>
             </div>
-            <div class="panel-body">
-              <input type="text" id="emojiSearch" placeholder="SEARCH_EMOJIS..." class="search-btn" style="width: 100%; text-align: left; padding-left: 12px; margin-bottom: 8px; cursor: text;">
-              <div id="emojiList" style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; max-height: 200px; overflow-y: auto; font-size: 20px; padding: 5px; background: var(--surface-low);">
-                <!-- Emojis here -->
-              </div>
-            </div>
+            <div class="panel-body"><!-- features.js inyecta el picker completo --></div>
           </div>
 
           <div class="panel architect-tools-panel">
@@ -999,35 +994,79 @@
     });
   }
 
-  // 2. Lógica de Clima (Open-Meteo)
+  // 2. Geolocalización real + clima offline
+  const WEATHER_CACHE_KEY = 'sys_weather_cache';
   const weatherMap = {
     0: "CLEAR_SKY", 1: "MAINLY_CLEAR", 2: "PARTLY_CLOUDY", 3: "OVERCAST",
     45: "FOG_NODE", 48: "RIME_FOG", 51: "LIGHT_DRIZZLE", 61: "LIGHT_RAIN",
     80: "RAIN_SHOWERS", 95: "THUNDERSTORM"
   };
 
-  async function updateWeather() {
-    const statusEl = document.getElementById('localHeroStatus');
-    // Coordenadas default: Asunción
-    let lat = -25.26, lon = -57.57;
+  function getCachedWeather() {
+    try { return JSON.parse(localStorage.getItem(WEATHER_CACHE_KEY)); } catch(e) { return null; }
+  }
 
-    try {
-      statusEl.innerText = "UPLINKING...";
-      const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`);
-      const data = await res.json();
-      
-      document.getElementById('localTemp').innerText = `${Math.round(data.current_weather.temperature)}°`;
-      document.getElementById('localCond').innerText = weatherMap[data.current_weather.weathercode] || "NODE_SYNC";
-      document.getElementById('localCity').innerText = "ASUNCION_NODE";
-      
-      statusEl.innerText = "SYNCED";
-      statusEl.style.color = "var(--success)";
-    } catch (e) {
-      statusEl.innerText = "OFFLINE_MODE";
+  function setCachedWeather(data) {
+    try { localStorage.setItem(WEATHER_CACHE_KEY, JSON.stringify(Object.assign({}, data, { _cachedAt: Date.now() }))); } catch(e) {}
+  }
+
+  function applyWeather(lat, lon, city) {
+    var statusEl = document.getElementById('localHeroStatus');
+    statusEl.innerText = "UPLINKING...";
+
+    var cached = getCachedWeather();
+    if (cached && Date.now() - cached._cachedAt < 30 * 60 * 1000) {
+      document.getElementById('localTemp').innerText = cached.temp;
+      document.getElementById('localCond').innerText = cached.cond;
+      document.getElementById('localCity').innerText = cached.city;
+      statusEl.innerText = "CACHED";
+      statusEl.style.color = "var(--warn)";
+    }
+
+    fetch('https://api.open-meteo.com/v1/forecast?latitude=' + lat + '&longitude=' + lon + '&current_weather=true')
+      .then(function(r) { return r.json(); })
+      .then(function(data) {
+        var temp = Math.round(data.current_weather.temperature) + '°';
+        var cond = weatherMap[data.current_weather.weathercode] || "NODE_SYNC";
+        document.getElementById('localTemp').innerText = temp;
+        document.getElementById('localCond').innerText = cond;
+        document.getElementById('localCity').innerText = (city || "UNKNOWN_NODE").toUpperCase();
+        statusEl.innerText = "SYNCED";
+        statusEl.style.color = "var(--success)";
+        setCachedWeather({ temp: temp, cond: cond, city: (city || "UNKNOWN_NODE").toUpperCase() });
+      })
+      .catch(function() {
+        if (!cached) statusEl.innerText = "OFFLINE_MODE";
+      });
+  }
+
+  function updateLocation() {
+    var cached = getCachedWeather();
+    if (cached && cached.lat && cached.lon) {
+      applyWeather(cached.lat, cached.lon, cached.city);
+    }
+
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition(
+        function(pos) {
+          var lat = pos.coords.latitude;
+          var lon = pos.coords.longitude;
+          var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+          var city = tz.split('/').pop().replace(/_/g, ' ');
+          applyWeather(lat, lon, city);
+          setCachedWeather({ lat: lat, lon: lon, city: city.toUpperCase(), temp: '--°', cond: 'SYNC' });
+        },
+        function() {
+          if (!cached) applyWeather(-25.26, -57.57, 'ASUNCION_NODE');
+        },
+        { enableHighAccuracy: false, timeout: 10000 }
+      );
+    } else {
+      if (!cached) applyWeather(-25.26, -57.57, 'ASUNCION_NODE');
     }
   }
 
-  document.addEventListener('DOMContentLoaded', updateWeather);
+  document.addEventListener('DOMContentLoaded', updateLocation);
 </script>
 
 <script>
@@ -1447,6 +1486,130 @@
   }
 </script>
 
+  <script>
+  // Override reGeoBtn to re-trigger geolocation
+  document.addEventListener('DOMContentLoaded', function() {
+    var btn = document.getElementById('reGeoBtn');
+    if (btn) {
+      btn.addEventListener('click', function() {
+        if ('geolocation' in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            function(pos) {
+              var lat = pos.coords.latitude;
+              var lon = pos.coords.longitude;
+              var tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+              var city = tz.split('/').pop().replace(/_/g, ' ');
+              if (window.applyWeather) window.applyWeather(lat, lon, city);
+              try {
+                localStorage.setItem('sys_weather_cache', JSON.stringify({
+                  lat: lat, lon: lon, city: city.toUpperCase(),
+                  temp: '--°', cond: 'SYNC', _cachedAt: Date.now()
+                }));
+              } catch(e) {}
+              if (window.m) window.m('Geolocation updated: ' + city, 'ok', 'GEO');
+            },
+            function() {
+              if (window.m) window.m('Geolocation denied by browser', 'warn', 'GEO');
+            },
+            { enableHighAccuracy: false, timeout: 10000 }
+          );
+        } else {
+          if (window.m) window.m('Geolocation not available', 'err', 'GEO');
+        }
+      });
+    }
+  });
+  </script>
+  <script>
+  // Offline weather cache for all city nodes
+  (function() {
+    var CACHE_KEY = 'sys_nodes_weather';
+    function saveNodesWeather() {
+      var data = {};
+      document.querySelectorAll('[data-weather]').forEach(function(el) {
+        data[el.getAttribute('data-weather')] = el.textContent;
+      });
+      document.querySelectorAll('[data-weather-block]').forEach(function(el) {
+        var code = el.getAttribute('data-weather-block');
+        var tempEl = el.querySelector('.temp');
+        var condEl = el.querySelector('.cond');
+        if (tempEl && condEl) {
+          data['block_' + code] = { temp: tempEl.textContent, cond: condEl.textContent };
+        }
+      });
+      if (Object.keys(data).length) {
+        try { localStorage.setItem(CACHE_KEY, JSON.stringify(data)); } catch(e) {}
+      }
+    }
+    // Save 2s after any weather update (debounced)
+    var debounceTimer = null;
+    var observer = new MutationObserver(function() {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(saveNodesWeather, 2000);
+    });
+    document.addEventListener('DOMContentLoaded', function() {
+      observer.observe(document.body, { subtree: true, childList: true, attributes: true, attributeFilter: ['data-weather'] });
+      // Restore cached weather on load
+      try {
+        var cached = JSON.parse(localStorage.getItem(CACHE_KEY));
+        if (cached) {
+          Object.keys(cached).forEach(function(key) {
+            if (key.startsWith('block_')) {
+              var code = key.replace('block_', '');
+              var el = document.querySelector('[data-weather-block="' + code + '"]');
+              if (el) {
+                var t = el.querySelector('.temp');
+                var c = el.querySelector('.cond');
+                if (t) t.textContent = cached[key].temp;
+                if (c) c.textContent = cached[key].cond;
+              }
+            } else {
+              var el = document.querySelector('[data-weather="' + key + '"]');
+              if (el) el.textContent = cached[key];
+            }
+          });
+        }
+      } catch(e) {}
+      // Save on page unload
+      window.addEventListener('beforeunload', saveNodesWeather);
+    });
+  })();
+  </script>
+  <script>
+  // Touch drag support for SVG world map
+  (function() {
+    document.addEventListener('touchstart', function(e) {
+      var target = e.target.closest('g[data-code]');
+      if (!target) return;
+      var touch = e.changedTouches[0];
+      var me = new MouseEvent('mousedown', {
+        clientX: touch.clientX, clientY: touch.clientY,
+        bubbles: true, cancelable: true
+      });
+      target.dispatchEvent(me);
+    }, { passive: true });
+
+    document.addEventListener('touchmove', function(e) {
+      var g = document.querySelector('g[data-code]:active');
+      if (!g) return;
+      var touch = e.changedTouches[0];
+      var me = new MouseEvent('mousemove', {
+        clientX: touch.clientX, clientY: touch.clientY,
+        bubbles: true, cancelable: true
+      });
+      document.dispatchEvent(me);
+    }, { passive: true });
+
+    document.addEventListener('touchend', function(e) {
+      var g = document.querySelector('g[data-code]:active');
+      if (!g) return;
+      var me = new MouseEvent('mouseup', {
+        bubbles: true, cancelable: true
+      });
+      document.dispatchEvent(me);
+    }, { passive: true });
+  })();
+  </script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
