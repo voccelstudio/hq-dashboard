@@ -1610,33 +1610,37 @@
     }, { passive: true });
   })();
   </script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.net.min.js" async></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta@latest/dist/vanta.clouds.min.js" async></script>
   <script>
-    var currentEffect = null;
-
-    function initVanta(effect) {
-      if (currentEffect) { try { currentEffect.destroy(); } catch(e) {} }
-      var opts = {
-        el: "#vanta-bg",
-        mouseControls: true,
-        touchControls: true,
-        gyroControls: false,
-        minHeight: 200.00,
-        minWidth: 200.00
-      };
-      currentEffect = effect === 'clouds' ? VANTA.CLOUDS(opts) : VANTA.NET(opts);
-    }
-
-    function updateVantaTheme() {
-      initVanta(document.documentElement.classList.contains('theme-xp') ? 'clouds' : 'net');
-    }
-
-    var obs = new MutationObserver(updateVantaTheme);
-    obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-
-    updateVantaTheme();
+    (function(){
+      function tryVanta() {
+        if (typeof VANTA === 'undefined') { setTimeout(tryVanta, 500); return; }
+        try {
+          var currentEffect = null;
+          function initVanta(effect) {
+            if (currentEffect) { try { currentEffect.destroy(); } catch(e) {} }
+            var opts = {
+              el: "#vanta-bg",
+              mouseControls: true,
+              touchControls: true,
+              gyroControls: false,
+              minHeight: 200.00,
+              minWidth: 200.00
+            };
+            currentEffect = effect === 'clouds' ? VANTA.CLOUDS(opts) : VANTA.NET(opts);
+          }
+          function updateVantaTheme() {
+            initVanta(document.documentElement.classList.contains('theme-xp') ? 'clouds' : 'net');
+          }
+          var obs = new MutationObserver(updateVantaTheme);
+          obs.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
+          updateVantaTheme();
+        } catch(e) { console.warn('Vanta init failed:', e); }
+      }
+      tryVanta();
+    })();
   </script>
 </body>
 </html>
