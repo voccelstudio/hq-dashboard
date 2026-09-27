@@ -40,17 +40,62 @@
       .dash-grid {
         grid-template-columns: repeat(3, 1fr) !important;
       }
+      /* 3-col grid: news spans the row, so let the radio take the rest */
+      .dash-grid .radio-panel { grid-column: span 2; }
     }
   </style>
   <style>
     @media (max-width: 480px) {
-      #globeContainer { min-height: 300px !important; }
-      .globe-panel .panel-body { min-height: 300px !important; }
       .command-sidebar .panel { margin-bottom: 12px; }
       .modal { max-width: 96%; }
       .modal-body { padding: 12px; }
       .setting-row { grid-template-columns: 1fr; }
       .links-grid { gap: 8px; }
+    }
+  </style>
+  <style>
+    /* CHRONOS / GLOBE SIZING
+       Reserve = topbar + statusbar + .main padding + view header + panel header.
+       Everything else is vertical rhythm, so the globe gets the rest of the
+       viewport and never forces the page to scroll. */
+    :root { --chronos-reserve: 296px; }
+    .globe-panel .panel-body {
+      padding: 0;
+      position: relative;
+      height: clamp(240px, calc(100vh - var(--chronos-reserve)), 1100px);
+      height: clamp(240px, calc(100dvh - var(--chronos-reserve)), 1100px);
+      overflow: hidden;
+    }
+    #globeContainer {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+    /* Clocks scroll inside their own column instead of stretching the page */
+    .chronos-layout > .clock-nodes {
+      max-height: clamp(240px, calc(100vh - var(--chronos-reserve)), 1100px);
+      max-height: clamp(240px, calc(100dvh - var(--chronos-reserve)), 1100px);
+      overflow-y: auto;
+    }
+    @media (max-width: 768px) {
+      :root { --chronos-reserve: 200px; }
+    }
+    @media (max-width: 1100px) {
+      /* Single column: cap the globe so it fits on screen, let the clocks flow below */
+      .globe-panel .panel-body {
+        height: clamp(220px, 46dvh, 460px);
+      }
+      .chronos-layout > .clock-nodes {
+        height: auto;
+        max-height: none;
+        overflow: visible;
+      }
+    }
+    @media (max-width: 480px) {
+      /* Phones: keep the globe compact so the clocks stay within reach */
+      .globe-panel .panel-body {
+        height: clamp(200px, 40dvh, 340px);
+      }
     }
   </style>
   <style>
@@ -274,51 +319,6 @@
 
         <div class="panel">
           <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">timer</span>root/sys/pomodoro.exe</div>
-          </div>
-          <div class="panel-body">
-            <div class="pomodoro">
-              <div class="pomo-mode" id="pomoMode">FOCUS</div>
-              <div class="pomo-display" id="pomoDisplay">25:00</div>
-              <div class="pomo-controls">
-                <button class="pomo-btn primary" id="pomoStartBtn" type="button">START</button>
-                <button class="pomo-btn" id="pomoResetBtn" type="button">RESET</button>
-                <button class="pomo-btn" id="pomoSkipBtn" type="button">SKIP</button>
-              </div>
-              <div class="pomo-stats">
-                CYCLES: <span class="v" id="pomoCycles">0</span> // 
-                TOTAL_FOCUS: <span class="v" id="pomoFocusTime">0m</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">checklist</span>root/user/todo.exe</div>
-          </div>
-          <div class="panel-body">
-            <form class="todo-form" id="todoForm">
-              <input id="todoInput" placeholder="NEW_TASK..." type="text" autocomplete="off" />
-              <select id="todoPriority">
-                <option value="low">LOW</option>
-                <option value="medium" selected>MEDIUM</option>
-                <option value="high">HIGH</option>
-              </select>
-              <select id="todoFilter">
-                <option value="all">ALL</option>
-                <option value="active">ACTIVE</option>
-                <option value="done">DONE</option>
-              </select>
-              <button type="submit">[ ADD ]</button>
-            </form>
-            <div class="todo-list" id="todoList"></div>
-            <div class="todo-stats" id="todoStats">0 TASKS // 0 DONE</div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">my_location</span>root/local/node.sys</div>
             <div class="right" id="localHeroStatus">SYNCING...</div>
           </div>
@@ -338,42 +338,7 @@
           </div>
         </div>
 
-        <div class="panel">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">track_changes</span>root/user/habits.exe</div>
-          </div>
-          <div class="panel-body">
-            <form class="habit-form" id="habitForm">
-              <input id="habitInput" placeholder="NEW_HABIT..." type="text" autocomplete="off" />
-              <button type="submit">[ ADD ]</button>
-            </form>
-            <div class="habit-list" id="habitList"></div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">monitoring</span>root/sys/metrics.sys</div>
-          </div>
-          <div class="panel-body" id="metricsBody">
-            <!-- JS updates this -->
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">headphones</span>root/user/ambient.exe</div>
-          </div>
-          <div class="panel-body">
-            <div class="sounds-grid" id="soundsGrid"></div>
-            <div class="sound-controls">
-              <label>VOL: <input type="range" id="soundVolume" min="0" max="1" step="0.05" value="0.3" /></label>
-              <button class="sound-btn" id="soundStopBtn">STOP</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
+        <div class="panel radio-panel">
           <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">radio</span>root/user/radio.exe</div>
           </div>
@@ -399,70 +364,6 @@
             </div>
           </div>
         </div>
-        <div class="panel full">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">mood</span>root/user/mood_chart.exe</div>
-            <div class="right">
-              <span id="moodStreak" style="font-size:10px;color:var(--accent);font-family:var(--font-mono)"></span>
-            </div>
-          </div>
-          <div class="panel-body">
-            <div class="mood-today">
-              <span class="mood-label">TODAY'S MOOD:</span>
-              <div class="mood-options" id="moodOptions">
-                <button class="mood-btn" data-mood="1"><span class="mood-icon">😡</span><span class="mood-text">TERRIBLE</span></button>
-                <button class="mood-btn" data-mood="2"><span class="mood-icon">😞</span><span class="mood-text">BAD</span></button>
-                <button class="mood-btn" data-mood="3"><span class="mood-icon">😐</span><span class="mood-text">NEUTRAL</span></button>
-                <button class="mood-btn" data-mood="4"><span class="mood-icon">🙂</span><span class="mood-text">OK</span></button>
-                <button class="mood-btn" data-mood="5"><span class="mood-icon">😄</span><span class="mood-text">GOOD</span></button>
-              </div>
-            </div>
-            <div class="mood-chart-wrap">
-              <canvas id="moodChart" height="180"></canvas>
-            </div>
-            <div class="mood-stats">
-              <span id="moodAvg">AVG: --</span>
-              <span id="moodBest">BEST: --</span>
-              <span id="moodTotal">LOGGED: 0 days</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">pets</span>root/sys/pet.daemon</div>
-          </div>
-          <div class="panel-body">
-            <div class="pet-container">
-              <pre class="pet-ascii" id="petAscii">
-  /\___/\
- (  o o  )
- /   ^   \</pre>
-            </div>
-            <div class="pet-stats">
-              <div class="pet-stat"><span class="label">HUNGER</span><div class="bar-bg"><div class="bar" id="petHunger" style="width:80%"></div></div></div>
-              <div class="pet-stat"><span class="label">HAPPINESS</span><div class="bar-bg"><div class="bar" id="petHappy" style="width:60%"></div></div></div>
-              <div class="pet-stat"><span class="label">ENERGY</span><div class="bar-bg"><div class="bar" id="petEnergy" style="width:70%"></div></div></div>
-            </div>
-            <div class="pet-actions">
-              <button class="viz-btn" onclick="petFeed()">[ FEED ]</button>
-              <button class="viz-btn" onclick="petPlay()">[ PLAY ]</button>
-              <button class="viz-btn" onclick="petSleep()">[ SLEEP ]</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="panel full">
-          <div class="panel-header">
-            <div class="left"><span class="material-symbols-outlined">terminal</span>root/sys/daemon.log</div>
-          </div>
-          <div class="panel-body">
-            <div class="daemon-log" id="daemonLog">
-              <div class="loading">INITIALIZING_LOG_STREAM</div>
-            </div>
-          </div>
-        </div>
-
       </div>
     </section>
 
@@ -550,8 +451,8 @@
           <div class="panel-header">
             <div class="left"><span class="material-symbols-outlined">public</span>root/net/globe.3d</div>
           </div>
-          <div class="panel-body" style="padding:0; height:100%; position:relative; min-height:480px; overflow:hidden">
-            <div id="globeContainer" style="width:100%; height:100%; min-height:480px; position:relative"></div>
+          <div class="panel-body">
+            <div id="globeContainer"></div>
             <div id="globeInfo" class="world-map-info" style="display:none">
               UPLINK: <span class="v">ESTABLISHED</span><br>
               PROTOCOL: <span class="v">TCP/IP_SECURE</span>
@@ -1161,7 +1062,7 @@
 <script src="./assets/features.js"></script>
 
 <style>
-  #globeContainer canvas { display: block; width: 100% !important; height: 100% !important; }
+  #globeContainer canvas { display: block; max-width: 100%; }
   .globe-label {
     color: var(--on-surface);
     font-family: 'JetBrains Mono', monospace;
@@ -1206,6 +1107,9 @@
 
   const scene = new THREE.Scene();
   let renderer, labelRenderer, camera, controls, globe, bloomComposer, bloomPass;
+  let resizeObserver = null;
+  let appliedFit = 13;
+  let isVisible = true;
 
   let currentColor = getCSS('--accent', '#fce300');
   let currentBg = getCSS('--bg', '#0a0a0a');
@@ -1221,6 +1125,16 @@
   ];
 
   const labelEls = [];
+
+  // Distance at which the whole sphere (plus label margin) fits the current aspect ratio.
+  function fitDistance() {
+    const w = container.clientWidth || 1;
+    const h = container.clientHeight || 1;
+    const halfV = THREE.MathUtils.degToRad(camera.fov) / 2;
+    const halfH = Math.atan(Math.tan(halfV) * (w / h));
+    const r = R * 1.18;
+    return Math.max(r / Math.sin(halfV), r / Math.sin(halfH));
+  }
 
   function initScene() {
     const w = container.clientWidth || 600;
@@ -1260,6 +1174,17 @@
     cargarContinentes();
     crearMarcadores();
     agregarEstrellas();
+
+    // Frame the globe so it always fits the container, then lock zoom limits to it
+    appliedFit = fitDistance();
+    camera.position.setLength(appliedFit);
+    controls.minDistance = R * 1.2;
+    controls.maxDistance = appliedFit * 3;
+    controls.update();
+
+    // Track container size (viewport, sidebar, density changes), not just window resize
+    resizeObserver = new ResizeObserver(onResize);
+    resizeObserver.observe(container);
 
     animar();
   }
@@ -1436,20 +1361,32 @@
 
   function animar() {
     requestAnimationFrame(animar);
+    if (!isVisible) return;
     controls.update();
     renderer.render(scene, camera);
     labelRenderer.render(scene, camera);
   }
 
   function onResize() {
-    const w = container.clientWidth || 600;
-    const h = container.clientHeight || 480;
-    if (camera) {
-      camera.aspect = w / h;
-      camera.updateProjectionMatrix();
-    }
-    if (renderer) renderer.setSize(w, h);
+    if (!camera || !renderer) return;
+    const w = container.clientWidth;
+    const h = container.clientHeight;
+    if (!w || !h) return;
+
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+    renderer.setSize(w, h);
     if (labelRenderer) labelRenderer.setSize(w, h);
+
+    // Re-fit to the new aspect, but keep whatever zoom level the user chose
+    const nextFit = fitDistance();
+    const zoomRatio = camera.position.length() / appliedFit;
+    appliedFit = nextFit;
+    camera.position.setLength(nextFit * zoomRatio);
+    if (controls) {
+      controls.maxDistance = nextFit * 3;
+      controls.update();
+    }
   }
 
   // Theme change observer
@@ -1468,13 +1405,19 @@
     if (chronos && chronos.classList.contains('active')) {
       initialized = true;
       initScene();
-      // Re-init on resize after first render
-      addEventListener('resize', onResize);
     }
   }
 
   // Check on view change
-  document.addEventListener('view:changed', ensureInit);
+  document.addEventListener('view:changed', function() {
+    const chronos = document.querySelector('[data-view="chronos"]');
+    isVisible = !!(chronos && chronos.classList.contains('active'));
+    if (isVisible) {
+      ensureInit();
+      // Container may have been 0-sized while hidden
+      if (initialized) onResize();
+    }
+  });
   // Also check immediately
   ensureInit();
   // Final fallback
