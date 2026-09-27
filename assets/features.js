@@ -6,90 +6,6 @@
     try { return JSON.parse(localStorage.getItem('dash_'+k)); } catch(e) { return null; }
   };
 
-  /* ===== 4. PASSWORD GENERATOR ===== */
-  function genPassword(len, opts) {
-    var sets = {
-      upper: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
-      lower: 'abcdefghijklmnopqrstuvwxyz',
-      digits: '0123456789',
-      symbols: '!@#$%^&*()_+-=[]{}|;:,.<>?'
-    };
-    var chars = '', guaranteed = [];
-    if (opts.upper) { chars += sets.upper; guaranteed.push(sets.upper[Math.floor(Math.random()*sets.upper.length)]); }
-    if (opts.lower) { chars += sets.lower; guaranteed.push(sets.lower[Math.floor(Math.random()*sets.lower.length)]); }
-    if (opts.digits) { chars += sets.digits; guaranteed.push(sets.digits[Math.floor(Math.random()*sets.digits.length)]); }
-    if (opts.symbols) { chars += sets.symbols; guaranteed.push(sets.symbols[Math.floor(Math.random()*sets.symbols.length)]); }
-    if (!chars) chars = 'abcdefghijklmnopqrstuvwxyz';
-    var pw = '';
-    for (var i = 0; i < len - guaranteed.length; i++) {
-      pw += chars[Math.floor(Math.random() * chars.length)];
-    }
-    // Insert guaranteed chars
-    var arr = pw.split('');
-    guaranteed.forEach(function(c) {
-      arr.splice(Math.floor(Math.random() * arr.length), 0, c);
-    });
-    if (arr.length < len && guaranteed.length) arr.push(guaranteed[0]); // pad if needed
-    return arr.join('').slice(0, len);
-  }
-
-  function calcPwStrength(pw) {
-    var score = 0;
-    if (/[a-z]/.test(pw)) score++;
-    if (/[A-Z]/.test(pw)) score++;
-    if (/\d/.test(pw)) score++;
-    if (/[^a-zA-Z0-9]/.test(pw)) score++;
-    if (pw.length >= 12) score++;
-    if (pw.length >= 16) score++;
-    if (score <= 2) return 'weak';
-    if (score <= 4) return 'medium';
-    return 'strong';
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var genBtn = document.getElementById('pwGenBtn');
-    var pwOut = document.getElementById('pwOutput');
-    var pwLen = document.getElementById('pwLength');
-    var pwLenVal = document.getElementById('pwLengthVal');
-    var pwStrength = document.getElementById('pwStrength');
-    var pwCopy = document.getElementById('pwCopyBtn');
-    if (!pwOut) return;
-
-    function generate() {
-      var len = pwLen ? parseInt(pwLen.value) : 16;
-      var opts = {
-        upper: document.getElementById('pwUpper') ? document.getElementById('pwUpper').checked : true,
-        lower: document.getElementById('pwLower') ? document.getElementById('pwLower').checked : true,
-        digits: document.getElementById('pwDigits') ? document.getElementById('pwDigits').checked : true,
-        symbols: document.getElementById('pwSymbols') ? document.getElementById('pwSymbols').checked : true
-      };
-      var pw = genPassword(len, opts);
-      pwOut.value = pw;
-      if (pwStrength) {
-        var s = calcPwStrength(pw);
-        pwStrength.textContent = 'STRENGTH: ' + s.toUpperCase();
-        pwStrength.className = 'password-strength ' + s;
-      }
-    }
-
-    if (genBtn) genBtn.addEventListener('click', generate);
-    if (pwLen) pwLen.addEventListener('input', function() {
-      if (pwLenVal) pwLenVal.textContent = this.value;
-      generate();
-    });
-    if (pwCopy) {
-      pwCopy.addEventListener('click', function() {
-        pwOut.select();
-        document.execCommand('copy');
-      });
-    }
-    // regenerate on checkbox change
-    document.querySelectorAll('.password-opt input[type=checkbox]').forEach(function(cb) {
-      cb.addEventListener('change', generate);
-    });
-    generate();
-  });
-
   /* ===== 5. COLLAPSIBLE PANELS ===== */
   document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('.panel').forEach(function(p) {
@@ -122,7 +38,7 @@
 
   /* ===== 6. DRAG REORDER ===== */
   document.addEventListener('DOMContentLoaded', function() {
-    var containers = ['.dash-grid', '.command-sidebar', '.chronos-layout', '.tools-layout'];
+    var containers = ['.dash-grid', '.command-sidebar', '.chronos-layout'];
     containers.forEach(function(sel) {
       var parent = document.querySelector(sel);
       if (!parent) return;
@@ -189,9 +105,6 @@
         data[key] = localStorage.getItem(key);
       }
     }
-    // Include notes too
-    var notes = document.getElementById('notesArea');
-    if (notes) data.dash_notes = notes.value;
     var blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
     var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
@@ -208,11 +121,6 @@
         var data = JSON.parse(e.target.result);
         for (var key in data) {
           localStorage.setItem(key, data[key]);
-        }
-        // If notes imported
-        if (data.dash_notes !== undefined) {
-          var notes = document.getElementById('notesArea');
-          if (notes) notes.value = data.dash_notes;
         }
         alert('IMPORT_COMPLETE: ' + Object.keys(data).length + ' keys restored.');
       } catch(err) {
@@ -611,73 +519,6 @@
   }
 
   document.addEventListener('DOMContentLoaded', initComprehensiveEmoji);
-
-  /* ===== 14. MARKDOWN SUPPORT ===== */
-  function renderMarkdown(text) {
-    var html = text
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/```([\s\S]*?)```/g, function(m, code) {
-        return '<pre style="background:var(--surface-high);border:1px solid var(--outline);padding:8px;overflow-x:auto;font-size:12px">' + code.replace(/\n$/, '').replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</pre>';
-      })
-      .replace(/######\s*(.*?)(\n|$)/g, '<h6 style="font-size:11px;margin:12px 0 4px;color:var(--accent)">$1</h6>')
-      .replace(/#####\s*(.*?)(\n|$)/g, '<h5 style="font-size:12px;margin:12px 0 4px;color:var(--accent)">$1</h5>')
-      .replace(/####\s*(.*?)(\n|$)/g, '<h4 style="font-size:13px;margin:12px 0 4px;color:var(--accent)">$1</h4>')
-      .replace(/###\s*(.*?)(\n|$)/g, '<h3 style="font-size:14px;margin:12px 0 4px;color:var(--accent)">$1</h3>')
-      .replace(/##\s*(.*?)(\n|$)/g, '<h2 style="font-size:16px;margin:12px 0 4px;color:var(--accent)">$1</h2>')
-      .replace(/#\s*(.*?)(\n|$)/g, '<h1 style="font-size:18px;margin:12px 0 4px;color:var(--accent)">$1</h1>')
-      .replace(/^- (.+)/gm, '<li style="margin-left:16px;list-style:disc">$1</li>')
-      .replace(/`([^`]+)`/g, '<code style="background:var(--surface-high);padding:1px 4px;font-size:12px;border:1px solid var(--outline)">$1</code>')
-      .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-      .replace(/\*(.+?)\*/g, '<em>$1</em>')
-      .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" style="color:var(--accent);text-decoration:underline">$1</a>')
-      .replace(/\n/g, '<br>');
-    return html;
-  }
-
-  var notesPreviewVisible = false;
-
-  function toggleNotesPreview() {
-    var textarea = document.getElementById('notesArea');
-    var preview = document.getElementById('notesPreview');
-    if (!textarea || !preview) return;
-    notesPreviewVisible = !notesPreviewVisible;
-    if (notesPreviewVisible) {
-      preview.innerHTML = renderMarkdown(textarea.value);
-      preview.style.display = 'block';
-      textarea.style.display = 'none';
-    } else {
-      preview.style.display = 'none';
-      textarea.style.display = '';
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', function() {
-    var pv = document.getElementById('notesPreview');
-    if (pv) pv.style.display = 'none';
-  });
-
-  /* ===== 15. INTERNAL SEARCH ===== */
-  function doLocalSearch() {
-    var query = (document.getElementById('localSearch') || {}).value || '';
-    var resultsEl = document.getElementById('localSearchResults');
-    if (!resultsEl) return;
-    if (!query.trim()) { resultsEl.innerHTML = '<div class="result-empty">ENTER_QUERY</div>'; return; }
-    var q = query.toLowerCase();
-    var html = '';
-
-    var notes = localStorage.getItem('dash_notes') || '';
-    if (notes.toLowerCase().indexOf(q) !== -1) {
-      var idx = notes.toLowerCase().indexOf(q);
-      var snippet = notes.substring(Math.max(0, idx - 30), idx + q.length + 30);
-      html += '<div class="result-item"><span class="result-badge high">[NOTE]</span><span class="result-text">' + esc(snippet) + '</span></div>';
-    }
-
-    if (!html) {
-      resultsEl.innerHTML = '<div class="result-empty">NO_MATCHES</div>';
-    } else {
-      resultsEl.innerHTML = html;
-    }
-  }
 
   /* ===== 16. CUSTOM THEME ===== */
   function openCustomThemeEditor() {
