@@ -21,6 +21,7 @@ const PRECACHE = [
   './assets/style-CxH7Ekp1.css',
   './assets/features.css',
   './assets/xp-theme.css',
+  './assets/glass.css',
   './assets/layout.css'
 ];
 

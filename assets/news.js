@@ -41,7 +41,8 @@ var NEWS_SOURCES = {
   ],
   LIFESTYLE: [
     { name: 'Lifehacker', url: 'https://lifehacker.com/feed/rss' },
-    { name: 'Well+Good', url: 'https://www.wellandgood.com/feed/' },
+    // Well+Good estaba acá, pero su /feed/ devuelve 301 a theSkimm.com: feed muerto.
+    { name: 'Popular Mechanics', url: 'https://www.popularmechanics.com/rss' },
     { name: 'Apartment Therapy', url: 'https://www.apartmenttherapy.com/main.rss' },
     { name: 'GQ', url: 'https://www.gq.com/feed/rss' },
     { name: 'Conde Nast Traveler', url: 'https://www.cntraveler.com/feed/rss' },
