@@ -17,6 +17,7 @@ const PRECACHE = [
   './assets/index-Cpp8q40q.js',
   './assets/features.js',
   './assets/command-palette.js',
+  './assets/news.js',
   './assets/style-CxH7Ekp1.css',
   './assets/features.css',
   './assets/xp-theme.css',
