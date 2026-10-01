@@ -32,72 +32,13 @@
     }
   </script>
   <script defer src="./assets/index-Cpp8q40q.js"></script>
-  <link rel="stylesheet" crossorigin href="./assets/style-CxH7Ekp1.css">
-  <link rel="stylesheet" crossorigin href="./assets/features.css">
-  <link rel="stylesheet" crossorigin href="./assets/xp-theme.css">
-  <style>
-    @media (min-width: 1101px) {
-      .dash-grid {
-        grid-template-columns: repeat(3, 1fr) !important;
-      }
-      /* 3-col grid: news spans the row, so let the radio take the rest */
-      .dash-grid .radio-panel { grid-column: span 2; }
-    }
-  </style>
-  <style>
-    @media (max-width: 480px) {
-      .command-sidebar .panel { margin-bottom: 12px; }
-      .modal { max-width: 96%; }
-      .modal-body { padding: 12px; }
-      .setting-row { grid-template-columns: 1fr; }
-      .links-grid { gap: 8px; }
-    }
-  </style>
-  <style>
-    /* CHRONOS / GLOBE SIZING
-       Reserve = topbar + statusbar + .main padding + view header + panel header.
-       Everything else is vertical rhythm, so the globe gets the rest of the
-       viewport and never forces the page to scroll. */
-    :root { --chronos-reserve: 296px; }
-    .globe-panel .panel-body {
-      padding: 0;
-      position: relative;
-      height: clamp(240px, calc(100vh - var(--chronos-reserve)), 1100px);
-      height: clamp(240px, calc(100dvh - var(--chronos-reserve)), 1100px);
-      overflow: hidden;
-    }
-    #globeContainer {
-      width: 100%;
-      height: 100%;
-      position: relative;
-    }
-    /* Clocks scroll inside their own column instead of stretching the page */
-    .chronos-layout > .clock-nodes {
-      max-height: clamp(240px, calc(100vh - var(--chronos-reserve)), 1100px);
-      max-height: clamp(240px, calc(100dvh - var(--chronos-reserve)), 1100px);
-      overflow-y: auto;
-    }
-    @media (max-width: 768px) {
-      :root { --chronos-reserve: 200px; }
-    }
-    @media (max-width: 1100px) {
-      /* Single column: cap the globe so it fits on screen, let the clocks flow below */
-      .globe-panel .panel-body {
-        height: clamp(220px, 46dvh, 460px);
-      }
-      .chronos-layout > .clock-nodes {
-        height: auto;
-        max-height: none;
-        overflow: visible;
-      }
-    }
-    @media (max-width: 480px) {
-      /* Phones: keep the globe compact so the clocks stay within reach */
-      .globe-panel .panel-body {
-        height: clamp(200px, 40dvh, 340px);
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="./assets/style-CxH7Ekp1.css">
+  <link rel="stylesheet" href="./assets/features.css">
+  <link rel="stylesheet" href="./assets/xp-theme.css">
+  <!-- layout.css va último a propósito: contiene los overrides de layout que
+       antes vivían en <style> inline después de los links. Moverlo antes
+       cambiaría el orden de cascada y rompería el grid de 3 columnas. -->
+  <link rel="stylesheet" href="./assets/layout.css">
   <style>
     #loadingScreen {
       position: fixed; inset: 0; z-index: 99999;
@@ -666,7 +607,22 @@
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('./sw.js')
-        .then(reg => console.log('DAEMON_UPLINK: SW activo', reg.scope))
+        .then(reg => {
+          console.log('DAEMON_UPLINK: SW activo', reg.scope);
+          // Cuando hay un SW viejo esperando, el nuevo ya se instaló y
+          // activó solo (skipWaiting). El que tiene que avisarle al usuario
+          // que refresque para no quedarse con JS viejo.
+          reg.addEventListener('updatefound', () => {
+            const sw = reg.installing;
+            if (!sw) return;
+            sw.addEventListener('statechange', () => {
+              if (sw.state === 'activated' && navigator.serviceWorker.controller) {
+                console.log('DAEMON_UPLINK: update instalado — refrescá para activarlo');
+                document.documentElement.dataset.swUpdate = '1';
+              }
+            });
+          });
+        })
         .catch(err => console.error('DAEMON_ERROR:', err));
     });
   }

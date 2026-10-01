@@ -1,0 +1,94 @@
+name: deploy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+# Un deploy por commit. Cancelar runs viejos evita que un build lento publique
+# despues de uno nuevo que ya subió.
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate:
+    name: validate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      # Atrapa lo que antes solo se descubria en produccion: bundle con error de
+      # sintaxis, <script> que apunta a un archivo inexistente, service worker
+      # con la lista de precache desactualizada.
+      - name: Validar assets, JS y service worker
+        run: node scripts/validate.mjs
+
+  deploy:
+    name: deploy to Pages
+    needs: validate
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Inyectar SHA en el service worker
+        # El nombre del cache se deriva del commit. Es lo que hace que un
+        # cliente con la version vieja borre su cache al recibir el SW nuevo,
+        # en vez de quedarse sirviendo bundles viejos para siempre.
+        #
+        # Solo se reemplaza la Asignacion, no todas las ocurrencias: si el
+        # placeholder aparece tambien en un guard (BUILD === '__BUILD_SHA__'),
+        # el sed lo pisa y ese guard queda siempre en true -> el cache nunca se
+        # versiona en produccion. scripts/validate.mjs vigila que no vuelva.
+        run: |
+          SHA="${GITHUB_SHA::12}"
+          node -e "
+            const fs = require('fs');
+            const sha = process.argv[1];
+            const src = fs.readFileSync('sw.js', 'utf8');
+            const out = src.replace(/const BUILD = '[^']*'/, \"const BUILD = '\" + sha + \"'\");
+            if (out === src) { console.error('::error::no se encontro la asignacion de BUILD en sw.js'); process.exit(1); }
+            fs.writeFileSync('sw.js', out);
+          " "$SHA"
+          grep -n "const BUILD\|IS_UNVERSIONED\|const VERSION" sw.js
+          # El guard que detecta "sin versionar" tiene que sobrevivir al
+          # replace. Si desaparecio, VERSION caeria a 'dev' y el cache jamas
+          # se invalidaria.
+          grep -q "IS_UNVERSIONED" sw.js || { echo "::error::falta el guard IS_UNVERSIONED"; exit 1; }
+          node <<'EOF'
+          const fs = require('fs');
+          const s = fs.readFileSync('sw.js', 'utf8');
+          // El guard tiene que seguir siendo un regex sobre la forma del
+          // sentinel, no una comparacion contra el texto literal.
+          if (!/IS_UNVERSIONED\s*=\s*\/\^__/.test(s)) {
+            console.error('::error::el guard IS_UNVERSIONED ya no matchea la forma del sentinel — el cache quedaria en dev para siempre');
+            process.exit(1);
+          }
+          EOF
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4

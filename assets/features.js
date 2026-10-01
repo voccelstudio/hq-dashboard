@@ -595,4 +595,11 @@
     }
   })();
 
+  // Todo lo de arriba vive dentro de esta IIFE, así que nada de esto existe en
+  // el scope global. Pero index.html los llama desde atributos onclick="" en el
+  // card CUSTOM_THEME y dentro del editor — sin exponerlos, esos botones tiran
+  // ReferenceError y el tema custom no se puede aplicar.
+  window.openCustomThemeEditor = openCustomThemeEditor;
+  window.applyCustomTheme = applyCustomTheme;
+
 })();
